@@ -28,8 +28,12 @@ class Controller_Test extends Controller {
 	
 	public function action_UserCreate()
 	{
-		$dao = Factory_Dao::create('kohana', 'user');
+		$dao  = Factory_Dao::create('kohana', 'user');
 		$user = Factory_Model::create($dao);
+		
+		// echo Debug::vars($user->dao()->organizations); die;
+		$Orm_App_User = ORM::factory('Orm_App_User');
+		echo Debug::vars($Orm_App_User->app); die;
 	}
 	
 }
