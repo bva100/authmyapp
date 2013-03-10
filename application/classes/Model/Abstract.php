@@ -18,7 +18,7 @@ abstract class Model_Abstract {
 	 *
 	 * @var Dao_Abstract object
 	 */
-	private $dao;
+	protected $dao;
 	
 	/**
 	 * Constructor inject's a dao
@@ -101,7 +101,8 @@ abstract class Model_Abstract {
 		{
 			trigger_error('set_state expects argument 1 to be type int', E_USER_WARNING);
 		}
-		$this->dao->state = $state;
+		$this->dao->state           = $state;
+		$this->dao->state_timestamp = time();
 		if ( ! $lazy)
 		{
 			$this->db_update();

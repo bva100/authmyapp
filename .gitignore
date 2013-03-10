@@ -39,3 +39,6 @@ application/logs/
 Icon?
 ehthumbs.db
 Thumbs.db
+
+#Ignore cache
+application/cache/*

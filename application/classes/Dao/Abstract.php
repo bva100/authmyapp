@@ -11,12 +11,10 @@ abstract class Dao_Abstract {
 	abstract public function find_all();
 	
 	abstract public function update();
-	
 	abstract public function create();
-	
 	abstract public function save();
-	
 	abstract public function delete();
+	abstract public function add($alias, $far_keys);
 	
 	abstract public function loaded();
 	

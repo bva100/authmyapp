@@ -101,6 +101,30 @@ if ( ! defined('KOHANA_START_MEMORY'))
 // Bootstrap the application
 require APPPATH.'bootstrap'.EXT;
 
+// post and get functions.
+function post($key, $default = NULL) {
+	if ( ! isset($_POST[$key])) 
+	{
+		return $default;
+	}
+	return filter_input(INPUT_POST, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH);
+}
+
+function get($key, $default = NULL) {
+	if ( ! isset($_GET[$key])) 
+	{
+		return $default;
+	}
+	return filter_input(INPUT_GET, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH);
+}
+
+function post_raw($key) {
+	if ( ! isset($_POST[$key])) {
+		return '';
+	}
+	return filter_input(INPUT_POST, $key, FILTER_UNSAFE_RAW);
+}
+
 if (PHP_SAPI == 'cli') // Try and load minion
 {
 	class_exists('Minion_Task') OR die('Please enable the Minion module for CLI support.');

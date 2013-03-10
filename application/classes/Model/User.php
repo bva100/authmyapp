@@ -52,6 +52,49 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
+	 * Add a role to this user
+	 *
+	 * @param string $role_name 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function add_role($role_name)
+	{
+		$dao_role = $this->dao->roles->clear()->where('name', '=', $role_name)->find();
+		$this->dao->add('roles', $dao_role->id);
+	}
+	
+	/**
+	 * Remove a role from this user
+	 *
+	 * @param string $role_name 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function remove_role($role_name)
+	{
+		$dao_role = $this->dao->roles->clear()->where('name', '=', $role_name)->find();
+		$this->dao->remove('roles', $dao_role->id);
+	}
+	
+	/**
+	 * Returns an array of role names associated with this user
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function roles()
+	{
+		$dao_roles = $this->dao->roles->find_all();
+		$array = array();
+		foreach ($dao_roles as $dao_role) 
+		{
+			$array[] = $dao_role->name;
+		}
+		return $array;
+	}
+	
+	/**
 	 * set email
 	 *
 	 * @param string $email
@@ -83,38 +126,6 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	public function email()
 	{
 		return($this->dao->email);
-	}
-	
-	/**
-	 * set facebook_id
-	 *
-	 * @param float $facebook_id
-	 * @param bool $lazy
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_facebook_id($facebook_id, $lazy = FALSE)
-	{
-		if ( ! is_float($facebook_id) )
-		{
-			trigger_error('set_facebook_id expects argument 1 to be type float', E_USER_WARNING);
-		}
-		$this->dao->facebook_id = $facebook_id;
-		if ( ! $lazy)
-		{
-			$this->db_update();
-		}
-	}
-	
-	/**
-	 * get facebook_id
-	 *
-	 * @return float
-	 * @author BRIAN ANDERSON
-	 */
-	public function facebook_id()
-	{
-		return( (float) $this->dao->facebook_id);
 	}
 	
 	/**
@@ -184,13 +195,13 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	/**
 	 * Set password using a hash_algo object and a raw password string
 	 *
-	 * @param Hash_Algo_Abstract $hash_algo 
+	 * @param Hash_Base $hash_algo
 	 * @param string $raw_password 
 	 * @param string $lazy 
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_password(Hash_Algo_Abstract $hash_algo, $raw_password, $lazy = FALSE)
+	public function set_password(Hash_Base $hash_algo, $raw_password, $lazy = FALSE)
 	{
 		if ( ! is_string($raw_password) )
 		{
@@ -204,8 +215,7 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		}
 		
 		// set password
-		$password                      = $hash_algo->hash($raw_password);
-		$this->dao->password           = $password;
+		$this->dao->password           = $hash_algo->hash($raw_password);
 		$this->dao->password_hash_type = $hash_algo->name();
 		
 		//update
@@ -214,5 +224,225 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 			$this->db_update();
 		}
 	}
+	
+	/**
+	 * set a random password using a given hash_algo
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_rand_password(Hash_Base $hash_algo, $lazy = FALSE)
+	{
+		$this->dao->password           = $hash_algo->hash(mt_rand());
+		$this->dao->password_hash_type = $hash_algo->name();
+		
+		//update
+		if ( ! $lazy) 
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get hashed password
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function password()
+	{
+		return($this->dao->password);
+	}
+	
+	/**
+	 * get password_hash_type
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function password_hash_type()
+	{
+		return($this->dao->password_hash_type);
+	}
+	
+	/**
+	 * set facebook_id
+	 *
+	 * @param float $facebook_id (not forced)
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_facebook_id($facebook_id, $lazy = FALSE)
+	{
+		$this->dao->facebook_id = $facebook_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get facebook_id
+	 *
+	 * @return float (not forced)
+	 * @author BRIAN ANDERSON
+	 */
+	public function facebook_id()
+	{
+		return($this->dao->facebook_id);
+	}
+	
+	/**
+	 * set facebook_token
+	 *
+	 * @param string $facebook_token
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_facebook_token($facebook_token, $lazy = FALSE)
+	{
+		if ( ! is_string($facebook_token) )
+		{
+			trigger_error('set_facebook_token expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->facebook_token = $facebook_token;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get facebook_token
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function facebook_token()
+	{
+		return($this->dao->facebook_token);
+	}
+	
+	/**
+	 * set facebook_token_created
+	 *
+	 * @param int $facebook_token_created. Unix timestamp.
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_facebook_token_created($timestamp, $lazy = FALSE)
+	{
+		if ( ! is_int($timestamp) )
+		{
+			trigger_error('set_facebook_token_created expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->facebook_token_created = $timestamp;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get facebook_token_created
+	 *
+	 * @return int. Unix timestamp
+	 * @author BRIAN ANDERSON
+	 */
+	public function facebook_token_created()
+	{
+		return( (int) $this->dao->facebook_token_created);
+	}
+	
+	/**
+	 * set facebook_token_expires
+	 *
+	 * @param int $facebook_token_expires. Unix timestamp.
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_facebook_token_expires($timestamp, $lazy = FALSE)
+	{
+		if ( ! is_int($facebook_token_expires) )
+		{
+			trigger_error('set_facebook_token_expires expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->facebook_token_expires = $timestamp;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get facebook_token_expires
+	 *
+	 * @return int. Unix timestamp.
+	 * @author BRIAN ANDERSON
+	 */
+	public function facebook_token_expires()
+	{
+		return( (int) $this->dao->facebook_token_expires);
+	}
+	
+	/**
+	 * get login_count
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function login_count()
+	{
+		return( (int) $this->dao->login_count);
+	}
+	
+	/**
+	 * get last_login
+	 *
+	 * @return int. Unix timestamp.
+	 * @author BRIAN ANDERSON
+	 */
+	public function last_login()
+	{
+		return( (int) $this->dao->last_login);
+	}
+	
+	/**
+	 * set gender
+	 *
+	 * @param string $gender. "m" or "f"
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_gender($gender, $lazy = FALSE)
+	{
+		if ($gender !== 'm' AND $gender === 'f') 
+		{
+			trigger_error('set_gender expects argument 1, gender, to be string with char "m" or char "f" ', E_USER_WARNING);
+		}
+		
+		$this->dao->gender = $gender;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get gender
+	 *
+	 * @return string. "m" or "f"
+	 * @author BRIAN ANDERSON
+	 */
+	public function gender()
+	{
+		return($this->dao->gender);
+	}
+	
 	
 }

@@ -40,4 +40,40 @@ class Controller_Test extends Controller {
 		echo Debug::vars($user); die;
 	}
 	
+	public function action_userAddRole()
+	{
+		$user_id = (int) get('user_id', 1);
+		$role = (string) get('role', 'login');
+		
+		$dao = Factory_Dao::create('kohana', 'user', $user_id);
+		$user = Factory_Model::create($dao);
+		$user->add_role($role);
+	}
+	
+	public function action_userPassword()
+	{
+		$user_id = (int) get('user_id', 1);
+		$password = (string) get('password', '');
+		
+		$dao = Factory_Dao::create('kohana', 'user', $user_id);
+		$user = Factory_Model::create($dao);
+		
+		$hash_algo = Factory_Hash::create( Auth::instance() );
+		
+		$user->set_password($hash_algo, $password);
+		echo Debug::vars($user->password()); die;
+	}
+	
+	public function action_userFacebookId()
+	{
+		$user_id = (int) get('user_id', 1);
+		$facebook_id = get('facebook_id', 0);
+		
+		$dao = Factory_Dao::create('kohana', 'user', $user_id);
+		$user = Factory_Model::create($dao);
+		
+		$user->set_facebook_id($facebook_id);
+		echo Debug::vars($user->facebook_id()); die;
+	}
+	
 }
