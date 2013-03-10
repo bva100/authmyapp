@@ -42,3 +42,4 @@ Thumbs.db
 
 #Ignore cache
 application/cache/*
+application/cache/
