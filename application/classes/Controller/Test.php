@@ -26,14 +26,18 @@ class Controller_Test extends Controller {
 		echo Debug::vars($authenticate); die;
 	}
 	
+	public function action_hash()
+	{
+		$hash = Factory_Hash::create( Auth::instance() );
+		$string = 'yeah doggie dog';
+		echo Debug::vars($hash->name(), $hash->hash($string)); die;
+	}
+	
 	public function action_UserCreate()
 	{
 		$dao  = Factory_Dao::create('kohana', 'user');
-		$user = Factory_Model::create($dao);
-		
-		// echo Debug::vars($user->dao()->organizations); die;
-		$Orm_App_User = ORM::factory('Orm_App_User');
-		echo Debug::vars($Orm_App_User->app); die;
+		$user = Model_User::create_with_email($dao, 'brianvanderson@gmail.com');
+		echo Debug::vars($user); die;
 	}
 	
 }

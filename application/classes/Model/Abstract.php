@@ -8,6 +8,12 @@
 abstract class Model_Abstract {
 	
 	/**
+	 * state constants
+	 */
+	const STATE_ACTIVE  = 1;
+	const STATE_DELETED = 2;
+	
+	/**
 	 * DAO. Database access object.
 	 *
 	 * @var Dao_Abstract object

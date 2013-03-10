@@ -4,7 +4,7 @@ return array(
 
 	'driver'       => 'File',
 	'hash_method'  => 'sha256',
-	'hash_key'     => NULL,
+	'hash_key'     => 'j17592Ndk2Ls0xT18Fv',
 	'lifetime'     => 1209600,
 	'session_type' => Session::$default,
 	'session_key'  => 'auth_user',

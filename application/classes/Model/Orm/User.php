@@ -33,4 +33,15 @@ class Model_Orm_User extends Model_Auth_User {
 				'model'       => 'Orm_Organization',
 			)
 		);
+	
+	/**
+	 * Orm rules for validation
+	 * @return array
+	 * @author BRIAN ANDERSON
+	 */
+	public function rules()
+	{
+		$rules = array();
+		return($rules);
+	}
 }

@@ -9,7 +9,7 @@
  * @copyright  (c) 2007-2010 Kohana Team
  * @license    http://kohanaframework.org/license
  */
-abstract class Kohana_Auth {
+abstract class Kohana_Auth extends Hash_Abstract {
 
 	// Auth instances
 	protected static $_instance;
@@ -128,6 +128,17 @@ abstract class Kohana_Auth {
 	public function logged_in($role = NULL)
 	{
 		return ($this->get_user() !== NULL);
+	}
+	
+	/**
+	 * Name of this hash type
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function hash_name()
+	{
+		return('kohana_auth');
 	}
 
 	/**
