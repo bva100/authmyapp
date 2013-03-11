@@ -12,14 +12,14 @@ abstract class Controller_Abstract extends Controller_Template{
 	 *
 	 * @var string
 	 */
-	public   $template = "templates/default";
+	public $template;
 	
 	/**
 	 * front end version. Used for css and js cache.
 	 *
 	 * @var string
 	 */
- 	public static $front_end_version  = "?v=1";
+ 	public static $front_end_version;
 	
 	/**
 	 * holds an instance of an auth object which is injected into the Authenticate class
@@ -112,7 +112,8 @@ abstract class Controller_Abstract extends Controller_Template{
 	}
 	
 	/**
-	 * set requires_login.
+	 * set requires_login
+	 *
 	 * @param bool $requires_login
 	 * @return void
 	 * @author BRIAN ANDERSON
@@ -124,6 +125,33 @@ abstract class Controller_Abstract extends Controller_Template{
 			trigger_error('set_requires_login expects argument 1 to be type bool', E_USER_WARNING);
 		}
 		$this->requires_login = $requires_login;
+	}
+	
+	/**
+	 * get requires_login
+	 *
+	 * @return bool
+	 * @author BRIAN ANDERSON
+	 */
+ 	public function requires_login()
+	{
+		return( (bool) $this->requires_login);
+	}
+	
+	/**
+	 * set requires_admin
+	 * 
+	 * @param bool $requires_admin
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	protected function set_requires_admin($requires_admin)
+	{
+		if ( ! is_bool($requires_admin) )
+		{
+			trigger_error('set_requires_admin expects argument 1 to be type bool', E_USER_WARNING);
+		}
+		$this->requires_admin = $requires_admin;
 	}
 	
 	/**
@@ -171,11 +199,17 @@ abstract class Controller_Abstract extends Controller_Template{
 	 */
 	public function before()
 	{
+		// set template
+		$this->template = "templates/default";
+		
+		// set front end version
+		self::$front_end_version = "?v=1";
+		
+		// run controller before
 		parent::before();
 		
 		$this->set_auth_object( Auth::instance() ); // default to kohana's auth system
 		$this->set_user();
-		$this->set_uri();
 		
 		// by default, user's should be logged in and admin access is not required.
 		if ( ! isset($this->requires_login)) 
@@ -191,15 +225,15 @@ abstract class Controller_Abstract extends Controller_Template{
 		if($this->auto_render)
 		{
 			//meta
-			$this->template->title            = '';
-			$this->template->meta_description = '';
+			$this->template->title            = 'Facebook Connect For Your App &#8212; AuthMyApp';
+			$this->template->meta_description = 'Auth My App makes it surprisingly simply to add Facebook connect to your app. Sign up today for a free.';
 			$this->template->meta_copywrite   = 'AuthMyApp, INC';
-			$this->template->favicon          = URL::base(TRUE).'favicon.ico';
-			$this->template->favicon_image    = URL::base(TRUE).'favicon.png';
-			$this->template->apple_touch_icon = URL::base(TRUE).'apple-touch-icon.png';
+			$this->template->favicon          = 'assets/images/favicon/favicon.ico';
+			$this->template->favicon_image    = 'assets/images/favicon/favicon.png';
+			$this->template->apple_touch_icon = 'assets/images/favicon/apple-touch-icon.png';
 			
 			// fb meta
-			$this->template->fb_site_Name   = 'AuthMyApp';
+			$this->template->fb_site_name   = 'Auth My App';
 			$this->template->fb_title       = $this->template->meta_description;
 			$this->template->fb_type        = 'website';
 			$this->template->fb_url         = URL::base(TRUE);
@@ -209,13 +243,12 @@ abstract class Controller_Abstract extends Controller_Template{
 			
 			// scripts and styles
 			$this->template->jquery                 = 'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'; // perhaps dl this
-			$this->template->googleAnalytics        = 'assets/js/googleAnalytics.js';
+			$this->template->google_analytics       = 'assets/js/googleAnalytics.js';
 			$this->template->content                = '';
-			$this->template->bootstrapCss           = 'assets/bootstrap/css/bootstrap.min.css';
-			$this->template->bootstrapJs            = 'assets/bootstrap/js/bootstrap.min.js';
+			$this->template->bootstrap_css          = 'assets/bootstrap/css/bootstrap.min.css';
+			$this->template->bootstrap_js           = 'assets/bootstrap/js/bootstrap.min.js';
 			$this->template->templateJs             = 'assets/js/templates/templateJs.js'.self::$front_end_version;
 			$this->template->templateCss            = 'assets/css/templates/template.css'.self::$front_end_version;
-			
 			
 			$this->template->navbar  = '';
 			$this->template->styles  = '';
