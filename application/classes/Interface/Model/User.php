@@ -11,10 +11,6 @@ interface Interface_Model_User
 	public static function create(Dao_Abstract $dao);
 	public static function create_with_email(Dao_Abstract $dao, $email);
 	
-	public function add_role($role_name);
-	public function remove_role($role_name);
-	public function roles();
-	
 	public function set_email($email);
 	public function email();
 	
@@ -43,5 +39,13 @@ interface Interface_Model_User
 	
 	public function set_gender($gender, $lazy = FALSE);
 	public function gender();
+	
+	public function add_role($role_name);
+	public function remove_role($role_name);
+	public function roles();
+	
+	public function add_organization($organization_id);
+	public function remove_organization($organization_id);
+	public function organizations();
 	
 } // END interface Interface_Model_User

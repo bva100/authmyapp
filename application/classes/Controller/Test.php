@@ -76,4 +76,66 @@ class Controller_Test extends Controller {
 		echo Debug::vars($user->facebook_id()); die;
 	}
 	
+	public function action_userAddOrg()
+	{
+		$org_id = (int) get('org_id', 2);
+		$user_id = (int) get('user_id', 1);
+		
+		$dao = Factory_Dao::create('kohana', 'user', $user_id);
+		$user = Factory_Model::create($dao);
+		
+		// $user->add_organization($org_id);
+		
+		foreach ($user->organizations() as $org) 
+		{
+			echo $org->name().'<br>';
+		}
+		die('<hr>end');
+	}
+	
+	public function action_createOrg()
+	{
+		$name = (string) get('name', '');
+		$url = get('url', NULL);
+		
+		$dao = Factory_Dao::create('kohana', 'organization');
+		$org = Model_Organization::create_with_name($dao, $name);
+		if (is_bool($org)) 
+		{
+			die('already exists!');
+		}
+		else
+		{
+			echo Debug::vars($org->name(), $org); die;
+		}
+	}
+	
+	public function action_appCreate()
+	{
+		$app_name = (string) get('app_name', 'fast blogger');
+		$org_id = (int) get('org_id', 4);
+		
+		$dao = Factory_Dao::create('kohana', 'app');
+		$app = Model_App::create_with_name_and_organization_id($dao, $app_name, $org_id);
+		if (is_bool($app) AND $app !== FALSE) 
+		{
+			die('already exists!');
+		}
+		else
+		{
+			echo Debug::vars($app->name(), $app); die;
+		}
+	}
+	
+	public function action_appUserCreate()
+	{
+		$email = (string) get('email', 'brian.anderson@ovooko.com');
+		$app_id = (int) get('app_id', 2);
+		
+		$dao = Factory_Dao::create('kohana', 'app_user');
+		$app_user = Model_App_User::create_with_email_and_app_id($dao, $email, $app_id);
+		
+		echo Debug::vars($app_user); die;
+	}
+	
 }

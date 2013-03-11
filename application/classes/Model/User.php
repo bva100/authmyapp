@@ -39,62 +39,6 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
-	 * Creates and returns a new Model_user given a DAO
-	 *
-	 * @param Dao_Abstract $dao 
-	 * @return Model_User
-	 * @author BRIAN ANDERSON
-	 */
-	public static function create(Dao_Abstract $dao)
-	{
-		$user = self::create_with_email($dao, NULL);
-		return($user);
-	}
-	
-	/**
-	 * Add a role to this user
-	 *
-	 * @param string $role_name 
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function add_role($role_name)
-	{
-		$dao_role = $this->dao->roles->clear()->where('name', '=', $role_name)->find();
-		$this->dao->add('roles', $dao_role->id);
-	}
-	
-	/**
-	 * Remove a role from this user
-	 *
-	 * @param string $role_name 
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function remove_role($role_name)
-	{
-		$dao_role = $this->dao->roles->clear()->where('name', '=', $role_name)->find();
-		$this->dao->remove('roles', $dao_role->id);
-	}
-	
-	/**
-	 * Returns an array of role names associated with this user
-	 *
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function roles()
-	{
-		$dao_roles = $this->dao->roles->find_all();
-		$array = array();
-		foreach ($dao_roles as $dao_role) 
-		{
-			$array[] = $dao_role->name;
-		}
-		return $array;
-	}
-	
-	/**
 	 * set email
 	 *
 	 * @param string $email
@@ -436,7 +380,7 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	/**
 	 * get gender
 	 *
-	 * @return string. "m" or "f"
+	 * @return string. "m" or "f".
 	 * @author BRIAN ANDERSON
 	 */
 	public function gender()
@@ -444,5 +388,109 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		return($this->dao->gender);
 	}
 	
+	/**
+	 * Creates and returns a new Model_user given a DAO
+	 *
+	 * @param Dao_Abstract $dao 
+	 * @return Model_User
+	 * @author BRIAN ANDERSON
+	 */
+	public static function create(Dao_Abstract $dao)
+	{
+		$user = self::create_with_email($dao, NULL);
+		return($user);
+	}
+	
+	/**
+	 * Add a role to this user
+	 *
+	 * @param string $role_name 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function add_role($role_name)
+	{
+		$dao_role = $this->dao->roles->clear()->where('name', '=', $role_name)->find();
+		$this->dao->add('roles', $dao_role->id);
+	}
+	
+	/**
+	 * Remove a role from this user
+	 *
+	 * @param string $role_name 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function remove_role($role_name)
+	{
+		$dao_role = $this->dao->roles->clear()->where('name', '=', $role_name)->find();
+		$this->dao->remove('roles', $dao_role->id);
+	}
+	
+	/**
+	 * Returns an array of role names associated with this user
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function roles()
+	{
+		$dao_roles = $this->dao->roles->find_all();
+		$array = array();
+		foreach ($dao_roles as $dao_role) 
+		{
+			$array[] = $dao_role->name;
+		}
+		return $array;
+	}
+	
+	/**
+	 * Add this user to an organization
+	 *
+	 * @param int $organization_id 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function add_organization($organization_id)
+	{
+		if ( ! is_int($organization_id)) 
+		{
+			trigger_error('add_organization expects argument 1, organization_id, to be int', E_USER_WARNING);
+		}
+		$this->dao->add('organizations', $organization_id);
+	}
+	
+	/**
+	 * Remove this user from an organization
+	 *
+	 * @param string $organization_id 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function remove_organization($organization_id)
+	{
+		if ( ! is_int($organization_id)) 
+		{
+			trigger_error('remove_organization expects argument 1, organization_id to be int', E_USER_WARNING);
+		}
+		$this->dao->remove('organizations', $organization_id);
+	}
+	
+	/**
+	 * returns an array of Model_Organization objects associated with this user
+	 *
+	 * @return array of Model_Organization objects
+	 * @author BRIAN ANDERSON
+	 */
+	public function organizations()
+	{
+		$dao_orgs = $this->dao->organizations->find_all();
+		$array = array();
+		foreach ($dao_orgs as $dao_org) 
+		{
+			$array[] = Factory_Model::create($dao_org);
+		}
+		return $array;
+	}
 	
 }
