@@ -41,7 +41,7 @@ class Model_Orm_User extends Model_Auth_User {
 	 */
 	public function rules()
 	{
-		$rules = array();
+		$rules = array(); 
 		return($rules);
 	}
 }

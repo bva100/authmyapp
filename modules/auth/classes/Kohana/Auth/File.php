@@ -39,6 +39,8 @@ class Kohana_Auth_File extends Auth {
 			// Create a hashed password
 			$password = $this->hash($password);
 		}
+		
+		echo Debug::vars($password); die;
 
 		if (isset($this->_users[$username]) AND $this->_users[$username] === $password)
 		{

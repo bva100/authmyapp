@@ -16,7 +16,7 @@ class Model_Auth_User extends ORM {
 	 */
 	protected $_has_many = array(
 		'user_tokens' => array('model' => 'User_Token'),
-		'roles'       => array('model' => 'Role', 'through' => 'roles_users'),
+		'roles'       => array('model' => 'Orm_Role', 'through' => 'roles_users'),
 	);
 
 	/**
@@ -54,11 +54,7 @@ class Model_Auth_User extends ORM {
 	 */
 	public function filters()
 	{
-		return array(
-			'password' => array(
-				array(array(Auth::instance(), 'hash'))
-			)
-		);
+		return array();
 	}
 
 	/**

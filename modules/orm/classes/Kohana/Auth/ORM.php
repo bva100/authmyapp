@@ -19,11 +19,11 @@ class Kohana_Auth_ORM extends Auth {
 	{
 		// Get the user from the session
 		$user = $this->get_user();
-
+		
 		if ( ! $user)
 			return FALSE;
-
-		if ($user instanceof Model_User AND $user->loaded())
+		
+		if ($user instanceof Model_Orm_User AND $user->loaded())
 		{
 			// If we don't have a roll no further checking is needed
 			if ( ! $role)
@@ -32,11 +32,11 @@ class Kohana_Auth_ORM extends Auth {
 			if (is_array($role))
 			{
 				// Get all the roles
-				$roles = ORM::factory('Role')
+				$roles = ORM::factory('Orm_Role')
 							->where('name', 'IN', $role)
 							->find_all()
 							->as_array(NULL, 'id');
-
+						
 				// Make sure all the roles are valid ones
 				if (count($roles) !== count($role))
 					return FALSE;
@@ -46,7 +46,7 @@ class Kohana_Auth_ORM extends Auth {
 				if ( ! is_object($role))
 				{
 					// Load the role
-					$roles = ORM::factory('Role', array('name' => $role));
+					$roles = ORM::factory('Orm_Role', array('name' => $role));
 
 					if ( ! $roles->loaded())
 						return FALSE;
@@ -56,7 +56,7 @@ class Kohana_Auth_ORM extends Auth {
 			return $user->has('roles', $roles);
 		}
 	}
-
+	
 	/**
 	 * Logs a user in.
 	 *
@@ -69,19 +69,28 @@ class Kohana_Auth_ORM extends Auth {
 	{
 		if ( ! is_object($user))
 		{
-			$username = $user;
-
+			$email = $user;
+			
 			// Load the user
-			$user = ORM::factory('User');
-			$user->where($user->unique_key($username), '=', $username)->find();
+			$user = ORM::factory('Orm_User');
+			
+			// attempt to get use orm object via email
+			$user->where('email', '=', $email)->find();
+			if ( ! $user->loaded()) 
+			{
+				$username = $email;
+				
+				// attempt to get user via username
+				$user->where('username', '=', $username)->find();
+			}
 		}
-
+		
 		if (is_string($password))
 		{
 			// Create a hashed password
 			$password = $this->hash($password);
 		}
-
+		
 		// If the passwords match, perform a login
 		if ($user->has('roles', ORM::factory('Role', array('name' => 'login'))) AND $user->password === $password)
 		{
@@ -93,24 +102,25 @@ class Kohana_Auth_ORM extends Auth {
 					'expires'    => time() + $this->_config['lifetime'],
 					'user_agent' => sha1(Request::$user_agent),
 				);
-
+				
 				// Create a new autologin token
 				$token = ORM::factory('User_Token')
 							->values($data)
 							->create();
-
+					
 				// Set the autologin cookie
 				Cookie::set('authautologin', $token->token, $this->_config['lifetime']);
 			}
-
+			
 			// Finish the login
 			$this->complete_login($user);
-
-			return TRUE;
+			return(TRUE);
 		}
-
-		// Login failed
-		return FALSE;
+		else
+		{
+			// Login failed
+			return(FALSE);
+		}
 	}
 
 	/**
@@ -124,11 +134,20 @@ class Kohana_Auth_ORM extends Auth {
 	{
 		if ( ! is_object($user))
 		{
-			$username = $user;
-
+			$email = $user;
+			
 			// Load the user
-			$user = ORM::factory('User');
-			$user->where($user->unique_key($username), '=', $username)->find();
+			$user = ORM::factory('Orm_User');
+			
+			// attempt to get use orm object via email
+			$user->where('email', '=', $email)->find();
+			if ( ! $user->loaded()) 
+			{
+				$username = $email;
+				
+				// attempt to get user via username
+				$user->where('username', '=', $username)->find();
+			}
 		}
 
 		if ($mark_session_as_forced === TRUE)
@@ -139,6 +158,8 @@ class Kohana_Auth_ORM extends Auth {
 
 		// Run the standard completion
 		$this->complete_login($user);
+		
+		return(TRUE);
 	}
 
 	/**
@@ -151,7 +172,7 @@ class Kohana_Auth_ORM extends Auth {
 		if ($token = Cookie::get('authautologin'))
 		{
 			// Load the token and user
-			$token = ORM::factory('User_Token', array('token' => $token));
+			$token = ORM::factory('Orm_User_Token', array('token' => $token));
 
 			if ($token->loaded() AND $token->user->loaded())
 			{
@@ -217,12 +238,12 @@ class Kohana_Auth_ORM extends Auth {
 			Cookie::delete('authautologin');
 
 			// Clear the autologin token from the database
-			$token = ORM::factory('User_Token', array('token' => $token));
+			$token = ORM::factory('Orm_User_Token', array('token' => $token));
 
 			if ($token->loaded() AND $logout_all)
 			{
 				// Delete all user tokens. This isn't the most elegant solution but does the job
-				$tokens = ORM::factory('User_Token')->where('user_id','=',$token->user_id)->find_all();
+				$tokens = ORM::factory('Orm_User_Token')->where('user_id','=',$token->user_id)->find_all();
 				
 				foreach ($tokens as $_token)
 				{
@@ -251,7 +272,7 @@ class Kohana_Auth_ORM extends Auth {
 			$username = $user;
 
 			// Load the user
-			$user = ORM::factory('User');
+			$user = ORM::factory('Orm_User');
 			$user->where($user->unique_key($username), '=', $username)->find();
 		}
 
@@ -267,8 +288,9 @@ class Kohana_Auth_ORM extends Auth {
 	 */
 	protected function complete_login($user)
 	{
-		$user->complete_login();
-
+		// decoupled complete login with this class. No longer useed
+		// $user->complete_login();
+		
 		return parent::complete_login($user);
 	}
 

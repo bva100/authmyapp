@@ -76,6 +76,17 @@ class Controller_Test extends Controller {
 		echo Debug::vars($user->facebook_id()); die;
 	}
 	
+	public function action_login()
+	{
+		$email = (string) get('email', 'brianvanderson@gmail.com');
+		$password = (string) get('password', 'dress0159');
+		
+		$auth = Factory_Authenticate::create( Auth::instance() );
+		$result = $auth->login($email, $password);
+		
+		echo Debug::vars($result); die;
+	}
+	
 	public function action_userAddOrg()
 	{
 		$org_id = (int) get('org_id', 2);

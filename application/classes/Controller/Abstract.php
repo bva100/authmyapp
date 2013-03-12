@@ -242,15 +242,12 @@ abstract class Controller_Abstract extends Controller_Template{
 			$this->template->fb_description = $this->template->meta_description;
 			
 			// scripts and styles
-			$this->template->jquery                 = 'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'; // perhaps dl this
+			$this->template->jquery                 = 'assets/js/jquery.js'; // perhaps dl this
 			$this->template->google_analytics       = 'assets/js/googleAnalytics.js';
 			$this->template->content                = '';
 			$this->template->bootstrap_css          = 'assets/bootstrap/css/bootstrap.min.css';
 			$this->template->bootstrap_js           = 'assets/bootstrap/js/bootstrap.min.js';
-			$this->template->templateJs             = 'assets/js/templates/templateJs.js'.self::$front_end_version;
-			$this->template->templateCss            = 'assets/css/templates/template.css'.self::$front_end_version;
 			
-			$this->template->navbar  = '';
 			$this->template->styles  = '';
 			$this->template->scripts = '';
 		}

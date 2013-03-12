@@ -158,8 +158,11 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 			throw new Exception('Password must be longer than 6 characters', 1);
 		}
 		
+		//hash password
+		$hashed_password = $hash_algo->hash($raw_password);
+		
 		// set password
-		$this->dao->password           = $hash_algo->hash($raw_password);
+		$this->dao->password           = $hashed_password;
 		$this->dao->password_hash_type = $hash_algo->name();
 		
 		//update

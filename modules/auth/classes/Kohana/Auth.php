@@ -163,7 +163,7 @@ abstract class Kohana_Auth extends Hash_Abstract {
 	{
 		if ( ! $this->_config['hash_key'])
 			throw new Kohana_Exception('A valid hash key must be set in your auth config.');
-
+		
 		return hash_hmac($this->_config['hash_method'], $str, $this->_config['hash_key']);
 	}
 

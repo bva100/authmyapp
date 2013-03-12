@@ -26,13 +26,13 @@
 	
 	<?php echo HTML::style($bootstrap_css) ?>
 	
-	
 </head>
 <body>
 
 	<?php echo $content ?>
 	
 	<div id="fb-root"></div>
+	
 </body>
 </html>
 
