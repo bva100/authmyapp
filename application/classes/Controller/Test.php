@@ -73,7 +73,7 @@ class Controller_Test extends Controller {
 		$user = Factory_Model::create($dao);
 		
 		$user->set_facebook_id($facebook_id);
-		echo Debug::vars($user->facebook_id()); die;
+		$this->response->body( $user->facebook_id() );
 	}
 	
 	public function action_login()
@@ -85,6 +85,34 @@ class Controller_Test extends Controller {
 		$result = $auth->login($email, $password);
 		
 		echo Debug::vars($result); die;
+	}
+	
+	public function action_forceLogin()
+	{
+		$email = (string) get('email', 'brianvanderson@gmail.com');
+		
+		$auth = Factory_Authenticate::create( Auth::instance() );
+		$result = $auth->force_login($email);
+		$this->response->body( $result );
+	}
+	
+	public function action_logout()
+	{
+		$auth = Factory_Authenticate::create( Auth::instance() );
+		$auth->logout();
+		$this->response->body('logged out');
+	}
+	
+	public function action_getUser()
+	{
+		$auth = Factory_Authenticate::create( Auth::instance() );
+		$dao_user = $auth->get_user();
+		if ( ! $dao_user ) 
+		{
+			die('not logged in');
+		}
+		$user = Factory_Model::create($dao_user);
+		$this->response->body($user->email());
 	}
 	
 	public function action_userAddOrg()
@@ -117,7 +145,7 @@ class Controller_Test extends Controller {
 		}
 		else
 		{
-			echo Debug::vars($org->name(), $org); die;
+			$this->response->body($org->name());
 		}
 	}
 	
@@ -134,7 +162,7 @@ class Controller_Test extends Controller {
 		}
 		else
 		{
-			echo Debug::vars($app->name(), $app); die;
+			$this->response->body($app->name());
 		}
 	}
 	
@@ -145,8 +173,42 @@ class Controller_Test extends Controller {
 		
 		$dao = Factory_Dao::create('kohana', 'app_user');
 		$app_user = Model_App_User::create_with_email_and_app_id($dao, $email, $app_id);
+		$this->response->body($app_user->email());
+	}
+	
+	public function action_facebook()
+	{
+		$facebook = Factory_Facebook::create();
 		
-		echo Debug::vars($app_user); die;
+		// get user via fb session
+		$fb_user = $facebook->getUser();
+		
+		if ($fb_user) {
+			try 
+			{
+				// Proceed knowing you have a logged in user who's authenticated.
+				$user_profile = $facebook->api('/me');
+				echo Debug::vars($user_profile); die;
+			} 
+			catch (FacebookApiException $e) 
+			{
+				error_log($e);
+				$fb_user = NULL;
+			}
+		}
+		
+		// Login or logout url will be needed depending on current user state.
+		if ($fb_user) 
+		{
+			$logoutUrl = $facebook->getLogoutUrl();
+			$this->response->body('you are currently logged into facebook. <a href="'.$logoutUrl.'">log out</a>');
+		}
+		else
+		{
+			$loginUrl = $facebook->getLoginUrl();
+			$this->response->body('you are not logged into facebook. <a href="'.$loginUrl.'">log in</a>');
+		}
+		
 	}
 	
 }

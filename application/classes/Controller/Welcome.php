@@ -18,5 +18,11 @@ class Controller_Welcome extends Controller_Abstract {
 	{
 		echo Debug::vars('login here'); die;
 	}
+	
+	public function action_connectWithFacebook()
+	{
+		
+		$this->redirect('connect_facebook?internal_app_id=0&dao_type=kohana', 302);
+	}
 
 } // End Welcome

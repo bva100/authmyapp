@@ -137,6 +137,70 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
+	 * set birthday
+	 *
+	 * @param int $birthday. Unix timestamp.
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_birthday($birthday, $lazy = FALSE)
+	{
+		if ( ! is_int($birthday) )
+		{
+			trigger_error('set_birthday expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->birthday = $birthday;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get birthday
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function birthday()
+	{
+		return( (int) $this->dao->birthday);
+	}
+	
+	/**
+	 * set timezone
+	 *
+	 * @param int $timezone. Offset.
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_timezone($timezone, $lazy = FALSE)
+	{
+		if ( ! is_int($timezone) )
+		{
+			trigger_error('set_timezone expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->timezone = $timezone;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get timezone
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function timezone()
+	{
+		return( (int) $this->dao->timezone);
+	}
+	
+	/**
 	 * Set password using a hash_algo object and a raw password string
 	 *
 	 * @param Hash_Base $hash_algo
