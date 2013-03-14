@@ -5,7 +5,7 @@
  *
  * @author BRIAN ANDERSON
  */
-abstract class Controller_Abstract extends Controller_Template{
+abstract class Controller_Abstract extends Controller_Template {
 	
 	/**
 	 * template name. Kohana needs this to be public.
@@ -50,6 +50,20 @@ abstract class Controller_Abstract extends Controller_Template{
 	protected $requires_admin;
 	
 	/**
+	 * Stylesheet base url
+	 *
+	 * @var string
+	 */
+	protected $stylesheet_base_url;
+	
+	/**
+	 * Javascript base url
+	 *
+	 * @var string
+	 */
+	protected $javascript_base_url;
+	
+	/**
 	 * set auth_object
 	 *
 	 * @param object $auth_object
@@ -87,10 +101,10 @@ abstract class Controller_Abstract extends Controller_Template{
 		if ( ! $user)
 		{
 			$auth = Factory_Authenticate::create( $this->auth_object );
-			$db_user = $auth->get_user();
-			if ($db_user) 
+			$dao_user = $auth->get_user();
+			if ($dao_user) 
 			{
-				$user = Factory_Model_User::create($db_user);
+				$user = Factory_Model::create($dao_user);
 			}
 			else
 			{
@@ -192,6 +206,93 @@ abstract class Controller_Abstract extends Controller_Template{
 	}
 	
 	/**
+	 * set stylesheet_base_url
+	 *
+	 * @param string $stylesheet_base_url
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_stylesheet_base_url($stylesheet_base_url)
+	{
+		if ( ! is_string($stylesheet_base_url) )
+		{
+			trigger_error('set_stylesheet_base_url expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->stylesheet_base_url = $stylesheet_base_url;
+	}
+	
+	/**
+	 * get stylesheet_base_url
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function stylesheet_base_url()
+	{
+		if ( ! isset($this->stylesheet_base_url)) 
+		{
+			$this->stylesheet_base_url = URL::base(TRUE).'assets/css/';
+		}
+		return($this->stylesheet_base_url);
+	}
+	
+	/**
+	 * Add a stylesheet
+	 *
+	 * @param string $stylesheet 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function add_css($stylesheet)
+	{
+		if ( ! is_string($stylesheet)) 
+		{
+			trigger_error('add_css expects argument 1, stylesheet, to be a string', E_USER_WARNING);
+		}
+		$this->template->stylesheets[] = $this->stylesheet_base_url().$stylesheet.'.css';
+	}
+	
+	/**
+	 * Set javascript base url
+	 *
+	 * @param string $javascript_base_url
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_javascript_base_url($javascript_base_url)
+	{
+		if ( ! is_string($javascript_base_url)) 
+		{
+			trigger_error('set_javascript_base_url expects argument 1, javascript_base_url to be string', E_USER_WARNING);
+		}
+		$this->javascript_base_url = $javascript_base_url;
+	}
+	
+	/**
+	 * get javascript_base_url
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function javascript_base_url()
+	{
+		if ( ! isset($this->javascript_base_url))
+		{
+			$this->javascript_base_url = URL::base(TRUE).'assets/js/';
+		}
+		return($this->javascript_base_url);
+	}
+	
+	public function add_js($javascript)
+	{
+		if ( ! is_string($javascript))
+		{
+			trigger_error('add_js expects argument 1, javascript, to be string', E_USER_WARNING);
+		}
+		$this->template->scripts[] = $this->javascript_base_url().$javascript.'.js';
+	}
+	
+	/**
 	 * abstract's before method
 	 *
 	 * @return void
@@ -200,10 +301,10 @@ abstract class Controller_Abstract extends Controller_Template{
 	public function before()
 	{
 		// set template
-		$this->template = "templates/default";
+		$this->template = 'templates/default';
 		
 		// set front end version
-		self::$front_end_version = "?v=1";
+		self::$front_end_version = '?v=1';
 		
 		// run controller before
 		parent::before();
@@ -241,16 +342,14 @@ abstract class Controller_Abstract extends Controller_Template{
 			$this->template->fb_img         = ''; // use a non ssl service
 			$this->template->fb_description = $this->template->meta_description;
 			
-			// scripts and styles
-			$this->template->jquery                 = 'assets/js/jquery.js'; // perhaps dl this
-			$this->template->google_analytics       = 'assets/js/googleAnalytics.js';
-			$this->template->content                = '';
-			$this->template->bootstrap_css          = 'assets/bootstrap/css/bootstrap.min.css';
-			$this->template->bootstrap_js           = 'assets/bootstrap/js/bootstrap.min.js';
+			// styles
+			$this->template->stylesheets   = array();
+			$this->add_css('bootstrap/bootstrap.min');
 			
-			$this->template->styles  = '';
-			$this->template->scripts = '';
+			// scripts
+			$this->template->scripts = array();
+			$this->add_js('jquery');
+			$this->add_js('bootstrap/bootstrap.min');
 		}
 	}
-	
 }

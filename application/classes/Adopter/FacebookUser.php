@@ -76,7 +76,7 @@ class Adopter_FacebookUser {
 	/**
 	 * Insert given facebook data into user data
 	 *
-	 * @return void
+	 * @return self. Used for chaining with update() method;
 	 * @author BRIAN ANDERSON
 	 */
 	public function convert()
@@ -87,11 +87,11 @@ class Adopter_FacebookUser {
 		}
 		if (isset($this->fb_data['first_name']))
 		{
-			$this->user->set_first_name($this->fb_data['first_name'], TRUE)
+			$this->user->set_first_name($this->fb_data['first_name'], TRUE);
 		}
 		if (isset($this->fb_data['last_name'])) 
 		{
-			$this->user->set_last_name($this->fb_datap['last_name'], TRUE);
+			$this->user->set_last_name($this->fb_data['last_name'], TRUE);
 		}
 		if (isset($this->fb_data['birthday'])) 
 		{
@@ -99,20 +99,21 @@ class Adopter_FacebookUser {
 		}
 		if (isset($this->fb_data['gender'])) 
 		{
-			$this->user->set_gender(substr($fb_data['gender'], 0, 1), TRUE);
+			$this->user->set_gender(substr($this->fb_data['gender'], 0, 1), TRUE);
 		}
 		if (isset($this->fb_data['email']))
 		{
-			$this->user->set_email($email, TRUE);
+			$this->user->set_email($this->fb_data['email'], TRUE);
 		}
 		if (isset($this->fb_data['timezone']))
 		{
-			$this->user->set_timezone( (int) $this->fb_data['timezone'], TRUE)
+			$this->user->set_timezone( (int) $this->fb_data['timezone'], TRUE);
 		}
-		if (isset($this->fb_data['country_code'])) 
+		if (isset($this->fb_data['locale'])) 
 		{
-			$this->user->set_country_code(substr($this->fb_data['country_code'], 0, 1), TRUE);
+			$this->user->set_country_code(substr($this->fb_data['locale'], -2), TRUE);
 		}
+		return($this);
 	}
 	
 	/**

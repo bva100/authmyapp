@@ -10,7 +10,7 @@ class Controller_Welcome extends Controller_Abstract {
 
 	public function action_index()
 	{
-		$view = new View('welcome/index');
+		$view = new View('main/welcome/index');
 		$this->template->set('content', $view);
 	}
 	
@@ -21,8 +21,12 @@ class Controller_Welcome extends Controller_Abstract {
 	
 	public function action_connectWithFacebook()
 	{
+		$email = (string) get('email', '');
+		$first_name = (string ) get('first_name', '');
+		$last_name = (string) get('last_name', '');
+		$gender = (string) get('gender', '');
 		
-		$this->redirect('connect_facebook?internal_app_id=0&dao_type=kohana', 302);
+		echo Debug::vars(get_defined_vars()); die;
 	}
 
 } // End Welcome

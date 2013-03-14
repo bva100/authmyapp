@@ -20,6 +20,9 @@ interface Interface_Model_User
 	public function set_last_name($last_name, $lazy = FALSE);
 	public function last_name();
 	
+	public function set_picture($picture);
+	public function picture();
+	
 	public function set_password(Hash_Base $hash_algo, $raw_password, $lazy = FALSE);
 	public function set_rand_password(Hash_Base $hash_algo, $lazy = FALSE);
 	public function password();

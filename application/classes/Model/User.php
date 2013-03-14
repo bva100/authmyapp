@@ -277,6 +277,39 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
+	 * set picture
+	 *
+	 * @param string $picture
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_picture($picture, $lazy = FALSE)
+	{
+		if ( ! is_string($picture) )
+		{
+			trigger_error('set_picture expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->picture = $picture;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get picture
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function picture()
+	{
+		return($this->dao->picture);
+	}
+	
+	
+	/**
 	 * set facebook_id
 	 *
 	 * @param float $facebook_id (not forced)
@@ -378,7 +411,7 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	 */
 	public function set_facebook_token_expires($timestamp, $lazy = FALSE)
 	{
-		if ( ! is_int($facebook_token_expires) )
+		if ( ! is_int($timestamp) )
 		{
 			trigger_error('set_facebook_token_expires expects argument 1 to be type int', E_USER_WARNING);
 		}

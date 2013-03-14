@@ -166,6 +166,16 @@ class Controller_Test extends Controller {
 		}
 	}
 	
+	public function action_appSecret()
+	{
+		$app_id = (int) get('app_id', 1);
+		
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		$app->set_secret();
+		$this->response->body('new secret is '.$app->secret());
+	}
+	
 	public function action_appUserCreate()
 	{
 		$email = (string) get('email', 'brian.anderson@ovooko.com');
@@ -209,6 +219,18 @@ class Controller_Test extends Controller {
 			$this->response->body('you are not logged into facebook. <a href="'.$loginUrl.'">log in</a>');
 		}
 		
+	}
+	
+	public function action_pic()
+	{
+		$facebook = Factory_Facebook::create();
+		$fb_user = $facebook->getUser();
+		if ( ! $fb_user ) 
+		{
+			echo '<a href="'.$facebook->getLoginUrl().'">Log In</a>';
+		}
+		$pic = 'https://graph.facebook.com/'.$fb_user.'/picture?width=300&height=300';
+		echo Debug::vars($pic); die;
 	}
 	
 }

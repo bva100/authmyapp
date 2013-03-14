@@ -24,7 +24,11 @@
 	
 	<link href="<?php echo URL::base(TRUE).Kohana_Request::detect_uri() ?>" rel="canonical" />
 	
-	<?php echo HTML::style($bootstrap_css) ?>
+	<?php if (isset($stylesheets)): ?>
+		<?php foreach ($stylesheets as $stylesheet): ?>
+			<?php echo HTML::style($stylesheet); ?>
+		<?php endforeach ?>
+	<?php endif ?>
 	
 </head>
 <body>
@@ -36,5 +40,8 @@
 </body>
 </html>
 
-<?php echo HTML::script($jquery) ?>
-<?php echo HTML::script($bootstrap_js) ?>
+<?php if (isset($scripts)): ?>
+	<?php foreach ($scripts as $script): ?>
+		<?php echo HTML::script($script) ?>
+	<?php endforeach ?>
+<?php endif ?>

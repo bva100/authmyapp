@@ -1,0 +1,30 @@
+.hero-unit {
+	margin-top: 70px;
+	text-align: center;
+}
+.hero-unit > .btn-large {
+	margin-top: 20px;
+}
+.hero-unit p {
+	margin-top: 10px;
+}
+hr {
+	margin-top: 35px;
+	margin-bottom: 35px;
+}
+#fire-icon {
+	position: relative;
+	top: -3px;
+}
+#drink-icon {
+	position: relative;
+	top: -2px;
+}
+#fish-icon {
+	position: relative;
+	top: -2px;
+	left: -2px;
+}
+.modal-body p {
+	font-size: 17px;
+}

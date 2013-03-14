@@ -1,478 +1,215 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Sender signup object. Used when enduser creates a new account with a client's app.
+ * Sender signup object. Used when app_user creates a new account with a client's app or wishes to sign in. Holds recently updated app and user objects.
  *
  * @author BRIAN ANDERSON
  */
 class Sender_Signup {
 	
 	/**
-	 * Holds a Model_Organization object
+	 * holds Model_App
 	 *
-	 * @var Model_Organization
+	 * @var Model_App
 	 */
-	private $organization;
+	private $app;
 	
 	/**
-	 * email
-	 *
-	 * @var string
-	 */
-	private $email;
-	
-	/**
-	 * first_name
+	 * Can be app_user or user for internal purposes
 	 *
 	 * @var string
 	 */
-	private $first_name;
+	private $app_user;
 	
 	/**
-	 * last name
+     * Type of connect used
 	 *
 	 * @var string
 	 */
-	private $last_name;
+	private $method;
 	
 	/**
-	 * gender
-	 *
-	 * @var string. one char representing either 'm'ale or 'f'emale
-	 */
-	private $gender;
-	
-	/**
-	 * Time user signed up for service
-	 *
-	 * @var unix. Unix timestamp
-	 */
-	private $signup_timestamp;
-	
-	/**
-	 * IP used on signup
+	 * access token associated with connect method
 	 *
 	 * @var string
 	 */
-	private $ip;
+	private $access_token;
 	
 	/**
-	 * country code
-	 *
-	 * @var string
-	 */
-	private $country_code;
-	
-	/**
-	 * Employer name
-	 *
-	 * @var string
-	 */
-	private $employer_name;
-	
-	/**
-	 * Job title
-	 *
-	 * @var string
-	 */
-	private $job_title;
-	
-	/**
-	 * primary phone number
-	 *
-	 * @var string
-	 */
-	private $phone;
-	
-	/**
-	 * facebook_id
-	 *
-	 * @var float
-	 */
-	private $facebook_id;
-	
-	/**
-	 * facebook token
-	 *
-	 * @var string
-	 */
-	private $facebook_token;
-	
-	/**
-	 * facebook token expires
+	 * access token expiration
 	 *
 	 * @var int. unix timestamp.
 	 */
-	private $facebook_token_expires;
+	private $access_token_expires;
 	
 	/**
-	 * constructor
+	 * Constructor injects Model_App and Model_User/Model_App_User objects
 	 *
+	 * @param Model_App $app 
+	 * @param object $app_user 
 	 * @author BRIAN ANDERSON
 	 */
-	public function __construct()
+	public function __construct($method, Model_App $app, $app_user)
 	{
+		$this->set_app($app);
+		$this->set_app_user($app_user);
+		$this->set_method($method);
 	}
 	
 	/**
-	 * set email
+	 * set app
 	 *
-	 * @param string $email
+	 * @param Model_App $app
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_email($email)
+	public function set_app(Model_App $app)
 	{
-		if ( ! is_string($email) )
-		{
-			trigger_error('set_email expects argument 1 to be type string', E_USER_WARNING);
-		}
-		$this->email = $email;
+		$this->app = $app;
 	}
 	
 	/**
-	 * get email
+	 * get app
+	 *
+	 * @return Model_App object
+	 * @author BRIAN ANDERSON
+	 */
+	public function app()
+	{
+		return($this->dao->app);
+	}
+	
+	/**
+	 * set app_user
+	 *
+	 * @param object $app_user
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_app_user($app_user)
+	{
+		if ( ! is_object($app_user) )
+		{
+			trigger_error('set_app_user expects argument 1 to be type object', E_USER_WARNING);
+		}
+		$this->app_user = $app_user;
+	}
+	
+	/**
+	 * get app_user
+	 *
+	 * @return object
+	 * @author BRIAN ANDERSON
+	 */
+	public function app_user()
+	{
+		return($this->app_user);
+	}
+	
+	/**
+	 * set method
+	 *
+	 * @param string $method.
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_method($method)
+	{
+		if ( ! is_string($method) )
+		{
+			trigger_error('set_method expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->method = $method;
+	}
+	
+	/**
+	 * get method
 	 *
 	 * @return string
 	 * @author BRIAN ANDERSON
 	 */
-	public function email()
+	public function method()
 	{
-		return($this->email);
+		return($this->method);
 	}
 	
 	/**
-	 * set first_name
+	 * set access_token
 	 *
-	 * @param string $first_name
+	 * @param string $access_token
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_first_name($first_name)
+	public function set_access_token($access_token)
 	{
-		if ( ! is_string($first_name) )
+		if ( ! is_string($access_token) )
 		{
-			trigger_error('set_first_name expects argument 1 to be type string', E_USER_WARNING);
+			trigger_error('set_access_token expects argument 1 to be type string', E_USER_WARNING);
 		}
-		$this->first_name = $first_name;
+		$this->access_token = $access_token;
 	}
 	
 	/**
-	 * get first_name
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function first_name()
-	{
-		return($this->first_name);
-	}
-	
-	/**
-	 * set last_name
-	 *
-	 * @param string $last_name
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_last_name($last_name)
-	{
-		if ( ! is_string($last_name) )
-		{
-			trigger_error('set_last_name expects argument 1 to be type string', E_USER_WARNING);
-		}
-		$this->last_name = $last_name;
-	}
-	
-	/**
-	 * get last_name
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function last_name()
-	{
-		return($this->last_name);
-	}
-	
-	/**
-	 * set gender
-	 *
-	 * @param string $gender
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_gender($gender)
-	{
-		if ( ! is_string($gender) )
-		{
-			trigger_error('set_gender expects argument 1 to be type string', E_USER_WARNING);
-		}
-		if (strlen($gender) > 1)
-		{
-			$gender = substr($gender, 0, 1);
-		}
-		if ($gender !== 'm' OR $gender !== 'f') 
-		{
-			trigger_error('set_gender expects argument 1, gender to be either "m" or "f" ', E_USER_WARNING);
-		}
-		$this->gender = $gender;
-	}
-	
-	/**
-	 * get gender
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function gender()
-	{
-		return($this->gender);
-	}
-	
-	/**
-	 * set signup_timestamp
-	 *
-	 * @param int $signup_timestamp. Unix timestamp.
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_signup_timestamp($signup_timestamp)
-	{
-		if ( ! is_int($signup_timestamp) )
-		{
-			trigger_error('set_signup_timestamp expects argument 1 to be type int', E_USER_WARNING);
-		}
-		$this->signup_timestamp = $signup_timestamp;
-	}
-	
-	/**
-	 * get signup_timestamp
+	 * get access_token
 	 *
 	 * @return int. Unix timestamp.
 	 * @author BRIAN ANDERSON
 	 */
-	public function signup_timestamp()
+	public function access_token()
 	{
-		return( (int) $this->signup_timestamp);
+		return($this->access_token);
 	}
 	
 	/**
-	 * set ip
+	 * set access_token_expires
 	 *
-	 * @param string $ip
+	 * @param int $access_token_expires
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_ip($ip)
+	public function set_access_token_expires($access_token_expires)
 	{
-		$valid = Valid::ip($ip);
-		if ( ! $valid) 
+		if ( ! is_int($access_token_expires) )
 		{
-			trigger_error('set_ip expects argument 1, ip, to be a valid IP', E_USER_WARNING);
+			trigger_error('set_access_token_expires expects argument 1 to be type int', E_USER_WARNING);
 		}
-		$this->ip = $ip;
+		$this->access_token_expires = $access_token_expires;
 	}
 	
 	/**
-	 * get ip
+	 * get access_token_expires
+	 *
+	 * @return int. Unix timestamp.
+	 * @author BRIAN ANDERSON
+	 */
+	public function access_token_expires()
+	{
+		return( (int) $this->access_token_expires);
+	}
+	
+	
+	/**
+	 * generate the redirect url string for this user
 	 *
 	 * @return string
 	 * @author BRIAN ANDERSON
 	 */
-	public function ip()
+	public function redirect_url()
 	{
-		return($this->ip);
+		$base_url = $this->app->redirect_url();
+		// user params. These can be more dynamic in the future
+		$user_params = 'email='.urlencode($this->app_user->email()).'&first_name='.urlencode($this->app_user->first_name()).'&last_name='.urlencode($this->app_user->last_name()).'&birthday='.urlencode($this->app_user->birthday()).'&picture='.urlencode($this->app_user->picture()).'&gender='.urlencode($this->app_user->gender()).'&ip='.urlencode($this->app_user->ip()).'&employer_name='.urlencode($this->app_user->employer_name()).'&job_title='.urlencode($this->app_user->job_title()).'&country_code='.urlencode($this->app_user->country_code()).'&timezone='.urlencode($this->app_user->timezone());
+		
+		// method params for data associated with connect method
+		$method_params = 'facebook_id='.urlencode($this->app_user->facebook_id()).'&method='.urlencode($this->method()).'&access_token='.urlencode($this->access_token()).'&token_expires='.urlencode($this->access_token_expires());
+		
+		return( $base_url.'?'.$user_params.'&'.$method_params );
 	}
 	
-	/**
-	 * set phone
-	 *
-	 * @param string $phone
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_phone($phone)
+	public function post()
 	{
-		$valid = Valid::phone($phone);
-		if ( ! $valid) 
-		{
-			trigger_error('set_phone expects argument 1, phone, to be a valid phone number', E_USER_WARNING);
-		}
-		$this->phone = $phone;
+		$request = Request::factory($this->app->redirect_url());
+		$response = $request->execute();
 	}
 	
-	/**
-	 * get phone
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function phone()
-	{
-		return($this->phone);
-	}
-	
-	/**
-	 * set country_code
-	 *
-	 * @param string $country_code
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_country_code($country_code)
-	{
-		if ( ! is_string($country_code) )
-		{
-			trigger_error('set_country_code expects argument 1 to be type string', E_USER_WARNING);
-		}
-		if (strlen($country_code) > 2) 
-		{
-			trigger_error('set_country_code expects argument 1, country_code, to be string with a length of 2', E_USER_WARNING);
-		}
-		$this->country_code = $country_code;
-	}
-	
-	/**
-	 * get country_code
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function country_code()
-	{
-		return($this->country_code);
-	}
-	
-	/**
-	 * set employer_name
-	 *
-	 * @param string $employer_name
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_employer_name($employer_name)
-	{
-		if ( ! is_string($employer_name) )
-		{
-			trigger_error('set_employer_name expects argument 1 to be type string', E_USER_WARNING);
-		}
-		$this->employer_name = $employer_name;
-	}
-	
-	/**
-	 * get employer_name
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function employer_name()
-	{
-		return($this->employer_name);
-	}
-	
-	/**
-	 * set job_title
-	 *
-	 * @param string $job_title
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_job_title($job_title)
-	{
-		if ( ! is_string($job_title) )
-		{
-			trigger_error('set_job_title expects argument 1 to be type string', E_USER_WARNING);
-		}
-		$this->job_title = $job_title;
-	}
-	
-	/**
-	 * get job_title
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function job_title()
-	{
-		return($this->job_title);
-	}
-	
-	
-	/**
-	 * set facebook_id
-	 *
-	 * @param float $facebook_id
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_facebook_id($facebook_id)
-	{
-		$this->facebook_id = $facebook_id;
-	}
-	
-	/**
-	 * get facebook_id
-	 *
-	 * @return int
-	 * @author BRIAN ANDERSON
-	 */
-	public function facebook_id()
-	{
-		return($this->facebook_id);
-	}
-	
-	/**
-	 * set facebook_token
-	 *
-	 * @param string $facebook_token
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_facebook_token($facebook_token)
-	{
-		if ( ! is_string($facebook_token) )
-		{
-			trigger_error('set_facebook_token expects argument 1 to be type string', E_USER_WARNING);
-		}
-		$this->facebook_token = $facebook_token;
-	}
-	
-	/**
-	 * get facebook_token
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function facebook_token()
-	{
-		return($this->facebook_token);
-	}
-	
-	/**
-	 * set facebook_token_expires
-	 *
-	 * @param string $facebook_token_expires
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_facebook_token_expires($facebook_token_expires)
-	{
-		if ( ! is_object($facebook_token_expires) )
-		{
-			trigger_error('set_facebook_token_expires expects argument 1 to be type object', E_USER_WARNING);
-		}
-		$this->facebook_token_expires = $facebook_token_expires;
-	}
-	
-	/**
-	 * get facebook_token_expires
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function facebook_token_expires()
-	{
-		return($this->facebook_token_expires);
-	}
 }

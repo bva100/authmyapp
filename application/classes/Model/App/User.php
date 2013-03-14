@@ -129,6 +129,38 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	}
 	
 	/**
+	 * set picture
+	 *
+	 * @param string $picture
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_picture($picture, $lazy = FALSE)
+	{
+		if ( ! is_string($picture) )
+		{
+			trigger_error('set_picture expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->picture = $picture;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get picture
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function picture()
+	{
+		return($this->dao->picture);
+	}
+	
+	/**
 	 * set first_name
 	 *
 	 * @param string $first_name
@@ -257,20 +289,20 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	}
 	
 	/**
-	 * set company_name
+	 * set employer_name
 	 *
-	 * @param string $company_name
+	 * @param string $employer_name
 	 * @param bool $lazy
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_company_name($company_name, $lazy = FALSE)
+	public function set_employer_name($employer_name, $lazy = FALSE)
 	{
-		if ( ! is_string($company_name) )
+		if ( ! is_string($employer_name) )
 		{
-			trigger_error('set_company_name expects argument 1 to be type string', E_USER_WARNING);
+			trigger_error('set_employer_name expects argument 1 to be type string', E_USER_WARNING);
 		}
-		$this->dao->company_name = $company_name;
+		$this->dao->employer_name = $employer_name;
 		if ( ! $lazy)
 		{
 			$this->db_update();
@@ -278,14 +310,14 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	}
 	
 	/**
-	 * get company_name
+	 * get employer_name
 	 *
 	 * @return string
 	 * @author BRIAN ANDERSON
 	 */
-	public function company_name()
+	public function employer_name()
 	{
-		return($this->dao->company_name);
+		return($this->dao->employer_name);
 	}
 	
 	/**
@@ -375,6 +407,18 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	}
 	
 	/**
+	 * get country_code
+	 *
+	 * @return string. 2 char version of country.
+	 * @author BRIAN ANDERSON
+	 */
+	public function country_code()
+	{
+		return($this->dao->country_code);
+	}
+	
+	
+	/**
 	 * set gender
 	 *
 	 * @param string $gender
@@ -440,10 +484,11 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		return($this->dao->ip);
 	}
 	
-	 * set facebook_id
+	/**
+	 * Set facebook_id
 	 *
-	 * @param float $facebook_id (not forced)
-	 * @param bool $lazy
+	 * @param int| float $facebook_id 
+	 * @param bool $lazy 
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
@@ -541,7 +586,7 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	 */
 	public function set_facebook_token_expires($timestamp, $lazy = FALSE)
 	{
-		if ( ! is_int($facebook_token_expires) )
+		if ( ! is_int($timestamp) )
 		{
 			trigger_error('set_facebook_token_expires expects argument 1 to be type int', E_USER_WARNING);
 		}

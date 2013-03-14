@@ -20,12 +20,15 @@ interface Interface_Model_App_User
 	public function set_email($email, $lazy = FALSE);
 	public function email();
 	
-	public function set_company_name($company_name, $lazy = FALSE);
-	public function company_name();
+	public function set_picture($picture);
+	public function picture();
+	
+	public function set_employer_name($employer_name, $lazy = FALSE);
+	public function employer_name();
 	public function set_job_title($job_title, $lazy = FALSE);
 	public function job_title();
 	
-	public function set_phone();
+	public function set_phone($phone, $lazy = FALSE);
 	public function phone();
 	
 	public function set_country_code($country_code, $lazy = FALSE);

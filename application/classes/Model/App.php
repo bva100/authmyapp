@@ -68,6 +68,15 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		return self::create_with_name_and_organization_id($dao, NULL, NULL);
 	}
 	
+	/**
+	 * Does this app already exit?
+	 *
+	 * @param Dao_Abstract $dao 
+	 * @param string $name 
+	 * @param int $organization_id 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
 	public static function exists(Dao_Abstract $dao, $name, $organization_id)
 	{
 		if ($dao->loaded()) 
@@ -94,6 +103,66 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			return(FALSE);
 		}
+	}
+	
+	/**
+	 * set secret
+	 *
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_secret($lazy = FALSE)
+	{
+		$secret = md5(uniqid(mt_rand(), TRUE));
+		$this->dao->secret = $secret;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get secret
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function secret()
+	{
+		return($this->dao->secret);
+	}
+	
+	/**
+	 * set organization_id
+	 *
+	 * @param int $organization_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_organization_id($organization_id, $lazy = FALSE)
+	{
+		if ( ! is_int($organization_id) )
+		{
+			trigger_error('set_organization_id expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->organization_id = $organization_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get organizaton_id
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function organization_id()
+	{
+		return( (int) $this->dao->organization_id);
 	}
 	
 	/**
@@ -129,20 +198,20 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * set organization_id
+	 * set redirect_url
 	 *
-	 * @param int $organization_id
+	 * @param string $redirect_url
 	 * @param bool $lazy
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_organization_id($organization_id, $lazy = FALSE)
+	public function set_redirect_url($redirect_url, $lazy = FALSE)
 	{
-		if ( ! is_int($organization_id) )
+		if ( ! is_string($redirect_url) )
 		{
-			trigger_error('set_organization_id expects argument 1 to be type int', E_USER_WARNING);
+			trigger_error('set_redirect_url expects argument 1 to be type string', E_USER_WARNING);
 		}
-		$this->dao->organization_id = $organization_id;
+		$this->dao->redirect_url = $redirect_url;
 		if ( ! $lazy)
 		{
 			$this->db_update();
@@ -150,13 +219,197 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * get organizaton_id
+	 * get redirect_url
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function redirect_url()
+	{
+		return($this->dao->redirect_url);
+	}
+	
+	/**
+	 * set delivery_method
+	 *
+	 * @param string $delivery_method
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_delivery_method($delivery_method, $lazy = FALSE)
+	{
+		if ( $delivery_method !== 'post' OR $delivery_method !== 'get') 
+		{
+			trigger_error('delivery method must be either "post" or "get"', E_USER_WARNING);
+		}
+		$this->dao->delivery_method = $delivery_method;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * set picture_width
+	 *
+	 * @param int $picture_width
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_picture_width($picture_width, $lazy = FALSE)
+	{
+		if ( ! is_int($picture_width) )
+		{
+			trigger_error('set_picture_width expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->picture_width = $picture_width;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get picture_width
 	 *
 	 * @return int
 	 * @author BRIAN ANDERSON
 	 */
-	public function organization_id()
+	public function picture_width()
 	{
-		return( (int) $this->dao->organization_id);
+		return( (int) $this->dao->picture_width);
 	}
+	
+	/**
+	 * set picture_height
+	 *
+	 * @param int $picture_height
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_picture_height($picture_height, $lazy = FALSE)
+	{
+		if ( ! is_int($picture_height) )
+		{
+			trigger_error('set_picture_height expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->picture_height = $picture_height;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get picture_height
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function picture_height()
+	{
+		return( (int) $this->dao->picture_height);
+	}
+	
+	/**
+	 * get delivery_method
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function delivery_method()
+	{
+		return($this->dao->delivery_method);
+	}
+	
+	
+	/**
+	 * get message
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function message()
+	{
+		return($this->dao->message);
+	}
+	
+	
+	/**
+	 * set facebook_app_id
+	 *
+	 * @param int| float $facebook_app_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_facebook_app_id($facebook_app_id, $lazy = FALSE)
+	{
+		$this->dao->facebook_app_id = $facebook_app_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get facebook_app_id
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function facebook_app_id()
+	{
+		return($this->dao->facebook_app_id);
+	}
+	
+	/**
+	 * set facebook_secret
+	 *
+	 * @param string $facebook_secret
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_facebook_secret($facebook_secret, $lazy = FALSE)
+	{
+		if ( ! is_string($facebook_secret) )
+		{
+			trigger_error('set_facebook_secret expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->facebook_secret = $facebook_secret;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get facebook_secret
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function facebook_secret()
+	{
+		return($this->dao->facebook_secret);
+	}
+	
+	/**
+	 * returns an array used to initialize facebook sdk object
+	 *
+	 * @return array. "appId" and "secret"
+	 * @author BRIAN ANDERSON
+	 */
+	public function facebook_config()
+	{
+ 		return array(
+			'appId' => $this->facebook_app_id(),
+			'secret' => $this->facebook_secret(),
+		);
+	}
+	
 }
