@@ -86,14 +86,23 @@
 					<div class='span5'>
 						<h2>Super Fast Setup</h2>
 						<p>
-							Get all of the power of Facebook connect with none of the headaches. Create an account and start accepting new signups in minutes.
+							Get all of the power of Facebook connect with none of the headaches. Create an account in minutes and start accepting new signups today.
 						</p>
 					</div><!-- .span5 -->
 				</div><!-- .row -->
 			</div><!-- .span6 -->
 			
 		</div><!-- .row -->
-	
+		
+		<!-- hr drop -->
+		<div class='row'>
+			<div class='span12'>
+				<img src="assets/img/hr-drop.png" width="1000" height="10" alt="Facebook Connect Simplified">
+			</div><!-- .span12 -->
+		</div><!-- .row -->
+		
+		
+		
 	</div><!-- .container -->
 	
 </div><!-- .core-features -->

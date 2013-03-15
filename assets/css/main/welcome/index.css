@@ -2,7 +2,7 @@ body {
 	font-family: Gotham, helvetica, sans-serif;
 }
 .top-wrapper {
-	background: url(/assets/img/over_the_bridge.jpg) no-repeat center 60% fixed; 
+	background: url(/assets/img/over_the_bridge_blur.png) no-repeat center 60% fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
