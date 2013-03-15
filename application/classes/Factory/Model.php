@@ -16,7 +16,7 @@ class Factory_Model extends Factory_Abstract {
 	 */
 	static public function create(Dao_Abstract $dao = NULL)
 	{
-		$model_name = 'Model_'.ucfirst( Inflector::singular( $dao->table_name() ) );
+		$model_name = 'Model_'.ucwords( Inflector::singular( $dao->table_name() ) );
 		return( new $model_name( $dao ) );
 	}
 	
