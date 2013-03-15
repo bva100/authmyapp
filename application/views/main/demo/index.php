@@ -6,11 +6,11 @@
 <div class="modal fade" id="intro-modal">
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
-		<h3>Best Widgets Ever demo</h3>
+		<h3>Example Company demo</h3>
 	</div>
 	<div class="modal-body">
 		<p>
-			You've landed on the Best Ever Widget's website and have decide to signup for their service. Click the Connect with Auth My App button to continue this demo.
+			You've landed on the Example Company website and have decide to signup for their service. Click the Connect with Auth My App button to continue this demo.
 		</p>
 	</div>
 	<div class="modal-footer">
@@ -23,9 +23,9 @@
 	<div class='row'>
 		<div class='span12'>
 			<div class='hero-unit'>
-				<h1>Best Widgets Ever</h1>
+				<h1>Example Company</h1>
 				<p>
-					It's surprisingly simple to get high quality widgets delivered to your front door.
+					It's surprisingly simple to get high quality products delivered to your front door.
 					<br />
 					Sign up now for a free account with just <i>one very simple click</i>!
 				</p>
@@ -74,7 +74,7 @@
 		
 		<div class='span12'>
 			<h2>
-				Best widgets ever. <span class='muted'>It'll really blow your mind.</span> <a href='/connect_facebook?app_id=2'>Get started now.</a>
+				Best service ever. <span class='muted'>It'll really blow your mind.</span> <a href='/connect_facebook?app_id=2'>Get started now.</a>
 			</h2>
 		</div><!-- .span8 -->
 		

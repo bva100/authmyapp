@@ -1,0 +1,22 @@
+.top-header {
+	text-align: center;
+}
+.container {
+	margin-top: 70px;
+}
+#profile-pic {
+	margin-top: 10px;
+	border: 1px solid #bbb;
+	border-radius: 3px;
+}
+#datepicker {
+	margin-top: 20px;
+}
+#btn-profile {
+	margin-left: 60px;
+}
+#btn-close {
+}
+.btn-cta {
+	padding: 15px 30px;
+}

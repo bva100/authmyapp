@@ -36,6 +36,7 @@ class Controller_Demo extends Controller_Abstract {
 		$ip           = (string) get('ip', '');
 		$country_code = (string) get('country_code', '');
 		$facebook_id  = (string) get('facebook_id', '');
+		$method       = (string) get('method', '');
 		
 		$view = new View('main/demo/connect');
 		$view->header = new View('main/demo/header');
@@ -48,10 +49,42 @@ class Controller_Demo extends Controller_Abstract {
 		$view->ip           = $ip;
 		$view->country_code = $country_code;
 		$view->facebook_id  = $facebook_id;
+		$view->method       = $method;
 		
 		$this->template->set('content', $view);
 		$this->add_css('main/demo/connect');
 		$this->add_js('main/demo/connect');
+	}
+	
+	public function action_app()
+	{
+		$email        = (string) post('email', '');
+		$first_name   = (string) post('first_name', '');
+		$last_name    = (string) post('last_name', '');
+		$picture      = (string) post('picture', '');
+		$birthday     = (string) post('birthday', 0);
+		$gender       = (string) post('gender', '');
+		$ip           = (string) post('ip', '');
+		$country_code = (string) post('country_code', '');
+		$facebook_id  = (string) post('facebook_id', '');
+		$method       = (string) post('method', '');
+		
+		$view = new View('main/demo/app');
+		$view->header = new View('main/demo/header');
+		$view->email        = $email;
+		$view->first_name   = $first_name;
+		$view->last_name    = $last_name;
+		$view->picture      = $picture;
+		$view->birthday     = $birthday;
+		$view->gender       = $gender;
+		$view->ip           = $ip;
+		$view->country_code = $country_code;
+		$view->facebook_id  = $facebook_id;
+		$view->method       = $method;
+		
+		$this->template->set('content', $view);
+		$this->add_css('main/demo/app');
+		$this->add_js('main/demo/app');
 	}
 	
 	

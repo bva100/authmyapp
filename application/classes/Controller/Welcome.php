@@ -11,22 +11,14 @@ class Controller_Welcome extends Controller_Abstract {
 	public function action_index()
 	{
 		$view = new View('main/welcome/index');
+		$view->header = new View('main/welcome/header');
 		$this->template->set('content', $view);
+		$this->add_css('main/welcome/index');
 	}
 	
 	public function action_login()
 	{
 		echo Debug::vars('login here'); die;
-	}
-	
-	public function action_connectWithFacebook()
-	{
-		$email = (string) get('email', '');
-		$first_name = (string ) get('first_name', '');
-		$last_name = (string) get('last_name', '');
-		$gender = (string) get('gender', '');
-		
-		echo Debug::vars(get_defined_vars()); die;
 	}
 
 } // End Welcome

@@ -1,12 +1,14 @@
+<?php defined('SYSPATH') or die('No direct script access.');
+?>
+
 <div id="header">
 	<p class="header-message">
-		You now visiting the Best Widgets Ever demo <?php echo HTML::anchor("", "Close Demo", array('class' => 'btn btn-mini btn-demo')) ?>
+		You're now visiting the Example Company demo <?php echo HTML::anchor("", "Close Demo", array('class' => 'btn btn-mini btn-demo')) ?>
 	</p>
 </div>
 
 <style type="text/css" media="screen">
 	#header {
-/*		background-color: #f5f5f5;*/
 		background-color: #3a87ad;
 		position: fixed;
 		top: 0px;
