@@ -29,6 +29,38 @@ body {
 	-webkit-font-smoothing: antialiased;
 	font-weight: 500;
 }
+.btn-facebook {
+	background-color: hsl(221, 72%, 27%) !important;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1d4cb3", endColorstr="#133276");
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#1d4cb3), to(#133276));
+	background-image: -moz-linear-gradient(top, #1d4cb3, #133276);
+	background-image: -ms-linear-gradient(top, #1d4cb3, #133276);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1d4cb3), color-stop(100%, #133276));
+	background-image: -webkit-linear-gradient(top, #1d4cb3, #133276);
+	background-image: -o-linear-gradient(top, #1d4cb3, #133276);
+	background-image: linear-gradient(#1d4cb3, #133276);
+	border-color: #133276 #133276 hsl(221, 72%, 23.5%);
+	color: #fff !important;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.23);
+	-webkit-font-smoothing: antialiased;
+}
+.btn-demo {
+	background-color: hsl(2, 88%, 29%) !important;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e1150e", endColorstr="#8b0d08");
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#e1150e), to(#8b0d08));
+	background-image: -moz-linear-gradient(top, #e1150e, #8b0d08);
+	background-image: -ms-linear-gradient(top, #e1150e, #8b0d08);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e1150e), color-stop(100%, #8b0d08));
+	background-image: -webkit-linear-gradient(top, #e1150e, #8b0d08);
+	background-image: -o-linear-gradient(top, #e1150e, #8b0d08);
+	background-image: linear-gradient(#e1150e, #8b0d08);
+	border-color: #8b0d08 #8b0d08 hsl(2, 88%, 24.5%);
+	color: #fff !important;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.29);
+	-webkit-font-smoothing: antialiased;
+}
 .btn-cta {
 	font-size: 20px;
 	padding: 15px 0px;
@@ -47,6 +79,14 @@ body {
 	margin-bottom: 17px;
 	font-size: 22px;
 	letter-spacing: -1px;
+}
+#featurette-two {
+	font-size: 15px;
+	font-weight: 550;
+}
+#featurette-two p {
+	line-height: 22px;
+	color: #747170;
 }
 .core-features {
 	padding-top: 30px;
@@ -74,4 +114,65 @@ body {
 #setup-icon {
 	position: relative;
 	top: 3px;
+}
+.hr-drop {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+.hr-how-it-works {
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+.featurette-header {
+	font-size: 40px;
+}
+.featurette-header-bold {
+	color: #000000;
+}
+.featurette-header-small {
+	font-size: 32px;
+	margin: 0px;
+}
+.form-example-header {
+	text-align: center;
+	margin-bottom: 60px;
+}
+.form-example {
+	border-radius: 4px;
+	border: 1px solid #ddd;
+	background-color: #ffffff;
+	padding: 40px 20px;
+}
+#form-input-example {
+	margin-bottom: 60px;
+}
+#form-example-btn {
+	position: relative;
+	left: 329px;
+}
+#demo-header {
+	text-align: center;
+}
+#demo-btn {
+	width: 300px;
+	position: relative;
+	left: 330px;
+	margin-top: 30px;
+}
+.align-right {
+	text-align: right;
+}
+.core-features {
+	padding-bottom: 0px;
+}
+.bottom-band {
+	background-color: black;
+	background-color: rgba(53, 53, 53, .6);
+	color: white;
+	text-shadow: 0.1em 0.1em 0.05em #333;
+	text-align: center;
+	padding: 70px;
+}
+.bottom-band a {
+	margin: 30px;
 }

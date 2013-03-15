@@ -87,6 +87,10 @@ class Controller_Demo extends Controller_Abstract {
 		$this->add_js('main/demo/app');
 	}
 	
-	
+	public function action_form()
+	{
+		$view = new View('main/demo/form');
+		$this->template->set('content', $view);
+	}
 	
 }

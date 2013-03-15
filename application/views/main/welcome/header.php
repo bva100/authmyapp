@@ -16,6 +16,7 @@
 <style type="text/css" media="screen">
 	#header {
 		background-color: rgba(43, 43, 43, .8);
+		text-shadow: 0.1em 0.1em 0.05em #333;
 		position: fixed;
 		top: 0px;
 		z-index: 2;
