@@ -16,7 +16,10 @@ class Factory_Model extends Factory_Abstract {
 	 */
 	static public function create(Dao_Abstract $dao = NULL)
 	{
-		$model_name = 'Model_'.ucwords( Inflector::singular( $dao->table_name() ) );
+		$table = str_replace('_', ' ', $dao->table_name());
+		$table = Inflector::singular(ucwords($table));
+		$table = str_replace(' ', '_', $table);
+		$model_name = 'Model_'.$table;
 		return( new $model_name( $dao ) );
 	}
 	

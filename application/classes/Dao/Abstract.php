@@ -43,5 +43,4 @@ abstract class Dao_Abstract {
 	abstract public function offset($number);
 	
 	abstract public function table_name();
-	
 }
