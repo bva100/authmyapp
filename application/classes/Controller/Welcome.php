@@ -44,8 +44,8 @@ class Controller_Welcome extends Controller_Abstract {
 		$timezone               = (int) get('timezone', 0);
 		$facebook_id            = (string) get('facebook_id', '');
 		$method                 = (string) get('method', '');
-		$facebook_token         = (string ) get('access_token', '');
-		$security_code          = (string ) get('security_code', '');
+		$facebook_token         = (string) get('access_token', '');
+		$security_code          = (string) get('security_code', '');
 		$facebook_token_expires = (int) get('token_expires', 0);
 		if ($facebook_token_expires)
 		{

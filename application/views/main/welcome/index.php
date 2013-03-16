@@ -284,7 +284,7 @@
 		<div class='row'>
 			<div class='span12'>
 				<h2>Auth-My-App Simplifies Facebook Connect</h2>
-				<?php echo HTML::anchor("welcome/signup", "Get Started", array('class' => 'btn btn-large btn-blue btn-cta')) ?>
+				<?php echo HTML::anchor("connect_facebook?app_id=1&security_code=".$security_code, "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
 			</div><!-- .span12 -->
 		</div><!-- .row -->
 	</div><!-- .container -->

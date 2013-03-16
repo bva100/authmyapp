@@ -4,29 +4,23 @@
 <div class='container container-signup hide'>
 	<div class='row'>
 		<div class='span12'>
-			<div class='hero-unit'>
-				<h1>
-					Redirecting to Facebook
-				</h1>
-				<p>
-			 		We are now re-directing you towards Facebook to simplify your sign up process.
-				</p>
-				<img src="/assets/img/loading.gif" width="58" height="58" alt="Loading" id='signup-loader'>
-				<div class='signup_security_code' data-security-code="<?php echo $security_code ?>"></div><!-- .hide -->
-			</div><!-- .hero-unit -->
+			<h2>
+				Create your Auth-My-App account
+			</h2>
+			<?php echo HTML::anchor("connect_facebook?app_id=1&security_code=".$security_code, "Signup using Facebook", array('class' => 'btn btn-facebook btn-large btn-cta')) ?>
 		</div><!-- .span10 offset1 -->
 	</div><!-- .row -->
 </div><!-- .container -->
 
 <style type="text/css" media="screen">
+	body {
+		background-image:url('/assets/img/checkboxes.png');
+	}
 	.container-signup {
-		margin-top: 70px;
+		margin-top: 150px;
 		text-align: center;
 	}
-	.container-signup p {
-		padding-top: 20px;
-		padding-bottom: 20px;
-		font-size: 22px;
-		font-weight: 490;
+	.container-signup h2 {
+		margin-bottom: 40px;
 	}
 </style>
