@@ -206,6 +206,30 @@ abstract class Controller_Abstract extends Controller_Template {
 	}
 	
 	/**
+	 * Checks for a pre-existing session or an auto login cookie and redirects
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	protected function auto_login()
+	{
+		// if user already has a session, auto login
+		$auth = Factory_Authenticate::create( $this->auth_object );
+		$response = $auth->logged_in();
+		if ($response) 
+		{
+			$this->redirect('base', 302);
+		}
+		
+		// check for auto auth cookie
+		$response = $auth->auto_login();
+		if ($response) 
+		{
+			$this->redirect('base', 302);
+		}
+	}
+	
+	/**
 	 * set stylesheet_base_url
 	 *
 	 * @param string $stylesheet_base_url

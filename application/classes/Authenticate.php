@@ -89,6 +89,26 @@ class Authenticate {
 	}
 	
 	/**
+	 * Attempts to automatically log a user in with a cookie system
+	 *
+	 * @return object | bool. Returns a db_user object on success and bool FALSE if failed
+	 * @author BRIAN ANDERSON
+	 */
+	public function auto_login()
+	{
+		$result = $this->auth_object->auto_login();
+		if ($result) 
+		{
+			$this->record_login();
+			return(TRUE);
+		}
+		else
+		{
+			return(FALSE);
+		}
+	}
+	
+	/**
 	 * Forces a user login without a password
 	 *
 	 * @param string $email 

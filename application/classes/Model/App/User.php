@@ -417,7 +417,6 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		return($this->dao->country_code);
 	}
 	
-	
 	/**
 	 * set gender
 	 *

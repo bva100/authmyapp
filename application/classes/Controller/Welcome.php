@@ -10,7 +10,7 @@ class Controller_Welcome extends Controller_Abstract {
 
 	public function action_index()
 	{
-		session_unset();
+		$this->auto_login();
 		$security_code = MD5(uniqid(mt_rand(), TRUE));
 		Session::instance()->set('original_security_code', $security_code);
 		
@@ -19,6 +19,7 @@ class Controller_Welcome extends Controller_Abstract {
 		$view->footer = new View('footer');
 		$view->signup = new View('signup');
 		$view->signup->security_code = $security_code;
+		$view->security_code = $security_code;
 		$this->template->set('content', $view);
 		$this->add_css('main/welcome/index');
 		$this->add_js('signup');
@@ -26,6 +27,7 @@ class Controller_Welcome extends Controller_Abstract {
 	
 	public function action_login()
 	{
+		$this->auto_login();
 		echo Debug::vars('login here'); die;
 	}
 	
@@ -35,10 +37,11 @@ class Controller_Welcome extends Controller_Abstract {
 		$first_name             = (string) get('first_name', '');
 		$last_name              = (string) get('last_name', '');
 		$picture                = (string) get('picture', '');
-		$birthday               = (string) get('birthday', 0);
+		$birthday               = (string) get('birthday', '');
 		$gender                 = (string) get('gender', '');
 		$ip                     = (string) get('ip', '');
 		$country_code           = (string) get('country_code', '');
+		$timezone               = (int) get('timezone', 0);
 		$facebook_id            = (string) get('facebook_id', '');
 		$method                 = (string) get('method', '');
 		$facebook_token         = (string ) get('access_token', '');
@@ -55,7 +58,7 @@ class Controller_Welcome extends Controller_Abstract {
 			throw new Exception('Access Denied. Please try again by clicking <a href="'.URL::base(TRUE).'">here</a>', 1); die;
 		}
 		
-		// does user already exist in system?
+		// does user with given facebook_id already exist in system?
 		$dao = Factory_Dao::create('kohana', 'user')->where('facebook_id', '=', $facebook_id)->find();
 		if ($dao->loaded()) 
 		{
@@ -92,9 +95,14 @@ class Controller_Welcome extends Controller_Abstract {
 			{
 				$user->set_country_code($country_code, TRUE);
 			}
+			if ($timezone) 
+			{
+				$user->set_timezone($timezone, TRUE);
+			}
 			if ($facebook_token) 
 			{
 				$user->set_facebook_token($facebook_token, TRUE);
+				$user->set_facebook_token_created(time(), TRUE);
 			}
 			if ($facebook_token_expires) 
 			{
@@ -102,8 +110,9 @@ class Controller_Welcome extends Controller_Abstract {
 			}
 			$user->db_update();
 			
-			// login
+			// login and redirect
 			$auth->force_login( $user->email() );
+			$this->redirect('base', 302);
 		}
 		
 		//check for email

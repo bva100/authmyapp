@@ -28,6 +28,24 @@ interface Interface_Model_User
 	public function password();
 	public function password_hash_type();
 	
+	public function set_birthday($birthday);
+	public function birthday();
+	
+	public function set_gender($gender, $lazy = FALSE);
+	public function gender();
+	
+	public function set_country_code($country_code);
+	public function country_code();
+	
+	public function set_timezone($timezone);
+	public function timezone();
+	
+	public function set_ip($ip);
+	public function ip();
+	
+	public function login_count();
+	public function last_login();
+	
 	public function set_facebook_id($facebook_id, $lazy = FALSE);
 	public function facebook_id();
 	public function set_facebook_token($facebook_token, $lazy = FALSE);
@@ -36,12 +54,6 @@ interface Interface_Model_User
 	public function facebook_token_created();
 	public function set_facebook_token_expires($timestamp, $lazy = FALSE);
 	public function facebook_token_expires();
-	
-	public function login_count();
-	public function last_login();
-	
-	public function set_gender($gender, $lazy = FALSE);
-	public function gender();
 	
 	public function add_role($role_name);
 	public function remove_role($role_name);

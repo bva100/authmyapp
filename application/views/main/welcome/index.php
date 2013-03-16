@@ -15,7 +15,7 @@
 					<p>
 						Connect your app or website to Facebook and simplify your user signup process.
 					</p>
-					<?php echo HTML::anchor("welcome/signup", "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
+					<?php echo HTML::anchor("connect_facebook?app_id=2&security_code=".$security_code, "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
 				</div><!-- .hero-unit -->
 			</div><!-- .span12 -->
 		</div><!-- .row -->
@@ -226,10 +226,10 @@
 					Step Two.
 				</h3>
 				<h3 class='featurette-header-small'>
-					Redirect new sign ups to Auth-My-App.
+					Redirect new sign ups to Auth-My-App
 				</h3>
 				<h3 class='featurette-header-small muted'>
- 					Find the button that does this for you <?php echo HTML::anchor("tutorial/article?create-a-redirect-button", "here.") ?>
+ 					Find the button that does this for you <?php echo HTML::anchor("tutorial/article?create-a-redirect-button", "here") ?>
 				</h3>
 			</div><!-- .span -->
 		</div><!-- .row -->
@@ -243,10 +243,10 @@
 					Step Three.
 				</h3>
 				<h3 class='featurette-header-small'>
-					Receive the sign up data and create a new user.
+					Receive the sign up data and create a new user
 				</h3>
 				<h3 class='featurette-header-small muted'>
-					We already wrote all the nerdy scripts for you <?php echo HTML::anchor("tutorial/article?create-a-new-user-with-php", "here.") ?>
+					We already wrote all the nerdy scripts for you <?php echo HTML::anchor("tutorial/article?create-a-new-user-with-php", "here") ?>
 				</h3>
 			</div><!-- .span12 -->
 		</div><!-- .row -->

@@ -201,6 +201,39 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
+	 * set ip
+	 *
+	 * @param string $ip
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_ip($ip, $lazy = FALSE)
+	{
+		$valid = Valid::ip($ip);
+		if ( ! $valid) 
+		{
+			throw new Exception('Invalid IP address. Please try again soon.');
+		}
+		$this->dao->ip = $ip;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get ip
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function ip()
+	{
+		return($this->dao->ip);
+	}
+	
+	/**
 	 * Set password using a hash_algo object and a raw password string
 	 *
 	 * @param Hash_Base $hash_algo
@@ -486,6 +519,38 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	public function gender()
 	{
 		return($this->dao->gender);
+	}
+	
+	/**
+	 * set country_code
+	 *
+	 * @param string $country_code
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_country_code($country_code, $lazy = FALSE)
+	{
+		if ( ! is_string($country_code) OR strlen($country_code) !== 2)
+		{
+			trigger_error('set_country_code expects argument 1 to be type string and have a length of 2', E_USER_WARNING);
+		}
+		$this->dao->country_code = $country_code;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get country_code
+	 *
+	 * @return string. 2 char version of country.
+	 * @author BRIAN ANDERSON
+	 */
+	public function country_code()
+	{
+		return($this->dao->country_code);
 	}
 	
 	/**

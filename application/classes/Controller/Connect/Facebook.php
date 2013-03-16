@@ -209,9 +209,17 @@ class Controller_Connect_Facebook extends Controller {
 			
 			$request  = Request::factory($token_url);
 			$response = $request->execute();
+			if ($response) 
+			{
+				$token_params = (string)$response;
+			}
+			else
+			{
+				throw new Exception('A Facebook error has occured. Please try again soon.', 1);
+			}
 			
 			// redirect to sender
-			$this->redirect('connect_facebook/sender?'.$response);
+			$this->redirect('connect_facebook/sender?'.$token_params);
 		}
 	}
 	
@@ -229,7 +237,7 @@ class Controller_Connect_Facebook extends Controller {
 		$app            = Factory_Model::create( Factory_Dao::create($dao_type, 'app', $app_id) );
 		$facebook       = Factory_Facebook::create(array('appId' => $this->app_id(), 'secret' => $this->secret()));
 		$facebook->setAccessToken($access_token);
-		$app_user_fb_data = $facebook->api('/me');
+		$app_user_fb_data = $facebook->api('/me', 'GET');
 		
 		// get app_user email
 		if ( ! isset($app_user_fb_data['email'])) 
