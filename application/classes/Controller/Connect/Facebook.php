@@ -141,14 +141,40 @@ class Controller_Connect_Facebook extends Controller {
 	 */
 	public function action_index()
 	{
-		$internal_app_id = (int) get('app_id', 1);
+		$security_code   = get('security_code', NULL);
+		$internal_app_id = (int)    get('app_id', 1);
+		$version         = (string) get('version', '');
 		$dao_type        = (string) get('dao_type', 'kohana');
 		
 		if ( ! isset($_REQUEST['code'])) 	// send to auth dialog
 		{
-			// set appId and secrete
+			// clear session variables
+			if (isset($_SESSION['code'])) 
+			{
+				unset($_SESSION['code']);
+			}
+			if (isset($_SESSION['fb_state'])) 
+			{
+				unset($_SESSION['fb_state']);
+			}
+			if (isset($_SESSION['internal_app_id'])) 
+			{
+				unset($_SESSION['internal_app_id']);
+			}
+			
+			// set appId and secret
 			$this->set_app_id_and_secret($internal_app_id, $dao_type);
-
+			
+			// set security code to session
+			if ( ! $security_code) 
+			{
+				throw new Exception('Access Denied. Security code not provided', 1);
+			}
+			else
+			{
+				Session::instance()->set('security_code', $security_code);
+			}
+			
 			// create state var and store into session
 			Session::instance()->set('fb_state', md5(uniqid(rand(), TRUE)));
 			

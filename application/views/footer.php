@@ -19,7 +19,8 @@
 	#footer {
 		width: 100%;
 		text-align: center;
-		padding: 30px;
+		padding: 30px 0px;
+		box-shadow:inset 0 0 20px #aaa;
 	}
 	#footer a {
 		font-size: 18px;
@@ -27,7 +28,7 @@
 		text-align: center;
 	}
 	.footer-social-btn {
-		margin-left: 20px;
+		margin-left: 5px;
 		margin-bottom: 4px;
 	}
 </style>

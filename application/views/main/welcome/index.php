@@ -15,7 +15,7 @@
 					<p>
 						Connect your app or website to Facebook and simplify your user signup process.
 					</p>
-					<?php echo HTML::anchor("welcome/signup", "Get Started", array('class' => 'btn btn-large btn-blue btn-cta')) ?>
+					<?php echo HTML::anchor("welcome/signup", "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
 				</div><!-- .hero-unit -->
 			</div><!-- .span12 -->
 		</div><!-- .row -->
@@ -292,3 +292,5 @@
 </div><!-- .bottom-signup -->
 
 <?php echo $footer ?>
+
+<?php echo $signup ?>

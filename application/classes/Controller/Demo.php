@@ -17,8 +17,12 @@ class Controller_Demo extends Controller_Abstract {
 	{
 		$this->template->title = 'Best Widgets Ever Demo';
 		
+		$security_code = md5(uniqid(mt_rand(), TRUE));
+		Session::instance()->set('original_security_code', $security_code);
+		
 		$view = new View('main/demo/index');
 		$view->header = new View('main/demo/header');
+		$view->security_code = $security_code;
 		$this->template->set('content', $view);
 		
 		$this->add_css('main/demo/index');
@@ -27,16 +31,23 @@ class Controller_Demo extends Controller_Abstract {
 	
 	public function action_connect()
 	{
-		$email        = (string) get('email', '');
-		$first_name   = (string) get('first_name', '');
-		$last_name    = (string) get('last_name', '');
-		$picture      = (string) get('picture', '');
-		$birthday     = (string) get('birthday', '');
-		$gender       = (string) get('gender', '');
-		$ip           = (string) get('ip', '');
-		$country_code = (string) get('country_code', '');
-		$facebook_id  = (string) get('facebook_id', '');
-		$method       = (string) get('method', '');
+		$email         = (string) get('email', '');
+		$first_name    = (string) get('first_name', '');
+		$last_name     = (string) get('last_name', '');
+		$picture       = (string) get('picture', '');
+		$birthday      = (string) get('birthday', '');
+		$gender        = (string) get('gender', '');
+		$ip            = (string) get('ip', '');
+		$country_code  = (string) get('country_code', '');
+		$facebook_id   = (string) get('facebook_id', '');
+		$method        = (string) get('method', '');
+		$security_code = (string) get('security_code', '');
+		
+		// check security code
+		if ($security_code !== Session::instance()->get('original_security_code', FALSE)) 
+		{
+			throw new Exception('Access Denied. Please try again by clicking <a href="demo">here</a>', 1);
+		}
 		
 		$view = new View('main/demo/connect');
 		$view->header = new View('main/demo/header');

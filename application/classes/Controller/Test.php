@@ -198,7 +198,7 @@ class Controller_Test extends Controller {
 			{
 				// Proceed knowing you have a logged in user who's authenticated.
 				$user_profile = $facebook->api('/me');
-				echo Debug::vars($user_profile); die;
+				echo Debug::vars($user_profile);
 			} 
 			catch (FacebookApiException $e) 
 			{
@@ -210,15 +210,27 @@ class Controller_Test extends Controller {
 		// Login or logout url will be needed depending on current user state.
 		if ($fb_user) 
 		{
-			$logoutUrl = $facebook->getLogoutUrl();
-			$this->response->body('you are currently logged into facebook. <a href="'.$logoutUrl.'">log out</a>');
+			$this->response->body('you are currently logged into facebook. <a href="'.$facebook->getLogoutUrl().'">log out</a>');
 		}
 		else
 		{
 			$loginUrl = $facebook->getLoginUrl();
 			$this->response->body('you are not logged into facebook. <a href="'.$loginUrl.'">log in</a>');
 		}
-		
+	}
+	
+	public function action_facebookLogout()
+	{
+		$facebook = Factory_Facebook::create();
+		$fb_user = $facebook->getUser();
+		if ($fb_user) 
+		{
+			echo '<a href="'.$facebook->getLoginUrl().'">log out</a>';
+		}
+		else
+		{
+			$this->response->body('Already logged out');
+		}
 	}
 	
 	public function action_pic()

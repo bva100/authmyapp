@@ -29,7 +29,7 @@
 					<br />
 					Sign up now for a free account with just <i>one very simple click</i>!
 				</p>
-				<?php echo HTML::anchor("connect_facebook?app_id=2", "Connect with Auth-My-App Facebook button", array('class' => 'btn btn-primary btn-large')) ?>
+				<?php echo HTML::anchor("connect_facebook?app_id=2&security_code=".$security_code, "Connect with Auth-My-App Facebook button", array('class' => 'btn btn-primary btn-large')) ?>
 			</div><!-- .hero-unit -->
 		</div><!-- .span12 -->
 	</div><!-- .row -->

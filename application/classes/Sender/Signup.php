@@ -197,13 +197,22 @@ class Sender_Signup {
 	public function redirect_url()
 	{
 		$base_url = $this->app->redirect_url();
+		
 		// user params. These can be more dynamic in the future
 		$user_params = 'email='.urlencode($this->app_user->email()).'&first_name='.urlencode($this->app_user->first_name()).'&last_name='.urlencode($this->app_user->last_name()).'&birthday='.urlencode($this->app_user->birthday()).'&picture='.urlencode($this->app_user->picture()).'&gender='.urlencode($this->app_user->gender()).'&ip='.urlencode($this->app_user->ip()).'&employer_name='.urlencode($this->app_user->employer_name()).'&job_title='.urlencode($this->app_user->job_title()).'&country_code='.urlencode($this->app_user->country_code()).'&timezone='.urlencode($this->app_user->timezone());
+		
+		// security params
+		$security_code = Session::instance()->get('security_code', FALSE);
+		if ( ! $security_code) 
+		{
+			throw new Exception('Access Denied. Please Supply a valid security code.', 1);
+		}
+		$security_params = '&security_code='.urlencode($security_code);
 		
 		// method params for data associated with connect method
 		$method_params = 'facebook_id='.urlencode($this->app_user->facebook_id()).'&method='.urlencode($this->method()).'&access_token='.urlencode($this->access_token()).'&token_expires='.urlencode($this->access_token_expires());
 		
-		return( $base_url.'?'.$user_params.'&'.$method_params );
+		return( $base_url.'?'.$user_params.'&'.$security_params.'&'.$method_params );
 	}
 	
 	public function post()
