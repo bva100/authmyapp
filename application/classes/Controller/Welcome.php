@@ -12,6 +12,7 @@ class Controller_Welcome extends Controller_Abstract {
 	{
 		$view = new View('main/welcome/index');
 		$view->header = new View('main/welcome/header');
+		$view->footer = new view('footer');
 		$this->template->set('content', $view);
 		$this->add_css('main/welcome/index');
 	}

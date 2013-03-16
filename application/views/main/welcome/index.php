@@ -291,4 +291,4 @@
 	
 </div><!-- .bottom-signup -->
 
-<?php //echo $footer ?>
+<?php echo $footer ?>
