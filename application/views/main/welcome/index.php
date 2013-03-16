@@ -15,7 +15,7 @@
 					<p>
 						Connect your app or website to Facebook and simplify your user signup process.
 					</p>
-					<?php echo HTML::anchor("connect_facebook?app_id=2&security_code=".$security_code, "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
+					<?php echo HTML::anchor("connect_facebook?app_id=1&security_code=".$security_code, "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
 				</div><!-- .hero-unit -->
 			</div><!-- .span12 -->
 		</div><!-- .row -->
