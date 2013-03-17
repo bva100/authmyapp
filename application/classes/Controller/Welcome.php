@@ -37,16 +37,16 @@ class Controller_Welcome extends Controller_Abstract {
 		$first_name             = (string) get('first_name', '');
 		$last_name              = (string) get('last_name', '');
 		$picture                = (string) get('picture', '');
-		$birthday               = (string) get('birthday', '');
+		$birthday               = (int)    get('birthday', '');
 		$gender                 = (string) get('gender', '');
 		$ip                     = (string) get('ip', '');
 		$country_code           = (string) get('country_code', '');
-		$timezone               = (int) get('timezone', 0);
+		$timezone               = (int)    get('timezone', 0);
 		$facebook_id            = (string) get('facebook_id', '');
 		$method                 = (string) get('method', '');
 		$facebook_token         = (string) get('access_token', '');
 		$security_code          = (string) get('security_code', '');
-		$facebook_token_expires = (int) get('token_expires', 0);
+		$facebook_token_expires = (int)    get('token_expires', 0);
 		if ($facebook_token_expires)
 		{
 			$facebook_token_expires = time() + $facebook_token_expires;
@@ -81,7 +81,7 @@ class Controller_Welcome extends Controller_Abstract {
 			}
 			if ($birthday) 
 			{
-				$user->set_birthday( (int) strtotime($birthday), TRUE);
+				$user->set_birthday($birthday, TRUE);
 			}
 			if ($gender) 
 			{
@@ -112,7 +112,7 @@ class Controller_Welcome extends Controller_Abstract {
 			
 			// login and redirect
 			$auth->force_login( $user->email() );
-			$this->redirect('base', 302);
+			$this->redirect('home', 302);
 		}
 		
 		//check for email

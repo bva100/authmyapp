@@ -218,14 +218,14 @@ abstract class Controller_Abstract extends Controller_Template {
 		$response = $auth->logged_in();
 		if ($response) 
 		{
-			$this->redirect('base', 302);
+			$this->redirect('home', 302);
 		}
 		
 		// check for auto auth cookie
 		$response = $auth->auto_login();
 		if ($response) 
 		{
-			$this->redirect('base', 302);
+			$this->redirect('home', 302);
 		}
 	}
 	

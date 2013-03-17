@@ -1,0 +1,21 @@
+#primary-sidebar {
+	font-size: 15px;
+}
+.sidebar-img {
+	width: 20px;
+	height: 20px;
+	padding-right: 10px;
+}
+#sidebar-billing-text {
+	position: relative;
+	right: 1px;
+}
+#secondary-sidebar {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 10px;
+}
+#secondary-sidebar .btn {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}

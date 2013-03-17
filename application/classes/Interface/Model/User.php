@@ -63,4 +63,6 @@ interface Interface_Model_User
 	public function remove_organization($organization_id);
 	public function organizations();
 	
+	public function apps();
+	
 } // END interface Interface_Model_User

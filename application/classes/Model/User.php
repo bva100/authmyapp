@@ -658,4 +658,24 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		return $array;
 	}
 	
+	/**
+	 * returns an array of Model_App objects associated with this user
+	 *
+	 * @return array of Model_App objects
+	 * @author BRIAN ANDERSON
+	 */
+	public function apps()
+	{
+		$dao_orgs = $this->dao->organizations->find_all();
+		$array = array();
+		foreach ($dao_orgs as $org) 
+		{
+			foreach ($org->apps->find_all() as $app)
+			{
+				$array[] = Factory_Model::create($app);
+			}
+		}
+		return $array;
+	}
+	
 }
