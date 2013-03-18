@@ -7,6 +7,8 @@
  */
 class Model_App extends Model_Abstract implements Interface_Model_App {
 	
+	const DEFAULT_REDIRECT_URI = '/authMyAppReceiver';
+	
 	/**
 	 * Creates a new App with name and organization. If app name and org_id combo already exists, returns false. Otherwise returns Model_App object.
 	 *
@@ -22,7 +24,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		$pre_existing = self::exists($dao, $name, $organization_id);
 		if ($pre_existing) 
 		{
-			return(TRUE);
+			return( Factory_Model::create($dao) );
 		}
 		else
 		{
@@ -239,10 +241,15 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	 */
 	public function set_delivery_method($delivery_method, $lazy = FALSE)
 	{
-		if ( $delivery_method !== 'post' OR $delivery_method !== 'get') 
+		if ( $delivery_method === 'post' OR $delivery_method === 'get') 
+		{
+			$valid = TRUE;
+		}
+		else
 		{
 			trigger_error('delivery method must be either "post" or "get"', E_USER_WARNING);
 		}
+		
 		$this->dao->delivery_method = $delivery_method;
 		if ( ! $lazy)
 		{

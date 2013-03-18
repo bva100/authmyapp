@@ -50,13 +50,54 @@ body {
 	padding: 5px 14px;
 }
 /*new app*/
-.new-app h2 {
-	text-align: center;
+#new-app-primary-wrapper {
+	background-color: white;
+	-webkit-box-shadow:inset 0px 0px 15px rgba(0,0,0,.5);
+	-moz-box-shadow:inset 0px 0px 15px rgba(0,0,0,.5);
+	box-shadow:inset 0px 2px 15px rgba(0,0,0,.5);
+	background-image:url('/assets/img/checkboxes.png');
+	width: 100%;
+	height: 100%;
+	padding-top: 30px;
 }
-.new-app hr {
-	padding: 0px;
-	margin-bottom: 20px;
+.new-app {
+	background-color: white;
+	border-radius: 4px;
+	border: 1px solid #ddd;
+	padding-bottom: 10px;
+	margin-bottom: 40px;
+}
+#new-app-form {
+	margin-top: 20px;
+}
+#new-app-header {
+	text-align: center;
+	border-bottom: 1px solid #ccc;
 }
 .new-app input {
 	width: 96%;
+}
+.new-app .radio-label {
+	position: relative;
+	top: -16px;
+	left: 25px;
+}
+#new-org-name {
+	position: relative;
+	top: -5px;
+	width: 88%;
+}
+.new-app .submitter {
+	border-top: 1px solid #ddd;
+	padding-top: 20px;
+	margin-top: 20px;
+}
+/*downloads*/
+.alert-text {
+	font-size: 20px;
+	padding-left: 100px;
+}
+.alert {
+	padding: 20px;
+	padding-right: 40px;
 }

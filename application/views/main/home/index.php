@@ -11,7 +11,7 @@
 			</div><!-- .span3 -->
 			<div class='span9'>
 				
-				<?php if (count($user->apps()) !== 0): ?>
+				<?php if (count($user->apps()) === 0): ?>
 					
 					<div class='no-apps-container well'>
 						<h2>
@@ -21,7 +21,7 @@
 							We will now walk you through the steps to add your first app or website
 						</p>
 						<hr />
-						<?php echo HTML::anchor("/home/add", "Add an app or website", array('class' => 'btn btn-large btn-blue')) ?>
+						<?php echo HTML::anchor("/home/addApp", "Add an app or website", array('class' => 'btn btn-large btn-blue')) ?>
 					</div><!-- .no-apps-container -->
 					
 				<?php else: ?>

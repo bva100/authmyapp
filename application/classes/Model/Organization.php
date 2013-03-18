@@ -21,6 +21,10 @@ class Model_Organization extends Model_Abstract implements Interface_Model_Organ
 		{
 			trigger_error('create_with_name expects argument 2, name, to be string', E_USER_WARNING);
 		}
+		else
+		{
+			$name = NULL;
+		}
 		if ($dao->loaded()) 
 		{
 			$dao->clear();
@@ -32,15 +36,16 @@ class Model_Organization extends Model_Abstract implements Interface_Model_Organ
 			$exists = self::exists($dao, $name);
 			if ($exists) 
 			{
-				return(TRUE);
+				return(Factory_Model::create($dao));
 			}
 			else
 			{
 				$dao->clear();
 			}
+			$name = str_replace(' ', '_', $name);
+			$dao->name = $name;
 		}
 		
-		$dao->name             = str_replace(' ', '_', $name);
 		$dao->create_timestamp = time();
 		$dao->create();
 		return Factory_Model::create($dao);

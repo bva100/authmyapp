@@ -28,24 +28,24 @@
 	<div class='row'>
 		<div class='span12'>
 			<div class='menu-pulldown-arrow pull-right hide'>
-				<img src="assets/img/arrow_up_white.png" width="20" height="20" alt="">
+				<img src="/assets/img/arrow_up_white.png" width="20" height="20" alt="">
 			</div><!-- .menu-pulldown-arrow -->
 			<div class='menu-pulldown pull-right hide' id='header-pulldown' state='closed'>
 				<ul class="nav nav-list">
 					<li>
-						<a href="/home/apps' ?>">
+						<a href="/home">
 							<img src="/assets/img/dashboard.png" width="22" height="22" class='header-pulldown-img'>
 							Manage Apps
 						</a>
 					</li>
 					<li>
-						<a href="/home/account' ?>">
+						<a href="/home/account">
 							<img src="/assets/img/cog.png" width="22" height="22" class='header-pulldown-img'>
 							Settings
 						</a>
 					</li>
 					<li>
-						<a href="/home/logout'">
+						<a href="/home/logout">
 							<img src="/assets/img/power.png" width="21" height="21" class='header-pulldown-img' id='header-pulldown-logout'>
 							Log Out
 						</a>
