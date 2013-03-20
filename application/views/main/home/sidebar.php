@@ -31,6 +31,6 @@
 </ul>
 
 <div id="secondary-sidebar">
-	<?php echo HTML::anchor("home/upgrade", "Upgrade to Premium", array('class' => 'btn btn-info btn-block')) ?>
+	<?php echo HTML::anchor("home/plans", "Upgrade Account", array('class' => 'btn btn-info btn-block')) ?>
 	<?php echo HTML::anchor("home/addapp", "Add a New App", array('class' => 'btn btn-block')) ?>
 </div>

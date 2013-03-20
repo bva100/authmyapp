@@ -5,11 +5,16 @@
 
 <div id='primary-wrapper'>
 	<div class='container' id='primary-container'>
+		
 		<div class='row'>
 			<div class='span3'>
 				<?php echo $sidebar ?>
 			</div><!-- .span3 -->
 			<div class='span9'>
+				
+				<?php if (isset($alert)): ?>
+					<?php echo $alert ?>
+				<?php endif ?>
 				
 				<?php if (count($user->apps()) === 0): ?>
 					

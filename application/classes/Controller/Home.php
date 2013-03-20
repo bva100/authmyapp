@@ -27,12 +27,21 @@ class Controller_Home extends Controller_Abstract {
 	
 	public function action_index()
 	{
-		$view                = new View('main/home/index');
-		$view->user          = $this->user();
-		$view->header        = new View('main/home/header');
-		$view->header->user  = $this->user();
-		$view->sidebar       = new View('main/home/sidebar');
-		$view->sidebar->page = 'manage';
+		$message    = (string) get('message', '');
+		$alert_type = (string) get('alert_type', 'warning');
+		
+		$view                      = new View('main/home/index');
+		$view->user                = $this->user();
+		if ($message AND $alert_type) 
+		{
+			$view->alert               = new View('alert');
+			$view->alert->message      = $message;
+			$view->alert->type         = $alert_type;
+		}
+		$view->header              = new View('main/home/header');
+		$view->header->user        = $this->user();
+		$view->sidebar             = new View('main/home/sidebar');
+		$view->sidebar->page       = 'manage';
 		$this->template->set('content', $view);
 	}
 	
@@ -107,16 +116,36 @@ class Controller_Home extends Controller_Abstract {
 		$app->set_delivery_method('get', TRUE);
 		$app->set_state(Model_App::STATE_ACTIVE);
 		
-		// complete
-		$message = $name.' has been successfully added to your AuthMyApp account';
-		$this->redirect('home/downloads?app_id='.$app->id().'&message='.$message.'&message_type=success', 302);
+		// redirect
+		if ($this->user->plan()->name() === 'free') 
+		{
+			// if using free plan redirect to account upgrade page with app_id
+			$this->redirect('home/plans?app_id='.$app->id.'&new_app='.TRUE, 302);
+		}
+		else
+		{
+			// if using premium plan redirect to downloads page with app_id
+			$message = urlencode($app->name().' has been successfully added to your account');
+			$this->redirect('home/downloads?message='.$message.'&alert_type="success"', 302);
+		}
 	}
 	
-	public function action_downloads()
+	public function action_plans()
 	{
-		$app_id       = (int) get('app_id', 0);
-		$message      = (string) get('message', '');
-		$message_type = (string) get('message_type', '');
+		$app_id  = (int)  get('app_id', 0);
+		$new_app = (bool) get('new_app', FALSE);
+		$limit   = get('limit', 4);
+		
+		// plan name
+		$plan_name = $this->user->plan()->name();
+		
+		// null limit
+		if ($limit === 'null' OR ( $plan_name === 'Platinum' OR $plan_name === 'Platinum Plus' ) )
+		{
+			$limit = NULL;
+		}
+		
+		// create app object
 		if ($app_id) 
 		{
 			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
@@ -127,16 +156,128 @@ class Controller_Home extends Controller_Abstract {
 			$app = FALSE;
 		}
 		
-		$view = new View('main/home/downloads');
-		$view->message = $message;
-		$view->message_type = $message_type;
-		$view->app = $app;
-		$view->user = $this->user();
-		$view->header = new View('main/home/header');
-		$view->header->user = $this->user();
-		$view->sidebar = new View('main/home/sidebar');
+		//create plans object
+		$dao_plan = Factory_Dao::create('kohana', 'plan');
+		$plans = Model_Plan::all($dao_plan, Model_Plan::STATE_ACTIVE, 'ASC', $limit);
+		
+		$view                = new View('main/home/plans');
+		$view->app           = $app;
+		$view->new_app       = $new_app;
+		$view->limit         = $limit;
+		$view->plans         = $plans;
+		$view->user          = $this->user();
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
+		$view->sidebar->page = 'plan';
+		$this->template->set('content', $view);
+	}
+	
+	public function action_plansProcess()
+	{
+		$plan_id = (int) post('plan_id', 1);
+		$app_id  = (int) post('app_id', 0);
+		$new_app = (bool) post('new_app', FALSE);
+		
+		$this->user->set_plan_id($plan_id);
+		
+		// wepay integration here...
+		
+		$dao_plan = Factory_Dao::create('kohana', 'plan')->where('name', '=', 'free')->find();
+		$plan = Factory_Model::create($dao_plan);
+		
+		// redirect
+		if ($app_id AND $new_app )
+		{
+			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
+			$app = Factory_Model::create($dao_app);
+			
+			if ($plan_id !== $plan->id()) 
+			{
+				$dao = Factory_Dao::create('kohana', 'app', $app_id);
+				$app = Factory_Model::create($dao);
+				$this->redirect('home/downloads?app_id='.$app->id().'&new_app='.TRUE, 302);
+			}
+			else
+			{
+				$message = urlencode( $app->name().' is ready to go. Be sure to click on the help link in the navigation bar for integration tutorials');
+				$this->redirect('home?message='.$message.'&alert_type=success', 302);
+			}
+		}
+		else
+		{
+			$this->redirect('home/plans', 302);
+		}
+		
+	}
+	
+	public function action_downloads()
+	{
+		$app_id  = (int)  get('app_id', 0);
+		$new_app = (bool) get('new_app', FALSE);
+		
+		if ($app_id) 
+		{
+			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
+			$app = Factory_Model::create($dao_app);
+		}
+		else
+		{
+			$app = FALSE;
+		}
+		
+		$view                = new View('main/home/downloads');
+		$view->app           = $app;
+		$view->new_app       = $new_app;
+		$view->user          = $this->user();
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'downloads';
 		$this->template->set('content', $view);
 		$this->add_js('main/home/downloads');
 	}
+	
+	public function action_downloadsProcess()
+	{
+		$type   = (string) post('type', '');
+		$app_id = (int)    post('app_id', 0);
+		$text   = (string) post('text', '');
+		$size = (string) post('size', 'small');
+		
+		$data = array(
+			'text' => $text,
+			'size' => $size,
+		);
+		
+		// objects
+		$hash_algo = Factory_Hash::create( Auth::instance() );
+		$app_dao   = Factory_Dao::create('kohana', 'app', $app_id);
+		$app       = Factory_Model::create($app_dao);
+		$script    = Factory_Script::create($type, $this->user, $app, $data);
+		$script->set_compression_type('zip');
+		
+		// create file
+		$results = $script->create();
+		if ( ! $results) 
+		{
+			throw new Exception('We cannot complete your request at this time, please try again soon', 1);
+		}
+		
+		// redirect or print url on ajax
+		if ( ! $this->request->is_ajax())
+		{
+			$this->redirect($script->url(), 302);
+		}
+		else
+		{
+			$this->auto_render = FALSE;
+			$this->response->body($script->url());
+		}
+		
+		// delete with cron here
+		
+		
+	}
+	
 }

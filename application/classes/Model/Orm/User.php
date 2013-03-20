@@ -35,6 +35,18 @@ class Model_Orm_User extends Model_Auth_User {
 		);
 	
 	/**
+	 * belongs to relationships
+	 *
+	 * @var array
+	 */
+	protected $_belongs_to = array(
+			'plan' => array(
+				'foreign_key' => 'plan_id',
+				'model'       => 'Orm_Plan',
+			)
+		);
+	
+	/**
 	 * Orm rules for validation
 	 * @return array
 	 * @author BRIAN ANDERSON

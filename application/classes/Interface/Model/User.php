@@ -11,7 +11,7 @@ interface Interface_Model_User
 	public static function create(Dao_Abstract $dao);
 	public static function create_with_email(Dao_Abstract $dao, $email);
 	
-	public function set_email($email);
+	public function set_email($email, $lazy = FALSE);
 	public function email();
 	
 	public function set_first_name($first_name, $lazy = FALSE);
@@ -28,19 +28,19 @@ interface Interface_Model_User
 	public function password();
 	public function password_hash_type();
 	
-	public function set_birthday($birthday);
+	public function set_birthday($birthday, $lazy = FALSE);
 	public function birthday();
 	
 	public function set_gender($gender, $lazy = FALSE);
 	public function gender();
 	
-	public function set_country_code($country_code);
+	public function set_country_code($country_code, $lazy = FALSE);
 	public function country_code();
 	
-	public function set_timezone($timezone);
+	public function set_timezone($timezone, $lazy = FALSE);
 	public function timezone();
 	
-	public function set_ip($ip);
+	public function set_ip($ip, $lazy = FALSE);
 	public function ip();
 	
 	public function login_count();
@@ -54,6 +54,10 @@ interface Interface_Model_User
 	public function facebook_token_created();
 	public function set_facebook_token_expires($timestamp, $lazy = FALSE);
 	public function facebook_token_expires();
+	
+	public function set_plan_id($plan_id, $lazy = FALSE);
+	public function plan_id();
+	public function plan();
 	
 	public function add_role($role_name);
 	public function remove_role($role_name);

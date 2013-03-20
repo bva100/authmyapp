@@ -467,6 +467,50 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
+	 * set plan_id
+	 *
+	 * @param int $plan_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_plan_id($plan_id, $lazy = FALSE)
+	{
+		if ( ! is_int($plan_id) )
+		{
+			trigger_error('set_plan_id expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->plan_id = $plan_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get plan_id
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function plan_id()
+	{
+		return( (int) $this->dao->plan_id);
+	}
+	
+	/**
+	 * Get the user's current plan
+	 *
+	 * @return Model_Plan
+	 * @author BRIAN ANDERSON
+	 */
+	public function plan()
+	{
+		$dao_plan = $this->dao->plan;
+		return Factory_Model::create($dao_plan);
+	}
+	
+	/**
 	 * get login_count
 	 *
 	 * @return int

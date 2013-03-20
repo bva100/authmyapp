@@ -245,4 +245,21 @@ class Controller_Test extends Controller {
 		echo Debug::vars($pic); die;
 	}
 	
+	public function action_plan()
+	{
+		$dao = Factory_Dao::create('kohana', 'plan', 1);
+		$plan = Factory_Model::create($dao);
+		$this->response->body($plan);
+	}
+	
+	public function action_plans()
+	{
+		$dao = Factory_Dao::create('kohana', 'plan');
+		$plans = Model_Plan::all($dao);
+		foreach ($plans as $plan) 
+		{
+			echo $plan->name().'<br>';
+		}
+	}
+	
 }
