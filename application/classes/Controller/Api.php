@@ -7,6 +7,6 @@
  */
 class Controller_Api extends Controller {
 	
-	const CURRENT_VERSION = '0.8';
+	const CONNECT_VERSION = '0.8';
 	
 }

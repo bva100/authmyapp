@@ -15,11 +15,11 @@ class Controller_Welcome extends Controller_Abstract {
 		Session::instance()->set('original_security_code', $security_code);
 		
 		$view = new View('main/welcome/index');
+		$view->security_code = $security_code;
 		$view->header = new View('main/welcome/header');
 		$view->footer = new View('footer');
 		$view->signup = new View('signup');
 		$view->signup->security_code = $security_code;
-		$view->security_code = $security_code;
 		$this->template->set('content', $view);
 		$this->add_css('main/welcome/index');
 		$this->add_js('signup');

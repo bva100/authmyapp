@@ -17,8 +17,15 @@ class Controller_Demo extends Controller_Abstract {
 	{
 		$this->template->title = 'Best Widgets Ever Demo';
 		
-		$security_code = md5(uniqid(mt_rand(), TRUE));
-		Session::instance()->set('original_security_code', $security_code);
+		if (Session::instance()->get('original_security_code', FALSE)) 
+		{
+			$security_code = Session::instance()->get('original_security_code', '');
+		}
+		else
+		{
+			$security_code = md5(uniqid(mt_rand(), TRUE));
+			Session::instance()->set('original_security_code', $security_code);
+		}
 		
 		$view = new View('main/demo/index');
 		$view->header = new View('main/demo/header');

@@ -73,29 +73,5 @@ class Controller_Downloads extends Controller_Home {
 			$this->response->body($script->text());
 		}
 	}
-	
-	public function action_test()
-	{
-		$app_id = (int) get('app_id', 12);
-		$dao = Factory_Dao::create('kohana', 'app', $app_id);
-		$app = Factory_Model::create($dao);
-		
-		$button_version = ".07";
-		
-		
-		
-		// lazy load session incase environment has auto_start
-		if ( ! session_id())
-		{
-			session_start();
-		}
-		
-		// set a security token
-		$_SESSION["authMyAppSecurityCode"] = md5(uniqid(mt_rand(), TRUE));
-		
-		// redirect to AuthMyApp
-		header( 'Location: '.URL::base(TRUE).'connect_facebook?security_code='.$_SESSION['authMyAppSecurityCode'].'&app_id='.$app->id().'&version='.Controller_Api::CURRENT_VERSION.'&button-version='.$button_version);
-		
-	}
 
 }

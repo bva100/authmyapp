@@ -141,27 +141,13 @@ class Controller_Connect_Facebook extends Controller {
 	 */
 	public function action_index()
 	{
-		$security_code   = get('security_code', NULL);
-		$internal_app_id = (int)    get('app_id', 1);
-		$version         = (string) get('version', '');
-		$dao_type        = (string) get('dao_type', 'kohana');
+		$security_code   = (string)  get('security_code', '');
+		$connect_version = (string)  get('connect_version', '');
+		$internal_app_id = (int)     get('app_id', 1);
+		$dao_type        = (string)  get('dao_type', 'kohana');
 		
 		if ( ! isset($_REQUEST['code'])) 	// send to auth dialog
 		{
-			// clear session variables
-			if (isset($_SESSION['code'])) 
-			{
-				unset($_SESSION['code']);
-			}
-			if (isset($_SESSION['fb_state'])) 
-			{
-				unset($_SESSION['fb_state']);
-			}
-			if (isset($_SESSION['internal_app_id'])) 
-			{
-				unset($_SESSION['internal_app_id']);
-			}
-			
 			// set appId and secret
 			$this->set_app_id_and_secret($internal_app_id, $dao_type);
 			
@@ -172,14 +158,14 @@ class Controller_Connect_Facebook extends Controller {
 			}
 			else
 			{
-				Session::instance()->set('security_code', $security_code);
+				$_SESSION['security_code'] = $security_code;
 			}
 			
 			// create state var and store into session
-			Session::instance()->set('fb_state', md5(uniqid(rand(), TRUE)));
+			$_SESSION['fb_state'] = md5(uniqid(mt_rand(), TRUE));
 			
 			// create request
-			$url = 'https://www.facebook.com/dialog/oauth?client_id='.$this->app_id().'&redirect_uri='.URL::base(TRUE).'connect_facebook&state='.Session::instance()->get('fb_state', '');
+			$url = 'https://www.facebook.com/dialog/oauth?client_id='.$this->app_id().'&redirect_uri='.URL::base(TRUE).'connect_facebook&state='.$_SESSION['fb_state'];
 
 			// create scope flexibility via app in the future
 			$scope = '&scope=email,user_birthday';
@@ -189,7 +175,7 @@ class Controller_Connect_Facebook extends Controller {
 			
 			$this->redirect($dialog_url, 302);
 		}
-		else
+		else if(isset($_REQUEST['code']))
 		{
 			// get access token
 			
@@ -215,11 +201,15 @@ class Controller_Connect_Facebook extends Controller {
 			}
 			else
 			{
-				throw new Exception('A Facebook error has occured. Please try again soon.', 1);
+				throw new Exception('A Facebook error has occurred. Please try again soon.', 1);
 			}
 			
 			// redirect to sender
 			$this->redirect('connect_facebook/sender?'.$token_params);
+		}
+		else
+		{
+			throw new Exception('A Facebook error has occurred (new code not received). Please try again soon.', 1);
 		}
 	}
 	
@@ -237,12 +227,13 @@ class Controller_Connect_Facebook extends Controller {
 		$app            = Factory_Model::create( Factory_Dao::create($dao_type, 'app', $app_id) );
 		$facebook       = Factory_Facebook::create(array('appId' => $this->app_id(), 'secret' => $this->secret()));
 		$facebook->setAccessToken($access_token);
+		
 		$app_user_fb_data = $facebook->api('/me', 'GET');
 		
 		// get app_user email
 		if ( ! isset($app_user_fb_data['email'])) 
 		{
-			throw new Exception('Email was not provided by Facebook. Please try again soon.', 1);
+			throw new Exception('A Facebook error has occurred (Email not provided). Please try again soon.', 1);
 		}
 		$app_user_email = $app_user_fb_data['email'];
 		
@@ -271,7 +262,7 @@ class Controller_Connect_Facebook extends Controller {
 		$app_user->set_ip(Request::$client_ip);
 		
 		// cache picture
-		$app_user->set_picture('https://graph.facebook.com/'.$app_user->facebook_id().'/picture?type=large');
+		$app_user->set_picture('https://graph.facebook.com/'.$app_user->facebook_id().'/picture?type=large&access_token='.$access_token);
 		
 		// create sender object and redirect
 		$sender = Factory_Sender::create('signup', 'facebook', $app, $app_user);

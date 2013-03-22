@@ -50,16 +50,18 @@
 						</div>
 						
 						<!-- sender -->
-						<div class='download-setup-form well' id='sender-setup' data-title='Get The Data Sender'>
+						<div class='download-setup-form well well-unit' id='sender-setup' data-title='Get The Directions Sender'>
+							<h5>
+								After installing this file, <?php echo $app->name() ?> will be able to send directions to AuthMyApp.
+							</h5>
+							<p class='do-not-share'>
+								<span class="label label-important">Warning</span> This file contains a secret code which is unique to <?php echo $app->name() ?>. For security purposes, it is important that you do not share this file with others.
+							</p>
 							<?php echo Form::open("downloads/process"); ?>
 								<input type="hidden" name="type" value="sender">
 								<input type="hidden" name="app_id" value="<?php echo $app->id() ?>" class='app-id'>
-								<div class='row'>
-									HERE ARE THE SETUP OPTIONS
-								</div><!-- .row -->
-							    <div class='row'>
-									<?php echo Form::submit("submit", "Submit"); ?>
-								</div>
+								<hr />
+								<?php echo Form::submit("submit", "Get Directions Sender", array('class' => 'btn btn-blue submitter')); ?>
 							<?php echo Form::close(); ?>
 							
 						</div><!-- .download-setup-form well -->
@@ -174,7 +176,7 @@
 								</div><!-- .span4 -->
 								<div class='span2 btn-downloader-container'>
 									<?php if ($user->plan()->downloads()): ?>
-										<button class="btn btn-info btn-downloader" id='download-sender-btn'>
+										<button class="btn btn-info btn-downloader" data-open="#sender-setup">
 											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
 										</button>
 									<?php else: ?>

@@ -75,10 +75,20 @@
 #connect-facebook-setup {
 	padding-left: 40px;
 }
+.submitter {
+	padding: 10px 0px;
+}
 #connect-facebook-setup .submitter {
 	margin: 10px auto 0px auto;
-	padding: 10px 0px;
 	margin-left: 220px;
+}
+#sender-setup {
+	padding-bottom: 35px;
+}
+#sender-setup .submitter {
+	margin: 0px auto;
+	display: block;
+	width: 200px;
 }
 .script-preview-title {
 	color: dimgrey;

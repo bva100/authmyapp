@@ -273,4 +273,14 @@ class Controller_Test extends Controller {
 		$this->response->body($app->domain());
 	}
 	
+	public function action_appSalt()
+	{
+		$app_id = (int) get('app_id', 12);
+
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		echo Debug::vars($app->set_salt(), $app->salt()); die;
+	}
+	
 }

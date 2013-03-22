@@ -21,23 +21,26 @@ interface Interface_Model_App
 	public function set_name($name, $lazy = FALSE);
 	public function name();
 	
-	public function set_domain($domain);
+	public function set_domain($domain, $lazy = FALSE);
 	public function domain();
 	
-	public function set_sender_uri($sender_uri);
+	public function set_sender_uri($sender_uri, $lazy = FALSE);
 	public function sender_uri();
 	public function sender_url();
 	
-	public function set_receiver_uri($receiver_uri);
+	public function set_receiver_uri($receiver_uri, $lazy = FALSE);
 	public function receiver_uri();
 	public function receiver_url();
 	
-	public function set_delivery_method($delivery_method);
+	public function set_delivery_method($delivery_method, $lazy = FALSE);
 	public function delivery_method();
 	
-	public function set_picture_width($picture_width);
+	public function set_salt($lazy = FALSE);
+	
+	
+	public function set_picture_width($picture_width, $lazy = FALSE);
 	public function picture_width();
-	public function set_picture_height($picture_height);
+	public function set_picture_height($picture_height, $lazy = FALSE);
 	public function picture_height();
 	
 	public function set_facebook_app_id($facebook_app_id, $lazy = FALSE);

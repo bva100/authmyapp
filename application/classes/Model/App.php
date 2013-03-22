@@ -361,6 +361,35 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
+	 * Create and set a new salt
+	 *
+	 * @param string $salt
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_salt($lazy = FALSE)
+	{
+		$salt = md5(uniqid(mt_rand(), TRUE));
+		$this->dao->salt = $salt;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get salt
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function salt()
+	{
+		return($this->dao->salt);
+	}
+	
+	/**
 	 * set picture_width
 	 *
 	 * @param int $picture_width
