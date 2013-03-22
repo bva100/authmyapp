@@ -21,8 +21,16 @@ interface Interface_Model_App
 	public function set_name($name, $lazy = FALSE);
 	public function name();
 	
-	public function set_redirect_url($redirect_url);
-	public function redirect_url();
+	public function set_domain($domain);
+	public function domain();
+	
+	public function set_sender_uri($sender_uri);
+	public function sender_uri();
+	public function sender_url();
+	
+	public function set_receiver_uri($receiver_uri);
+	public function receiver_uri();
+	public function receiver_url();
 	
 	public function set_delivery_method($delivery_method);
 	public function delivery_method();

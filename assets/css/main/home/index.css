@@ -124,7 +124,6 @@ body {
 .btn-plan-submit {
 	margin-bottom: -15px;
 }
-/*downloads*/
 .alert-text {
 	font-size: 20px;
 	padding-left: 100px;
@@ -132,58 +131,4 @@ body {
 .alert {
 	padding: 20px;
 	padding-right: 40px;
-}
-#primary-download-well {
-	text-align: center;
-}
-#upgrade-account-cta {
-	margin-top: 10px;
-}
-.downloads-container {
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	margin-bottom: 30px;
-	overflow: hidden;
-}
-.downloads-header {
-	background-color: #f9f9f9;
-	padding: 20px 35px;
-	text-align: center;
-}
-.downloads-name {
-	font-size: 22px;
-	font-weight: 550;
-}
-.downloads-body {
-	padding: 10px 35px;
-}
-#downloads-app-body {
-	padding-bottom: 20px;
-}
-#downloads-app-body h3, #downloads-app-body p{
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-}
-.btn-downloader-container {
-	text-align: center;
-}
-.required:after {
-	content: '*required';
-	font-size: 12px;
-	color: red;
-	margin-left: 10px;
-	position: relative;
-	bottom: 7px;
-}
-.btn-downloader {
-	margin-top: 22px;
-}
-.tutorial-opener {
-	display: block;
-	margin-top: 5px;
-}
-.tutorial-closer {
-	margin-top: 10px;
 }

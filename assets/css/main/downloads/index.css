@@ -1,0 +1,94 @@
+.link-black {
+	color: #333333;
+}
+#primary-download-well {
+	text-align: center;
+}
+#upgrade-account-cta {
+	margin-top: 10px;
+}
+.downloads-container {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-bottom: 30px;
+	overflow: hidden;
+}
+.downloads-header {
+	background-color: #f9f9f9;
+	padding: 20px 35px;
+	text-align: center;
+}
+.downloads-name {
+	font-size: 22px;
+	font-weight: 550;
+}
+.downloads-body {
+	padding: 10px 35px;
+}
+#downloads-app-body {
+	padding-bottom: 20px;
+}
+#downloads-app-body h3, #downloads-app-body p{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.btn-downloader-container {
+	text-align: center;
+}
+.required:after {
+	content: '*required';
+	font-size: 12px;
+	color: red;
+	margin-left: 0px;
+	position: relative;
+	bottom: 7px;
+}
+.btn-downloader {
+	margin-top: 22px;
+}
+.tutorial-opener {
+	display: block;
+	margin-top: 5px;
+}
+.tutorial-closer {
+	margin-top: 10px;
+}
+#download-setup-title-container {
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+	margin-bottom: 15px;
+}
+#download-setup-back-button {
+	position: relative;
+	bottom: 12px;
+	right: 15px;
+}
+#download-setup-title {
+	position: relative;
+	left: 14px;
+}
+#download-setup-results {
+	margin-bottom: 30px;
+}
+#connect-facebook-setup {
+	padding-left: 40px;
+}
+#connect-facebook-setup .submitter {
+	margin: 10px auto 0px auto;
+	padding: 10px 0px;
+	margin-left: 220px;
+}
+.script-preview-title {
+	color: dimgrey;
+	font-size: 28px;
+	font-weight: 550;
+	margin-right: 122px;
+	margin-top: 15px;
+}
+.script-description {
+	font-size: 17px;
+	margin-top: 20px;
+	margin-bottom: 15px;
+}

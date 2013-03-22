@@ -5,7 +5,7 @@
  *
  * @author BRIAN ANDERSON
  */
-class Script_Connect_Facebook extends Script_Abstract {
+class Script_Connect_Button_Facebook extends Script_Abstract {
 	
 	/**
 	 * data used to create this script
@@ -15,6 +15,13 @@ class Script_Connect_Facebook extends Script_Abstract {
 	private $file_data;
 	
 	/**
+	 * iframe used produce 
+	 *
+	 * @var string
+	 */
+	private $iframe;
+	
+	/**
 	 * Set file data
 	 *
 	 * @return void
@@ -22,6 +29,9 @@ class Script_Connect_Facebook extends Script_Abstract {
 	 */
 	public function set_file_data()
 	{
+		// run create (this runs twice)
+		$this->create();
+		
 		// create size via css
 		switch ($this->data['size']) {
 			case 'extra-large':
@@ -31,6 +41,8 @@ class Script_Connect_Facebook extends Script_Abstract {
 					-webkit-border-radius: 8px;
 					-moz-border-radius: 8px;
 					border-radius: 8px;';
+				$width = '290';
+				$height= '68';
 				break;
 			case 'large':
 				$size = 
@@ -39,9 +51,13 @@ class Script_Connect_Facebook extends Script_Abstract {
 					-webkit-border-radius: 6px;
 					-moz-border-radius: 6px;
 					border-radius: 6px;';
+				$width = '250';
+				$height ='60';
 				break;
 			case 'medium':
 				$size = ''; //leave as default
+				$width = '193';
+				$height = '46';
 				break;
 			case 'small':
 				$size = 
@@ -50,6 +66,8 @@ class Script_Connect_Facebook extends Script_Abstract {
 					-webkit-border-radius: 3px;
 					-moz-border-radius: 3px;
 					border-radius: 3px;';
+				$width = '165';
+				$height = '42';
 				break;
 			default:
 				throw new Exception('Button size not available. Please try again.');
@@ -58,14 +76,8 @@ class Script_Connect_Facebook extends Script_Abstract {
 		
 		// create html and css
 		$this->file_data = '
-		<?php
-			$security_code = MD5('');
-			
-			start_session();
-			$_SESSION[''];
-		?>
 		
-		<a href="'.URL::base(TRUE).'connect_facebook?app_id='.$this->app->id().'&secret='.$this->app->secret().'security_code=&version='.Controller_Api::CURRENT_VERSION.'" class="btn-facebook">'.$this->data['text'].'</a>
+		<a href="'.$this->app->sender_url().'?button_version='.Controller_Api::CURRENT_VERSION.'" class="btn-facebook" target="_top">'.$this->data['text'].'</a>
 		
 		<style type="text/css" media="screen">
 			.btn-facebook {
@@ -139,6 +151,22 @@ class Script_Connect_Facebook extends Script_Abstract {
 		</style>
 		
 		';
+		
+		// set iframe
+		$this->iframe = '
+
+<iframe src="'.URL::base(TRUE).'assets/clients/downloads/'.$this->filename().'.html" width="'.$width.'" height="'.$height.'" sandbox="allow-top-navigation" seamless></iframe>
+
+<style type="text/css" media="screen">
+	iframe[seamless]{
+		background-color: transparent;
+		border: 0px none transparent;
+		padding: 0px;
+		overflow: hidden;
+		
+	}
+</style>';
+
 	}
 	
 	/**
@@ -153,23 +181,29 @@ class Script_Connect_Facebook extends Script_Abstract {
 		$filename = $this->hash_algo->hash( $filename = $this->user->email().'download_connect_facebook' );
 		$this->set_filename($filename);
 		
-		// set archive path
-		$this->set_archive_path('buttons/');
-		
 		// create file
-		file_put_contents ($this->path().$this->filename().'.php', $this->file_data, LOCK_EX);
+		file_put_contents ($this->path().$this->filename().'.html', $this->file_data, LOCK_EX);
+		
+		return file_exists($this->path().$this->filename().'.html');
+		
+		// set archive path
+		// $this->set_archive_path('buttons/');
 		
 		// zip
-		if ($this->compression_type())
-		{
-			$compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.html'), $this->path().$this->filename().'.zip', $this->archive_path(), TRUE);
-			$results = $compress->execute();
-			return $results;
-		}
-		else
-		{
-			return TRUE;
-		}
+		// $compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.html'), $this->path().$this->filename().'.zip', $this->archive_path(), TRUE);
+		// $results = $compress->execute();
+		// return $results;
+	}
+	
+	/**
+	 * Preview generated html
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function preivew()
+	{
+		return $this->file_date;
 	}
 	
 	/**
@@ -178,9 +212,11 @@ class Script_Connect_Facebook extends Script_Abstract {
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function create_text()
+	public function text()
 	{
-		return $this->file_data;
+		$button = $this->file_data;
+		$iframe = $this->iframe;
+		return '<hr /><span class="script-preview-title">Preview</span>'.$button.'<hr /><div class="script-description">Copy and paste the following into your html. It will automatically create the button for you.</div><pre><code>'.htmlentities($iframe).'</code></pref>';
 	}
 	
 	/**

@@ -200,20 +200,34 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * set redirect_url
+	 * set domain
 	 *
-	 * @param string $redirect_url
-	 * @param bool $lazy
+	 * @param string $domain
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_redirect_url($redirect_url, $lazy = FALSE)
+	public function set_domain($domain, $lazy = FALSE)
 	{
-		if ( ! is_string($redirect_url) )
+		$valid = Valid::url($domain);
+		if ( ! $valid) 
 		{
-			trigger_error('set_redirect_url expects argument 1 to be type string', E_USER_WARNING);
+			// attempt to add 'http://' and re-validate
+			$domain = 'http://'.$domain;
+			$valid = Valid::url($domain);
+			if ( ! $valid) 
+			{
+				throw new Exception('Please enter a valid domain url', 1);
+			}
 		}
-		$this->dao->redirect_url = $redirect_url;
+		
+		// add trailing slash as nessisary
+		if (substr($domain, -1, 1) !== '/') 
+		{
+			$domain = $domain.'/';
+		}
+		
+		// set
+		$this->dao->domain = $domain;
 		if ( ! $lazy)
 		{
 			$this->db_update();
@@ -221,14 +235,103 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * get redirect_url
+	 * get domain
 	 *
 	 * @return string
 	 * @author BRIAN ANDERSON
 	 */
-	public function redirect_url()
+	public function domain()
 	{
-		return($this->dao->redirect_url);
+		return($this->dao->domain);
+	}
+	
+	/**
+	 * set sender_uri
+	 *
+	 * @param string $sender_uri
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_sender_uri($sender_uri, $lazy = FALSE)
+	{
+		if ( ! is_string($sender_uri) )
+		{
+			trigger_error('set_sender_uri expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->sender_uri = $sender_uri;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get sender_uri
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function sender_uri()
+	{
+		return($this->dao->sender_uri);
+	}
+	
+	/**
+	 * Get absolute path to sender url
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function sender_url()
+	{
+		$uri = ltrim($this->sender_uri(), '/');
+		return $this->domain().$uri;
+	}
+	
+	/**
+	 * set receiver_uri
+	 *
+	 * @param string $receiver_uri
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_receiver_uri($receiver_uri, $lazy = FALSE)
+	{
+		if ( ! is_string($receiver_uri) )
+		{
+			trigger_error('set_receiver_uri expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->receiver_uri = $receiver_uri;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get receiver_uri
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function receiver_uri()
+	{
+		return($this->dao->receiver_uri);
+	}
+	
+	
+	/**
+	 * get absolute url to to receiver
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function receiver_url()
+	{
+		$uri = ltrim($this->receiver_uri(), '/');
+		return $this->domain().$uri;
 	}
 	
 	/**

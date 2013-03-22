@@ -12,8 +12,8 @@ class Factory_Script extends Factory_Abstract {
 	public static function create($type, Model_User $user, Model_App $app, array $data)
 	{
 		switch ($type) {
-			case 'connect_facebook':
-				return new Script_Connect_Facebook($user, $app, $data);
+			case 'connect_facebook_button':
+				return new Script_Connect_Button_Facebook($user, $app, $data);
 				break;
 			default:
 				trigger_error('Factory_Script::create() does not recognize type '.$type, E_USER_WARNING);

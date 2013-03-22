@@ -9,7 +9,7 @@
 		</a>
 	</li>
 	<li <?php if($page === 'downloads'){echo 'class="active"';} ?>>
-		<a href="/home/downloads">
+		<a href="/downloads">
 			<img src="/assets/img/download.png" width="20" height="20" class='sidebar-img'>
 			Get Downloads
 		</a>

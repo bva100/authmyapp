@@ -90,8 +90,8 @@ abstract class Script_Abstract {
 		
 		// set defaults
 		$this->set_hash_algo( Factory_Hash::create( Auth::instance() ) );
-		$this->set_path( $_SERVER['DOCUMENT_ROOT'].'/assets/downloads/' );
-		$this->set_url_path( URL::base(TRUE).'assets/downloads/' );
+		$this->set_path( $_SERVER['DOCUMENT_ROOT'].'/assets/clients/downloads/' );
+		$this->set_url_path( URL::base(TRUE).'assets/clients/downloads/' );
 		
 		// set file data
 		$this->set_file_data();
@@ -391,7 +391,7 @@ abstract class Script_Abstract {
 	 * @return string
 	 * @author BRIAN ANDERSON
 	 */
-	abstract public function create_text();
+	abstract public function text();
 	
 	/**
 	 * get url associated with created file

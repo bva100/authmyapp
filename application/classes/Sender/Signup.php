@@ -196,7 +196,7 @@ class Sender_Signup {
 	 */
 	public function redirect_url()
 	{
-		$base_url = $this->app->redirect_url();
+		$base_url = $this->app->receiver_url();
 		
 		// user params. These can be more dynamic in the future
 		$user_params = 'email='.urlencode($this->app_user->email()).'&first_name='.urlencode($this->app_user->first_name()).'&last_name='.urlencode($this->app_user->last_name()).'&birthday='.urlencode($this->app_user->birthday()).'&picture='.urlencode($this->app_user->picture()).'&gender='.urlencode($this->app_user->gender()).'&ip='.urlencode($this->app_user->ip()).'&employer_name='.urlencode($this->app_user->employer_name()).'&job_title='.urlencode($this->app_user->job_title()).'&country_code='.urlencode($this->app_user->country_code()).'&timezone='.urlencode($this->app_user->timezone());

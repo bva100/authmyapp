@@ -262,4 +262,15 @@ class Controller_Test extends Controller {
 		}
 	}
 	
+	public function action_appDomain()
+	{
+		$domain_var = (string) get('var', 'www.doggiedoggie.com');
+		$app_id = (int) get('app_id', 12);
+
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		$this->response->body($app->domain());
+	}
+	
 }
