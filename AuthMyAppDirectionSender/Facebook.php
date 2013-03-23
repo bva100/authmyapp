@@ -1,15 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
-
-/**
- * Sender for Facebooks script
- *
- * @author BRIAN ANDERSON
- */
-class Script_Sender_Facebook extends Script_Abstract{
-	
-	public function set_file_data()
-	{
-		$this->file_data = '<?php
+<?php
 
 /**
  * SessionHelper for managing sessions
@@ -157,57 +146,4 @@ $securityCode = SecurityHelper::md5_rand();
 $sessionHelper->set("authMyAppSecurityToken", $securityCode);
 
 // redirect
-header( "Location: '.URL::base(TRUE).'connect_facebook?app_id='.$this->app->id().'&security_code=$securityCode&connect_version='.Controller_Api::CONNECT_VERSION.'" );';
-	}
-	
-	/**
-	 * Create Facebook Sender
-	 *
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function create()
-	{
-		// set filename
-		$filename = $this->hash_algo->hash( $this->user->email().'download_sender' );
-		$this->set_filename($filename);
-		
-		// create file
-		file_put_contents ($this->path().$this->filename().'.php', $this->file_data, LOCK_EX);
-		
-		// set archive path. Ensure first letter is capitalized and string should begin with "/"
-		$archive_path = $this->app->sender_uri();
-		$archive_path = ucfirst( ltrim( $archive_path, '/' ) );
-		$archive_path = '/'.$archive_path;
-		$this->set_archive_path( $archive_path );
-		
-		// zip
-		$compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.php'), $this->path().$this->filename().'.zip', $this->archive_path(), '/Facebook.php', TRUE);
-		$results = $compress->execute();
-		return $results;
-	}
-	
-	/**
-	 * Text
-	 *
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function text()
-	{
-		return $this->file_data;
-	}
-	
-	/**
-	 * Url
-	 *
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function url()
-	{
-		// return compression url
-		return $this->url_path().$this->filename().'.'.$this->compression_type();
-	}
-	
-}
+header( "Location: http://192.168.2.5/connect_facebook?app_id=12&security_code=$securityCode&connect_version=0.8" );

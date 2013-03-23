@@ -15,6 +15,8 @@ class Factory_Script extends Factory_Abstract {
 			case 'connect_facebook_button':
 				return new Script_Connect_Button_Facebook($user, $app, $data);
 				break;
+			case 'sender':
+				return new Script_Sender_Facebook($user, $app, $data);
 			default:
 				trigger_error('Factory_Script::create() does not recognize type '.$type, E_USER_WARNING);
 				break;

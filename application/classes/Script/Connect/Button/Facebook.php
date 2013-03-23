@@ -178,7 +178,7 @@ class Script_Connect_Button_Facebook extends Script_Abstract {
 	public function create()
 	{
 		// set filename
-		$filename = $this->hash_algo->hash( $filename = $this->user->email().'download_connect_facebook' );
+		$filename = $this->hash_algo->hash( $this->user->email().'download_connect_facebook' );
 		$this->set_filename($filename);
 		
 		// create file

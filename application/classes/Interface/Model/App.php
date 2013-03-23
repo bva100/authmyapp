@@ -35,8 +35,11 @@ interface Interface_Model_App
 	public function set_delivery_method($delivery_method, $lazy = FALSE);
 	public function delivery_method();
 	
-	public function set_salt($lazy = FALSE);
+	public function set_storage_method($storage_method, $lazy = FALSE);
+	public function storage_method();
 	
+	public function set_salt($lazy = FALSE);
+	public function salt();
 	
 	public function set_picture_width($picture_width, $lazy = FALSE);
 	public function picture_width();

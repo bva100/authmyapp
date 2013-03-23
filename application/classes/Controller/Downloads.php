@@ -36,12 +36,105 @@ class Controller_Downloads extends Controller_Home {
 		$this->add_css('back');
 	}
 	
+	public function action_connectButton()
+	{
+		$app_id  = (int)   get('app_id', 0);
+		$new_app = (bool) get('new_app', FALSE);
+		$type    = (string) get('type', 'connect_facebook');
+		
+		// get app
+		if ($app_id) 
+		{
+			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
+			$app = Factory_Model::create($dao_app);
+		}
+		else
+		{
+			$app = FALSE;
+		}
+		
+		$view                = new View('main/downloads/connectButton');
+		$view->app           = $app;
+		$view->new_app       = $new_app;
+		$view->type          = $type;
+		$view->user          = $this->user();
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
+		$view->sidebar->page = 'downloads';
+		$this->template->set('content', $view);
+		$this->add_js('main/downloads/index');
+		$this->add_css('main/downloads/index');
+	}
+	
+	public function action_sender()
+	{
+		$app_id  = (int)    get('app_id', 0);
+		$new_app = (bool)   get('new_app', FALSE);
+		$type    = (string) get('type', 'facebook');
+		
+		// get app
+		if ($app_id) 
+		{
+			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
+			$app = Factory_Model::create($dao_app);
+		}
+		else
+		{
+			$app = FALSE;
+		}
+		
+		$view                = new View('main/downloads/sender');
+		$view->app           = $app;
+		$view->new_app       = $new_app;
+		$view->type          = $type;
+		$view->user          = $this->user();
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
+		$view->sidebar->page = 'downloads';
+		$this->template->set('content', $view);
+		$this->add_js('main/downloads/index');
+		$this->add_css('main/downloads/index');
+	}
+	
+	public function action_receiver()
+	{
+		$app_id  = (int)     get('app_id', 0);
+		$new_app = (bool)    get('new_app', FALSE);
+		$type    = (string ) get('type', 'facebook');
+		
+		// get app
+		if ($app_id) 
+		{
+			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
+			$app = Factory_Model::create($dao_app);
+		}
+		else
+		{
+			$app = FALSE;
+		}
+		
+		$view                = new View('main/downloads/receiver');
+		$view->app           = $app;
+		$view->new_app       = $new_app;
+		$view->type          = $type;
+		$view->user          = $this->user();
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
+		$view->sidebar->page = 'downloads';
+		$this->template->set('content', $view);
+		$this->add_js('main/downloads/index');
+		$this->add_css('main/downloads/index');
+	}
+	
 	public function action_process()
 	{
 		$type   = (string) post('type', '');
 		$app_id = (int)    post('app_id', 0);
 		$text   = (string) post('text', '');
-		$size = (string) post('size', 'large');
+		$size = (string)   post('size', 'large');
 		
 		$data = array(
 			'text' => $text,

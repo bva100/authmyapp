@@ -23,32 +23,6 @@
 					
 					<div class='download-setup-body'>
 						
-						<!-- connect-facebook -->
-						<div class='download-setup-form well' id='connect-facebook-setup' data-title='Get The Facebook Signup Button'>
-							<?php echo Form::open("downloads/process"); ?>
-								<input type="hidden" name="type" value="connect_facebook">
-								<input type="hidden" name="app_id" value="<?php echo $app->id() ?>" class='app-id'>
-								<div class='row'>
-									<p class='span2 offset1'>
-										<label for="text">Button Text</label>
-										<input type="text" name="text" value="Connect with Facebook" id='facebook-connect-text-input'>
-									</p>
-									<p class='offset1 span2'>
-										<label for="size">Button Size</label>
-										<select id='facebook-connect-size-input'>
-											<option value="extra-large">Extra Large</option> 
-											<option value="large" selected>Large</option>
-											<option value="medium">Medium</option>
-											<option value="small">Small</option>
-										</select>
-									</p>
-								</div><!-- .row -->
-								<div class='row'>
-									<?php echo Form::submit("submit", "Get This Button", array('class' => 'btn btn-blue submitter span3')); ?>
-								</div><!-- .row -->
-							<?php echo Form::close(); ?>
-						</div>
-						
 						<!-- sender -->
 						<div class='download-setup-form well well-unit' id='sender-setup' data-title='Get The Directions Sender'>
 							<h5>
@@ -61,14 +35,30 @@
 								<input type="hidden" name="type" value="sender">
 								<input type="hidden" name="app_id" value="<?php echo $app->id() ?>" class='app-id'>
 								<hr />
-								<?php echo Form::submit("submit", "Get Directions Sender", array('class' => 'btn btn-blue submitter')); ?>
+								<?php echo Form::submit("submit", "Download Directions Sender", array('class' => 'btn btn-blue submitter')); ?>
 							<?php echo Form::close(); ?>
-							
 						</div><!-- .download-setup-form well -->
+						
+						<!-- receiver -->
+						<div class='download-setup-form well well-unit' id='receiver-setup' data-title='Get The Directions Sender'>
+							<h5>
+								After installing this file, AuthMyApp will be able to send sign up data to <?php echo $app->name() ?>
+							</h5>
+							<p class='do-not-share'>
+								<span class="label label-important">Warning</span> This file contains a secret code which is unique to <?php echo $app->name() ?>. For security purposes, it is important that you do not share this file with others.
+							</p>
+							<?php echo Form::open("downloads/process"); ?>
+								<input type="hidden" name="type" value="receiver">
+								<input type="hidden" name="app_id" value="<?php echo $app->id() ?>" class='app-id'>
+								<hr />
+								<?php echo Form::submit("submit", "Download Data Receiver", array('class' => 'btn btn-blue submitter')); ?>
+							<?php echo Form::close(); ?>
+						</div><!-- .download-setup-form well -->
+						
 						
 					</div><!-- .download-setup-body -->
 					
-					<div id='download-setup-results'></div><!-- .download-setup-results -->
+					<div id='download-setup-results' class='hide'></div><!-- .download-setup-results -->
 					
 				</div><!-- .download-setup -->
 			<?php endif ?>
@@ -125,10 +115,10 @@
 									<p>
 										Let new users signup with a "Connect using Facebook" button
 									</p>
-									<a href="#see-tutorial-connect-button" data-open='#tutorial-connect-btn' class='tutorial-open-close'>
-										Open Tutorial
+									<a href="#see-tutorial-connect-button" data-open='#tutorial-connect-facebook' class='tutorial-open-close'>
+										View Instructions
 									</a>
-									<div class='tutorial hide' id='tutorial-connect-btn' state='closed'>
+									<div class='tutorial hide' id='tutorial-connect-facebook' state='closed'>
 										<h5>
 											Implementing your "Connect using Facebook" button
 										</h5>
@@ -138,7 +128,6 @@
 										<p>
 											<a href="#close" class='btn tutorial-closer'>Close</a>
 										</p>
-
 									</div>
 								</div><!-- .span6 -->
 								<div class='span2 btn-downloader-container'>
@@ -167,12 +156,37 @@
 									<p>
 										Allow <?php echo $app->name() ?> to send directions to AuthMyApp
 									</p>
-									<a href="#see-tutorial-sender" id='see-tutorial-sender-btn' class='tutorial-opener'>
-										View Tutorial
+									<a href="#see-tutorial-sender" data-open='#tutorial-sender' class='tutorial-open-close'>
+										View Instructions
 									</a>
-									<p class='tutorial hide' id='tutorial-connect-btn'>
-										Beef tenderloin strip steak t-bone filet mignon. Chicken prosciutto bacon spare ribs capicola salami tenderloin tail corned beef turducken rump ham hock frankfurter tri-tip. Prosciutto tongue turkey, spare ribs ribeye flank frankfurter pork loin drumstick jerky jowl meatloaf rump. Flank ball tip boudin short loin meatball biltong. Ribeye chuck shoulder, venison swine andouille beef.
-									</p>
+									<div class='tutorial hide' id='tutorial-sender' state='closed'>
+										<div classs='tutorial-body' id='tutorial-sender-body'>
+											<h5>
+												Installing Your "Directions Sender"
+											</h5>
+											<ol>
+												<li>
+													Unzip the .zip file which you'll receive after clicking the download button. Typically unzipping can be accomplished by double clicking on the downloaded file
+												</li>
+												<li>
+													Locate the folder called "<?php echo $app->sender_uri() ?>"
+												</li>
+												<li>
+													<p>
+														Upload the entire <?php echo $app->sender_uri() ?> folder and the facebook.php file it contains to <?php echo $app->name() ?>. It should be placed in the <?php echo HTML::anchor("http://en.wikipedia.org/wiki/Root_directory", "root directory", array('target' => '_blank')) ?>. Uploading can be accomplished using FTP and we recommend <?php echo HTML::anchor("http://filezilla-project.org/", "FireZilla", array('target' => 'blank')) ?>
+													</p>
+													<p class='step-by-step'>
+														<strong>Use GoDaddy?</strong> Find step by step upload instructions <?php echo HTML::anchor("http://support.godaddy.com/help/article/3239/uploading-files-using-the-ftp-file-manager?locale=en", "here", array('target' => '_blank')) ?>
+														<br />
+														<strong>Use WordPress?</strong> Find step by step upload instructions <?php echo HTML::anchor("http://codex.wordpress.org/FTP_Clients", "here", array('target' => '_blank')) ?>
+													</p>
+												</li>
+											</ol>
+										</div>
+										<p>
+											<a href="#close" class='btn tutorial-closer'>Close</a>
+										</p>
+									</div><!-- .tutorial hide -->
 								</div><!-- .span4 -->
 								<div class='span2 btn-downloader-container'>
 									<?php if ($user->plan()->downloads()): ?>
@@ -198,18 +212,43 @@
 										</span>
 									</h3>
 									<p>
-										Allow AuthMyApp to send signup data to <?php echo $app->name() ?>
+										Allow AuthMyApp to send sign up data to <?php echo $app->name() ?>
 									</p>
-									<a href="#see-tutorial-connect-button" id='see-tutorial-connect-btn' class='tutorial-opener'>
+									<a href="#see-tutorial-connect-button" data-open="#tutorial-receiver" class='tutorial-open-close'>
 										View Tutorial
 									</a>
-									<p class='tutorial hide' id='tutorial-connect-btn'>
-										Beef tenderloin strip steak t-bone filet mignon. Chicken prosciutto bacon spare ribs capicola salami tenderloin tail corned beef turducken rump ham hock frankfurter tri-tip. Prosciutto tongue turkey, spare ribs ribeye flank frankfurter pork loin drumstick jerky jowl meatloaf rump. Flank ball tip boudin short loin meatball biltong. Ribeye chuck shoulder, venison swine andouille beef.
-									</p>
+									<div class='tutorial hide' id='tutorial-receiver' state='closed'>
+										<div classs='tutorial-body' id='tutorial-receiver-body'>
+											<h5>
+												Installing Your "Data Receiver"
+											</h5>
+											<ol>
+												<li>
+													Unzip the .zip file which you'll receive after clicking the download button. Typically unzipping can be accomplished by double clicking on the downloaded file
+												</li>
+												<li>
+													Locate the folder called "<?php echo $app->receiver_uri() ?>"
+												</li>
+												<li>
+													<p>
+														Upload the entire <?php echo $app->receiver_uri() ?> folder and the facebook.php file it contains to <?php echo $app->name() ?>. It should be placed in the <?php echo HTML::anchor("http://en.wikipedia.org/wiki/Root_directory", "root directory", array('target' => '_blank')) ?>. Uploading can be accomplished using FTP and we recommend <?php echo HTML::anchor("http://filezilla-project.org/", "FireZilla", array('target' => 'blank')) ?>
+													</p>
+													<p class='step-by-step'>
+														<strong>Use GoDaddy?</strong> Find step by step upload instructions <?php echo HTML::anchor("http://support.godaddy.com/help/article/3239/uploading-files-using-the-ftp-file-manager?locale=en", "here", array('target' => '_blank')) ?>
+														<br />
+														<strong>Use WordPress?</strong> Find step by step upload instructions <?php echo HTML::anchor("http://codex.wordpress.org/FTP_Clients", "here", array('target' => '_blank')) ?>
+													</p>
+												</li>
+											</ol>
+										</div>
+										<p>
+											<a href="#close" class='btn tutorial-closer'>Close</a>
+										</p>
+									</div><!-- .tutorial hide -->
 								</div><!-- .span4 -->
 								<div class='span2 btn-downloader-container'>
 									<?php if ($user->plan()->downloads()): ?>
-										<button class="btn btn-info btn-downloader" id='download-receiver-btn'>
+										<button class="btn btn-info btn-downloader" data-open='#receiver-setup'>
 											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
 										</button>
 									<?php else: ?>

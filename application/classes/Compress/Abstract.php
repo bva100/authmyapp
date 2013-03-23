@@ -29,6 +29,13 @@ abstract class Compress_Abstract {
 	protected $archive_dir;
 	
 	/**
+	 * Save file as what name inside archive dir?
+	 *
+	 * @var string
+	 */
+	protected $archive_name;
+	
+	/**
 	 * Overwrite previously existing files?
 	 *
 	 * @var bool
@@ -41,10 +48,11 @@ abstract class Compress_Abstract {
 	 * @param array $files 
 	 * @param string $destination 
 	 * @param string $archive_dir . Set dir for files within archive. Leave null to use source dir.
+	 * @param string $archive_name. Save file as what name inside archive dir? Only works if a single file is uploaded.
 	 * @param bool $overwrite 
 	 * @author BRIAN ANDERSON
 	 */
-	public function __construct(array $files, $destination, $archive_dir = NULL, $overwrite = TRUE)
+	public function __construct(array $files, $destination, $archive_dir = NULL, $archive_name = NULL, $overwrite = TRUE)
 	{
 		if ( ! is_string($destination)) 
 		{
@@ -54,15 +62,20 @@ abstract class Compress_Abstract {
 		{
 			trigger_error('Compress_Abstract::construct() expects argument 3, archive_dir, to be string', E_USER_WARNING);
 		}
+		if (isset($target_name) AND ! is_string($target_name)) 
+		{
+			trigger_error('Compress_Abstract::construct() expects argument 4, archive_name, to be string', E_USER_WARNING);
+		}
 		if ( ! is_bool($overwrite)) 
 		{
-			trigger_error('Compress_Abstract::construct() expects argument 4, overwrite, to be bool', E_USER_WARNING);
+			trigger_error('Compress_Abstract::construct() expects argument 5, overwrite, to be bool', E_USER_WARNING);
 		}
 		
-		$this->files       = $files;
-		$this->destination = $destination;
-		$this->archive_dir = $archive_dir;
-		$this->overwrite   = $overwrite;
+		$this->files        = $files;
+		$this->destination  = $destination;
+		$this->archive_dir  = $archive_dir;
+		$this->archive_name = $archive_name;
+		$this->overwrite    = $overwrite;
 	}
 	
 	/**

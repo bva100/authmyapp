@@ -1,16 +1,28 @@
 $(document).ready(function() {
 	
+	$("#download-setup-results-sender").show(function(){
+		var appId = $('.app-id').val();
+		$("#download-setup-results-sender").load('/downloads?app_id=' + appId + ' #tutorial-sender-body');
+	});
+	
+	$("#download-setup-results-receiver").show(function(){
+		var appId = $('.app-id').val();
+		$("#download-setup-results-sender").load('/downloads?app_id=' + appId + ' #tutorial-receiver-body');
+	});
+	
 	$(".tutorial-open-close").click(function(event) {
 		event.preventDefault();
 		var $tutorial = $( $(this).attr('data-open') );
 		var state     = $tutorial.attr('state');
-		tutorialOpenClose($tutorial, state);
 		tutorialOpenCloseText( $(this), state);
+		tutorialOpenClose($tutorial, state);
 	});
 	
 	$(".tutorial-closer").click(function(event) {
 		event.preventDefault();
 		var $tutorial = $(this).parents('.tutorial');
+		var $openClose = $tutorial.siblings('.tutorial-open-close');
+		tutorialOpenCloseText($openClose, 'opened');
 		tutorialOpenClose($tutorial, 'opened');
 	});
 	
@@ -25,18 +37,30 @@ $(document).ready(function() {
 		downloadSetupHide();
 	});
 	
-	$("#connect-facebook-setup .submitter").click(function(event) {
+	$("#connect-button-setup .submitter").click(function(event) {
 		event.preventDefault();
-		var text = $('#facebook-connect-text-input').val();
-		var size = $("#facebook-connect-size-input").val();
+		var type = $("#type-input").val();
+		var text = $('#text-input').val();
+		var size = $("#size-input").val();
 		var appId = $('.app-id').val();
 		
-		$.post('/downloads/process', {type: 'connect_facebook_button', text: text, size: size, app_id: appId}, function(data, textStatus, xhr) {
+		$.post('/downloads/process', {type: type, text: text, size: size, app_id: appId}, function(data, textStatus, xhr) {
 			if (textStatus === 'success' && data) {
-				$("#download-setup-results").hide().html(data).fadeIn();
-			};
+				$("#download-setup-results").html(data);
+				$("#results-container").fadeIn();
+			}else
+			{
+				alert('Your request cannot be completed at this time. Please try again soon');
+			}
 		});
-		
+	});
+	
+	$("#sender-setup .submitter").click(function(event) {
+		$("#results-container").fadeIn('slow');
+	});
+	
+	$("#receiver-setup .submitter").click(function(event) {
+		$("#results-container").fadeIn('slow');
 	});
 	
 });
@@ -47,6 +71,9 @@ function downloadSetupShow ($toOpen) {
 	
 	// hide siblings
 	$toOpen.siblings().hide();
+	
+	// hide download results
+	$("#download-setup-results").hide();
 	
 	// animate
 	$('.download-content').fadeOut(function() {
@@ -76,8 +103,10 @@ function tutorialOpenClose ($tutorial, state) {
 
 function tutorialOpenCloseText ($openClose, state) {
 	if (state === 'opened') {
-		$openClose.text('Open Tutorial');
+		//close it then display text
+		$openClose.text('View Instructions');
 	}else{
-		$openClose.text('Close Tutorial');
+		// open it then display text
+		$openClose.text('Hide Instructions');
 	}
 }

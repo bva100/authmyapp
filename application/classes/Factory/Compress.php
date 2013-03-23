@@ -14,11 +14,12 @@ class Factory_Compress extends Factory_Abstract {
 	 * @param array $files 
 	 * @param string $destination 
 	 * @param string $archive_dir. Set dir for files within archive. Leave null to use source dir.
+	 * @param string $archive_name. Set target name for file. Only works if a single file is uploaded.
 	 * @param bool $overwrite 
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public static function create($type, array $files, $destination, $archive_dir, $overwrite = TRUE)
+	public static function create($type, array $files, $destination, $archive_dir, $archive_name, $overwrite = TRUE)
 	{
 		if ( ! is_string($destination)) 
 		{
@@ -30,7 +31,7 @@ class Factory_Compress extends Factory_Abstract {
 		}
 		switch ($type) {
 			case 'zip':
-				return new Compress_Zip($files, $destination, $archive_dir, $overwrite);
+				return new Compress_Zip($files, $destination, $archive_dir, $archive_name, $overwrite);
 				break;
 			default:
 				trigger_error('Factory_Compress::create does not recognize type '.$type, E_USER_WARNING);

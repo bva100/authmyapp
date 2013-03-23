@@ -7,7 +7,8 @@
  */
 class Model_App extends Model_Abstract implements Interface_Model_App {
 	
-	const DEFAULT_REDIRECT_URI = '/authMyAppReceiver';
+	const DELIVERY_GET = 1;
+	const DELIVERY_GET_ENCRYPTED = 2;
 	
 	/**
 	 * Creates a new App with name and organization. If app name and org_id combo already exists, returns false. Otherwise returns Model_App object.
@@ -358,6 +359,38 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			$this->db_update();
 		}
+	}
+	
+	/**
+	 * set storage_method
+	 *
+	 * @param int $storage_method. Ints defined by consts in this class.
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_storage_method($storage_method, $lazy = FALSE)
+	{
+		if ( ! is_int($storage_method) )
+		{
+			trigger_error('set_storage_method expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->storage_method = $storage_method;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get storage_method
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function storage_method()
+	{
+		return( (int) $this->dao->storage_method);
 	}
 	
 	/**

@@ -43,13 +43,22 @@ class Compress_Zip extends Compress_Abstract {
 				return(FALSE);
 			}
 			
-			//add files
+			// add files
 			foreach($valid_files as $file) 
 			{
 				if (isset($this->archive_dir)) 
 				{
-					$filename = $this->filename($file);
-					$path = $this->archive_dir.$filename;
+					if (isset($this->archive_name) AND count($valid_files) === 1) 
+					{
+						// set using archive dir and archive_name
+						$path = $this->archive_dir.$this->archive_name;
+					}
+					else
+					{
+						// set using source filename and archive_fir
+						$filename = $this->filename($file);
+						$path = $this->archive_dir.$filename;	
+					}
 				}
 				else
 				{
