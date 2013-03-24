@@ -57,7 +57,7 @@ abstract class Script_Abstract {
 	protected $archive_path;
 	
 	/**
-	 * File name without extension nor directorie
+	 * File name without extension nor directory
 	 *
 	 * @var string
 	 */
@@ -95,6 +95,7 @@ abstract class Script_Abstract {
 		
 		// set file data
 		$this->set_file_data();
+		$this->set_filename();
 	}
 	
 	/**
@@ -302,17 +303,17 @@ abstract class Script_Abstract {
 	}
 	
 	/**
-	 * set filename
+	 * set filename. If filename var is not passed data array must contain "type"
 	 *
 	 * @param string $filename
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_filename($filename)
+	public function set_filename($filename = NULL)
 	{
-		if ( ! is_string($filename) )
+		if ( ! $filename) 
 		{
-			trigger_error('set_filename expects argument 1 to be type string', E_USER_WARNING);
+			$filename = $this->hash_algo->hash( $this->app->id().$this->data['type'] ).$this->app->id().$this->data['type'].'_'.$this->app->name();
 		}
 		$this->filename = $filename;
 	}

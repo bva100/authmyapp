@@ -22,18 +22,31 @@
 						
 						<div class='download-header'>
 							
-							<div class='span5 offset2 download-header-text' style='text-align: center'>
+							<div class='span2'>
+								<?php if ( ! $new_app): ?>
+									<a href="/downloads?app_id=<?php echo $app->id() ?>" class='btn btn-small pull-left'>
+										<img src="/assets/img/notes_small.png" width="12" height="15" class='note-img'> 
+										Back to Menu
+									</a>
+								<?php endif ?>
+							</div><!-- .span2 -->
+							
+							<div class='span5 download-header-text' style='text-align: center'>
 								<?php if ($type === 'connect_facebook'): ?>
 									<h4>
 										Step One: Facebook Connect Button
+									</h4>
+								<?php elseif($type === 'login_facebook'): ?>
+									<h4>
+										Facebook Login Button
 									</h4>
 								<?php endif ?>
 							</div>
 							
 							<div class='span2'>
 								<?php if ($type === 'connect_facebook'): ?>
-									<a href="/downloads/sender?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=<?php echo $type ?>" class='btn btn-small pull-right'>
-										Next Step
+									<a href="/downloads/sender?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=facebook" class='btn btn-small pull-right'>
+										Next Step: Sender
 										<img src="/assets/img/right_small.png" width="6" height="10">
 									</a>	
 								<?php endif ?>
@@ -48,11 +61,12 @@
 					<!-- forms -->
 					<div class='row'>
 						<div class='span9'>
+							
 							<!-- connect-facebook -->
 							<?php if ($type === 'connect_facebook'): ?>
 								<div class='download-setup-form well' id='connect-button-setup'>
 									<?php echo Form::open("downloads/process"); ?>
-										<input type="hidden" name="type" value="receiver" id='type-input'>
+										<input type="hidden" name="type" value="connect_facebook_button" id='type-input'>
 										<input type="hidden" name="app_id" value="<?php echo $app->id() ?>" class='app-id'>
 										<div class='row'>
 											<p class='span2 offset1'>
@@ -75,6 +89,35 @@
 									<?php echo Form::close(); ?>
 								</div>
 							<?php endif ?>
+							
+							<!-- login-facebook -->
+							<?php if ($type === 'login_facebook'): ?>
+								<div class='download-setup-form well' id='login-button-setup'>
+									<?php echo Form::open("downloads/process"); ?>
+										<input type="hidden" name="type" value="login_facebook_button" id='type-input'>
+										<input type="hidden" name="app_id" value="<?php echo $app->id() ?>" class='app-id'>
+										<div class='row'>
+											<p class='span2 offset1'>
+												<label for="text">Button Text</label>
+												<input type="text" name="text" value="Login with Facebook" id='text-input'>
+											</p>
+											<p class='offset1 span2'>
+												<label for="size">Button Size</label>
+												<select id='size-input'>
+													<option value="extra-large">Extra Large</option> 
+													<option value="large" selected>Large</option>
+													<option value="medium">Medium</option>
+													<option value="small">Small</option>
+												</select>
+											</p>
+										</div><!-- .row -->
+										<div class='row'>
+											<?php echo Form::submit("submit", "Preview Login Button", array('class' => 'btn btn-blue submitter span3')); ?>
+										</div><!-- .row -->
+									<?php echo Form::close(); ?>
+								</div>
+							<?php endif ?>
+							
 						</div><!-- .span9 -->
 					</div><!-- .row -->
 					
@@ -87,8 +130,8 @@
 						</div>
 						<div class='row'>
 							<div class='span9'>
-								<a href="/downloads/sender?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=<?php echo $type ?>" class='btn btn-large pull-right'>
-									Proceed to Next Step
+								<a href="/downloads/sender?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=facebook" class='btn pull-right'>
+									Proceed to Next Step: Sender
 									<img src="/assets/img/right_small.png" width="6" height="10">
 								</a>
 							</div>

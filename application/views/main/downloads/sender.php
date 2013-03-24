@@ -23,11 +23,18 @@
 						<div class='download-header'>
 							
 							<div class='span2'>
-								<?php if ($type === 'facebook'): ?>
-									<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=connect_facebook" class='btn btn-small pull-left'>
-										<img src="/assets/img/left_small.png" width="6" height="10">
-										Previous Step
-									</a>	
+								<?php if ( ! $new_app ): ?>
+									<a href="/downloads?app_id=<?php echo $app->id() ?>" class='btn btn-small pull-left'>
+										<img src="/assets/img/notes_small.png" width="12" height="15" class='note-img'> 
+										Back to Menu
+									</a>
+								<?php else: ?>
+									<?php if ($type === 'facebook'): ?>
+										<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=connect_facebook" class='btn btn-small pull-left'>
+											<img src="/assets/img/left_small.png" width="6" height="10">
+											Previous Step
+										</a>	
+									<?php endif ?>
 								<?php endif ?>
 							</div><!-- .span2 -->
 							
@@ -42,7 +49,7 @@
 							<div class='span2'>
 								<?php if ($type === 'facebook'): ?>
 									<a href="/downloads/receiver?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>" class='btn btn-small pull-right'>
-										Next Step
+										Next Step: Receiver
 										<img src="/assets/img/right_small.png" width="6" height="10">
 									</a>	
 								<?php endif ?>
@@ -87,8 +94,8 @@
 						</div>
 						<div class='row'>
 							<div class='span9'>
-								<a href="/downloads/receiver?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>" class='btn btn-large pull-right'>
-									Proceed to Next Step
+								<a href="/downloads/receiver?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>" class='btn pull-right'>
+									Proceed to Next Step: receiver
 									<img src="/assets/img/right_small.png" width="6" height="10">
 								</a>
 							</div>

@@ -5,6 +5,14 @@
 	padding: 0px;
 	margin: 0px;
 }
+.app-header {
+	padding: 0px;
+}
+.app-name a{
+	width: 100%;
+	display: block;
+	padding: 20px;
+}
 #primary-download-well {
 	text-align: center;
 }
@@ -107,14 +115,14 @@
 	position: relative;
 	top: 5px;
 }
-
-
-
+.note-img {
+	margin-right: 4px;
+}
 /*connectButton*/
-#connect-button-setup .submitter {
+#connect-button-setup .submitter, #login-button-setup .submitter {
 	margin: 0px auto;
 	display: block;
 }
-#connect-button-setup {
+#connect-button-setup, #login-button-setup {
 	padding-left: 40px;
 }

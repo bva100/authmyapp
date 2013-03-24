@@ -7,7 +7,7 @@ $(document).ready(function() {
 	
 	$("#download-setup-results-receiver").show(function(){
 		var appId = $('.app-id').val();
-		$("#download-setup-results-sender").load('/downloads?app_id=' + appId + ' #tutorial-receiver-body');
+		$("#download-setup-results-receiver").load('/downloads?app_id=' + appId + ' #tutorial-receiver-body');
 	});
 	
 	$(".tutorial-open-close").click(function(event) {
@@ -26,18 +26,7 @@ $(document).ready(function() {
 		tutorialOpenClose($tutorial, 'opened');
 	});
 	
-	$(".btn-downloader").click(function(event) {
-		event.preventDefault();
-		var $toOpen = $( $(this).attr('data-open') );
-		downloadSetupShow($toOpen);
-	});
-	
-	$("#download-setup-back-button").click(function(event) {
-		event.preventDefault();
-		downloadSetupHide();
-	});
-	
-	$("#connect-button-setup .submitter").click(function(event) {
+	$("#connect-button-setup .submitter, #login-button-setup .submitter").click(function(event) {
 		event.preventDefault();
 		var type = $("#type-input").val();
 		var text = $('#text-input').val();
@@ -64,30 +53,6 @@ $(document).ready(function() {
 	});
 	
 });
-
-function downloadSetupShow ($toOpen) {
-	// set vars
-	$('#download-setup-title').text($toOpen.attr('data-title'));
-	
-	// hide siblings
-	$toOpen.siblings().hide();
-	
-	// hide download results
-	$("#download-setup-results").hide();
-	
-	// animate
-	$('.download-content').fadeOut(function() {
-		$('.download-setup').fadeIn(function() {
-			$toOpen.fadeIn();
-		});
-	})
-}
-
-function downloadSetupHide () {
-	$(".download-setup").fadeOut(function () {
-		$(".download-content").fadeIn();
-	})
-}
 
 function tutorialOpenClose ($tutorial, state) {
 	if (state === 'opened') {

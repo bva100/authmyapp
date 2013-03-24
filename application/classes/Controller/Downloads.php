@@ -12,6 +12,13 @@ class Controller_Downloads extends Controller_Home {
 		$app_id  = (int)  get('app_id', 0);
 		$new_app = (bool) get('new_app', FALSE);
 		
+		// if no app_id was passed, but user only has one app, redirect
+		if ( ! $app_id AND count($this->user->apps()) === 1) 
+		{
+			$users_apps = $this->user->apps();
+			$this->redirect('downloads?app_id='.$users_apps['0']->id(), 302);
+		}
+		
 		if ($app_id) 
 		{
 			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
@@ -41,6 +48,12 @@ class Controller_Downloads extends Controller_Home {
 		$app_id  = (int)   get('app_id', 0);
 		$new_app = (bool) get('new_app', FALSE);
 		$type    = (string) get('type', 'connect_facebook');
+		
+		// check access
+		if ( ! $this->user->plan()->downloads()) 
+		{
+			throw new Exception('You must upgrade your account before attempting to download this file. To get started, <a href="/home/plan">click here</a>', 1);
+		}
 		
 		// get app
 		if ($app_id) 
@@ -73,6 +86,12 @@ class Controller_Downloads extends Controller_Home {
 		$new_app = (bool)   get('new_app', FALSE);
 		$type    = (string) get('type', 'facebook');
 		
+		// check access
+		if ( ! $this->user->plan()->downloads()) 
+		{
+			throw new Exception('You must upgrade your account before attempting to download this file. To get started, <a href="/home/plan">click here</a>', 1);
+		}
+		
 		// get app
 		if ($app_id) 
 		{
@@ -103,6 +122,12 @@ class Controller_Downloads extends Controller_Home {
 		$app_id  = (int)     get('app_id', 0);
 		$new_app = (bool)    get('new_app', FALSE);
 		$type    = (string ) get('type', 'facebook');
+		
+		// check access
+		if ( ! $this->user->plan()->downloads()) 
+		{
+			throw new Exception('You must upgrade your account before attempting to download this file. To get started, <a href="/home/plan">click here</a>', 1);
+		}
 		
 		// get app
 		if ($app_id) 
@@ -137,6 +162,7 @@ class Controller_Downloads extends Controller_Home {
 		$size = (string)   post('size', 'large');
 		
 		$data = array(
+			'type' => $type,
 			'text' => $text,
 			'size' => $size,
 		);
@@ -146,10 +172,10 @@ class Controller_Downloads extends Controller_Home {
 		$app_dao   = Factory_Dao::create('kohana', 'app', $app_id);
 		$app       = Factory_Model::create($app_dao);
 		$script    = Factory_Script::create($type, $this->user, $app, $data);
-		$script->set_compression_type('zip');
 		
-		// create file
-		$results = $script->create();
+		// create filename
+		$script->set_compression_type('zip');
+		$results = $script->create( $type );
 		if ( ! $results) 
 		{
 			throw new Exception('We cannot complete your request at this time, please try again soon', 1);
@@ -158,7 +184,15 @@ class Controller_Downloads extends Controller_Home {
 		// redirect or print url on ajax
 		if ( ! $this->request->is_ajax())
 		{
-			$this->redirect($script->url(), 302);
+			if ($type === 'connect_facebook_button' OR $type === 'login_facebook_button')
+			{
+				echo $script->text().' <hr> <a href="/downloads?app_id='.$app->id().'">Click Here to Return</a>';
+				die;
+			}
+			else
+			{
+				$this->redirect($script->url(), 302);	
+			}
 		}
 		else
 		{

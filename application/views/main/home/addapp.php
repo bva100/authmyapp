@@ -28,11 +28,23 @@
 									<div class="controls">
 										<input type="text" id="inputName" placeholder="Name" name='name'>
 									</div>
+								</div>
+								<div class='control-group'>
 									<label class="control-label" for="inputDomain">Domain</label>
 									<div class="controls">
 										<input type="text" id="inputDomain" placeholder="www.mywebsite.com" name='domain'>
 									</div>
 								</div>
+								<div class='control-group'>
+									<label class="control-label" for="inputPostAuthUrl">
+										Redirect Successful Signups To
+										<a href="#helpPostAuthUrl" id='help-post-auth-url' class='pull-right'>help!</a>
+									</label>
+									<div class='controls'>
+										<input type="text" id="inputPostAuthUrl" placeholder="www.mywebsite.com/welcome" name='postAuthUrl'>
+									</div><!-- .controls -->
+								</div><!-- .control-group -->
+								
 
 								<legend>
 									Organization
@@ -55,12 +67,19 @@
 								<legend>
 									Optional Nerdy Stuff
 								</legend>
-
-								<label class="control-label" for="inputUri">Redirect Uri for Signups</label>
-								<div class="controls">
-									<input type="text" id="inputUri" placeholder="/authMyAppReceiver" name='uri'>
+								<div class='control-group'>
+									<label class="control-label" for="inputSenderUri">Directions Sender Uri</label>
+									<div class='controls'>
+										<input type="text" id="inputSenderUri" placeholder="/AuthMyAppDirectionSender" name='uri'>
+									</div><!-- .controls -->
 								</div>
-
+								<div class='control-group'>
+									<label class="control-label" for="inputReceiverUri">Data Receiver Uri</label>
+									<div class="controls">
+										<input type="text" id="inputReceiverUri" placeholder="/AuthMyAppReceiver">
+									</div>
+								</div><!-- .control-group -->
+								
 								<p class='submitter'>
 									<?php echo Form::submit("submit", "Create It", array('class' => 'btn btn-blue btn-large btn-block', 'id' => 'submit-addapp')); ?>
 								</p>

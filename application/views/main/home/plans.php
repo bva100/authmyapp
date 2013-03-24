@@ -78,7 +78,7 @@
 										<input type="hidden" name="plan_id" value="<?php echo $plan->id() ?>">
 										<input type="hidden" name="app_id" value="<?php echo $app->id() ?>">
 										<input type="hidden" name="new_app" value="<?php echo $new_app ?>">
-										<?php echo Form::submit("submit", "Select", array('class' => 'btn btn-info btn-plan-action btn-plan-submit')); ?>
+										<?php echo Form::submit("submit", "Select", array('class' => 'btn btn-blue btn-plan-action btn-plan-submit')); ?>
 									<?php echo Form::close(); ?>
 									
 								<?php else: ?>
@@ -88,12 +88,12 @@
 									<?php elseif($user->plan_id() > $plan->id()): ?>
 										<?php echo Form::open("home/plansProcess"); ?>
 											<input type="hidden" name="plan_id" value="<?php echo $plan->id() ?>">
-											<?php echo Form::submit("submit", "Select", array('class' => 'btn btn-info btn-plan-action')); ?>
+											<?php echo Form::submit("submit", "Select", array('class' => 'btn btn-plan-action')); ?>
 										<?php echo Form::close(); ?>
 									<?php else: ?>
 										<?php echo Form::open("home/plansProcess"); ?>
 											<input type="hidden" name="plan_id" value="<?php echo $plan->id() ?>">
-											<?php echo Form::submit("submit", "Upgrade", array('class' => 'btn btn-info btn-plan-action')); ?>
+											<?php echo Form::submit("submit", "Upgrade", array('class' => 'btn btn-blue btn-plan-action')); ?>
 										<?php echo Form::close(); ?>
 									<?php endif ?>
 									

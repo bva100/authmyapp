@@ -77,7 +77,7 @@ class Script_Connect_Button_Facebook extends Script_Abstract {
 		// create html and css
 		$this->file_data = '
 		
-		<a href="'.$this->app->sender_url().'?button_version='.Controller_Api::CONNECT_VERSION.'" class="btn-facebook" target="_top">'.$this->data['text'].'</a>
+		<a href="'.$this->app->sender_url().'/Facebook.php?button_version='.Controller_Api::CONNECT_VERSION.'" class="btn-facebook" target="_top">'.$this->data['text'].'</a>
 		
 		<style type="text/css" media="screen">
 			.btn-facebook {
@@ -177,22 +177,15 @@ class Script_Connect_Button_Facebook extends Script_Abstract {
 	 */
 	public function create()
 	{
-		// set filename
-		$filename = $this->hash_algo->hash( $this->user->email().'download_connect_facebook' );
-		$this->set_filename($filename);
+		if ( ! $this->filename) 
+		{
+			$this->set_filename();
+		}
 		
 		// create file
 		file_put_contents ($this->path().$this->filename().'.html', $this->file_data, LOCK_EX);
 		
 		return file_exists($this->path().$this->filename().'.html');
-		
-		// set archive path
-		// $this->set_archive_path('buttons/');
-		
-		// zip
-		// $compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.html'), $this->path().$this->filename().'.zip', $this->archive_path(), TRUE);
-		// $results = $compress->execute();
-		// return $results;
 	}
 	
 	/**

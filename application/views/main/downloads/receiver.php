@@ -23,10 +23,17 @@
 						<div class='download-header'>
 							
 							<div class='span2'>
-								<a href="/downloads/sender?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=<?php echo $type ?>" class='btn btn-small pull-left'>
-									<img src="/assets/img/left_small.png" width="6" height="10">
-									Previous Step
-								</a>
+								<?php if ( ! $new_app): ?>
+									<a href="/downloads?app_id=<?php echo $app->id() ?>" class='btn btn-small pull-left'>
+										<img src="/assets/img/notes_small.png" width="12" height="15" class='note-img'> 
+										Back to Menu
+									</a>
+								<?php else: ?>
+									<a href="/downloads/sender?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=<?php echo $type ?>" class='btn btn-small pull-left'>
+										<img src="/assets/img/left_small.png" width="6" height="10">
+										Previous Step
+									</a>
+								<?php endif ?>
 							</div><!-- .span2 -->
 							
 							<div class='span5 download-header-text' style='text-align: center'>
@@ -36,7 +43,7 @@
 							</div>
 							
 							<div class='span2'>
-								<a href="/downloads?app_id<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>" class='btn btn-small pull-right'>
+								<a href="/downloads?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>" class='btn btn-small pull-right'>
 									Complete
 									<img src="/assets/img/right_small.png" width="6" height="10">
 								</a>
@@ -59,7 +66,7 @@
 									<span class="label label-important">Warning</span> This file contains a secret code which is unique to <?php echo $app->name() ?>. For security purposes, it is important that you do not share this file with others.
 								</p>
 								<?php echo Form::open("downloads/process"); ?>
-									<input type="hidden" name="type" value="sender">
+									<input type="hidden" name="type" value="receiver">
 									<input type="hidden" name="app_id" value="<?php echo $app->id() ?>" class='app-id'>
 									<hr />
 									<?php echo Form::submit("submit", "Download Data Receiver", array('class' => 'btn btn-blue submitter')); ?>
@@ -78,8 +85,8 @@
 						</div>
 						<div class='row'>
 							<div class='span9'>
-								<a href="/downloads/receiver?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>" class='btn btn-large pull-right'>
-									Proceed to Next Step
+								<a href="/downloads?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>" class='btn pull-right'>
+									Complete
 									<img src="/assets/img/right_small.png" width="6" height="10">
 								</a>
 							</div>

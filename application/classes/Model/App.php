@@ -370,7 +370,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	 */
 	public function post_auth_uri()
 	{
-		return($this->post_auth_uri);
+		return($this->dao->post_auth_uri);
 	}
 	
 	/**

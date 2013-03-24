@@ -183,9 +183,10 @@ header( "Location: '.URL::base(TRUE).'connect_facebook?app_id='.$this->app->id()
 	 */
 	public function create()
 	{
-		// set filename
-		$filename = $this->hash_algo->hash( $this->user->email().'download_sender' );
-		$this->set_filename($filename);
+		if ( ! $this->filename) 
+		{
+			$this->set_filename();
+		}
 		
 		// create file
 		file_put_contents ($this->path().$this->filename().'.php', $this->file_data, LOCK_EX);
@@ -196,9 +197,20 @@ header( "Location: '.URL::base(TRUE).'connect_facebook?app_id='.$this->app->id()
 		$archive_path = '/'.$archive_path;
 		$this->set_archive_path( $archive_path );
 		
-		// zip
-		$compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.php'), $this->path().$this->filename().'.zip', $this->archive_path(), '/Facebook.php', TRUE);
-		$results = $compress->execute();
+		if ( file_exists($this->path().$this->filename().'.php') ) 
+		{
+			// zip
+			$compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.php'), $this->path().$this->filename().'.zip', $this->archive_path(), '/Facebook.php', TRUE);
+			$results = $compress->execute();
+			
+			// remove orig file
+			unlink( $this->path().$this->filename().'.php' );
+		}
+		else
+		{
+			$results = FALSE;
+		}
+		
 		return $results;
 	}
 	

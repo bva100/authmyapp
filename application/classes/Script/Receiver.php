@@ -417,34 +417,25 @@ $sessionHelper = new SessionHelper();
 $sessionHelper->secure();
 
 // hardcoded App vars. This can be changed in your apps settings on AuthMyApp.com. After changing settings, please re-install this file onto your server.
-$storage_method = "'.$app->storage_method().'";
-$delivery_method = "'.$app->delivery_method().'";
+$storage_method = "'.$this->app->storage_method().'";
 
-if ($delivery_method === "'.Model_App::DELIVERY_GET_ENCRYPTED.'")
-{
-	// working with encrypted GET string
-
-}
-else
-{
-	// working with GET
-	$email         = RequestHelper::request("email");
-	$firstName     = RequestHelper::request("first_name");
-	$lastName      = RequestHelper::request("last_name");
-	$birthday      = (int) RequestHelper::request("birthday");
-	$picture       = RequestHelper::request("picture");
-	$gender        = RequestHelper::request("gender");
-	$ip            = RequestHelper::request("ip");
-	$employerName  = RequestHelper::request("employer_name");
-	$jobTitle      = RequestHelper::request("job_title");
-	$countryCode   = RequestHelper::request("country_code");
-	$timezone      = (int) RequestHelper::request("timezone");
-	$facebookId    = RequestHelper::request("facebook_id");
-	$method        = RequestHelper::request("method"); // source of data
-	$accessToken   = RequestHelper::request("access_token");
-	$tokenExpires  = (int) RequestHelper::request("tokenExpires");
-	$securityCode  = RequestHelper::request("security_code");
-}
+// GET vars
+$email         = RequestHelper::request("email");
+$firstName     = RequestHelper::request("first_name");
+$lastName      = RequestHelper::request("last_name");
+$birthday      = (int) RequestHelper::request("birthday");
+$picture       = RequestHelper::request("picture");
+$gender        = RequestHelper::request("gender");
+$ip            = RequestHelper::request("ip");
+$employerName  = RequestHelper::request("employer_name");
+$jobTitle      = RequestHelper::request("job_title");
+$countryCode   = RequestHelper::request("country_code");
+$timezone      = (int) RequestHelper::request("timezone");
+$facebookId    = RequestHelper::request("facebook_id");
+$method        = RequestHelper::request("method"); // source of data
+$accessToken   = RequestHelper::request("access_token");
+$tokenExpires  = (int) RequestHelper::request("tokenExpires");
+$securityCode  = RequestHelper::request("security_code");
 
 // check security code
 if ( $sessionHelper->get("authMyAppSecurityToken") !== $securityCode )
@@ -552,6 +543,7 @@ switch ($storage_method) {
 			"facebookId"     => $facebookId,
 			"method"         => $method,
 		));
+		
 		break;
 }
 
@@ -561,7 +553,59 @@ header( "Location: '.$this->app->post_auth_url().'" );';
 	
 	public function create()
 	{
+		if ( ! $this->filename) 
+		{
+			$this->set_filename();
+		}
 		
+		// create file
+		file_put_contents ($this->path().$this->filename().'.php', $this->file_data, LOCK_EX);
+		
+		// set archive path. Ensure first letter is capitalized and string should begin with "/"
+		$archive_path = $this->app->receiver_uri();
+		$archive_path = ucfirst( ltrim( $archive_path, '/' ) );
+		$archive_path = '/'.$archive_path;
+		$this->set_archive_path( $archive_path );
+		
+		if ( file_exists($this->path().$this->filename().'.php') ) 
+		{
+			// zip
+			$compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.php'), $this->path().$this->filename().'.zip', $this->archive_path(), '/Index.php', TRUE);
+			$results = $compress->execute();
+			
+			// remove original
+			unlink($this->path().$this->filename().'.php');
+		}
+		else
+		{
+			$results = FALSE;
+		}
+		
+		// return results
+		return $results;
+	}
+	
+	/**
+	 * Text
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function text()
+	{
+		return $this->file_data;
+	}
+	
+	/**
+	 * Url
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function url()
+	{
+		// return compression url
+		return $this->url_path().$this->filename().'.'.$this->compression_type();
 	}
 	
 }

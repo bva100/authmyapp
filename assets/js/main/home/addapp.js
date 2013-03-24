@@ -34,6 +34,12 @@ $(document).ready(function() {
 		};
 	});
 	
+	$("#help-post-auth-url").popover({
+			'title': 'Where Should We Send Them Next?',
+			'content': 'Type in the URL of the page you\'d like to send the user after they\'ve successfully signed up using Facebook Connect.',
+			'trigger': 'hover',
+		});
+	
 });
 
 function valid_url (url) {
