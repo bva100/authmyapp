@@ -32,6 +32,10 @@ interface Interface_Model_App
 	public function receiver_uri();
 	public function receiver_url();
 	
+	public function set_post_auth_uri($post_auth_uri, $lazy = FALSE);
+	public function post_auth_uri();
+	public function post_auth_url();
+	
 	public function set_delivery_method($delivery_method, $lazy = FALSE);
 	public function delivery_method();
 	

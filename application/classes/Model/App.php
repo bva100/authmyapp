@@ -10,6 +10,12 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	const DELIVERY_GET = 1;
 	const DELIVERY_GET_ENCRYPTED = 2;
 	
+	const STORAGE_PHP_SESSION = 1;
+	const STORAGE_MYSQL       = 2;
+	const STRORAGE_POSTGRESQL = 3;
+	const STORAGE_SQLITE      = 4;
+	const STORAGE_ORACLE      = 5;
+	
 	/**
 	 * Creates a new App with name and organization. If app name and org_id combo already exists, returns false. Otherwise returns Model_App object.
 	 *
@@ -332,6 +338,50 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	public function receiver_url()
 	{
 		$uri = ltrim($this->receiver_uri(), '/');
+		return $this->domain().$uri;
+	}
+	
+	/**
+	 * set post_auth_uri
+	 *
+	 * @param string $post_auth_uri
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_post_auth_uri($post_auth_uri, $lazy = FALSE)
+	{
+		if ( ! is_string($post_auth_uri) )
+		{
+			trigger_error('set_post_auth_uri expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->post_auth_uri = $post_auth_uri;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get post_auth_uri
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function post_auth_uri()
+	{
+		return($this->post_auth_uri);
+	}
+	
+	/**
+	 * Get absolute url to post auth
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function post_auth_url()
+	{
+		$uri = ltrim($this->post_auth_uri(), '/');
 		return $this->domain().$uri;
 	}
 	

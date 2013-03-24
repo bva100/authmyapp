@@ -70,6 +70,21 @@ class SessionHelper {
 	{
 		$_SESSION[$key] = $value;
 	}
+	
+	/**
+	 * Set more than one session variable in one call
+	 *
+	 * @param array $array 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function massSet(array $array)
+	{
+		foreach ($array as $k => $v) 
+		{
+			self::set($k, $v);
+		}
+	}
 
 	/**
 	 * Getter

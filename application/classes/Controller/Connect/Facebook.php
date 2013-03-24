@@ -262,7 +262,7 @@ class Controller_Connect_Facebook extends Controller {
 		$app_user->set_ip(Request::$client_ip);
 		
 		// cache picture
-		$app_user->set_picture('https://graph.facebook.com/'.$app_user->facebook_id().'/picture?type=large&access_token='.$access_token);
+		$app_user->set_picture('https://graph.facebook.com/'.$app_user->facebook_id().'/picture?type=large');
 		
 		// create sender object and redirect
 		$sender = Factory_Sender::create('signup', 'facebook', $app, $app_user);

@@ -145,5 +145,7 @@ else
 $securityCode = SecurityHelper::md5_rand();
 $sessionHelper->set("authMyAppSecurityToken", $securityCode);
 
+print_r($sessionHelper->get("authMyAppSecurityToken"));
+
 // redirect
-header( "Location: http://192.168.2.5/connect_facebook?app_id=12&security_code=$securityCode&connect_version=0.8" );
+// header( "Location: http://192.168.2.5/connect_facebook?app_id=12&security_code=$securityCode&connect_version=0.8" );
