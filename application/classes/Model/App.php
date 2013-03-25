@@ -44,9 +44,13 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 			{
 				trigger_error('create_with_name_and_organization_id expects argument 2, name, to be string', E_USER_WARNING);
 			}
+			else if ( strlen($name) < 1 OR strlen($name) > 127 )
+			{
+				throw new Exception("Please enter a valid app name", 1);
+			}
 			else
 			{
-				$this->set_name($name);
+				$dao->name = $name;
 			}
 		}
 		if (isset($organization_id))
@@ -55,9 +59,13 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 			{
 				trigger_error('create_with_name_and_organization_id expects argument 3, organization_id, to be int', E_USER_WARNING);	
 			}
+			else if ( $organization_id < 0 )
+			{
+				throw new Exception("Please enter a valid organization id", 1);
+			}
 			else
 			{
-				$this->set_organization_id($organization_id);
+				$dao->organization_id = $organization_id;
 			}
 		}
 		$dao->create_timestamp = time();
@@ -306,7 +314,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	 */
 	public function sender_url()
 	{
-		$uri = ltrim($this->sender_uri(), '/');
+		$uri = trim($this->sender_uri(), '/');
 		return $this->domain().$uri;
 	}
 	
@@ -323,6 +331,10 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		if ( ! is_string($receiver_uri) )
 		{
 			trigger_error('set_receiver_uri expects argument 1 to be type string', E_USER_WARNING);
+		}
+		if ( strlen($receiver_uri) < 1 OR strlen($receiver_uri) > 127 )
+		{
+			throw new Exception("Please enter a valid sender uri", 1);
 		}
 		$this->dao->receiver_uri = $receiver_uri;
 		if ( ! $lazy)
@@ -351,7 +363,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	 */
 	public function receiver_url()
 	{
-		$uri = ltrim($this->receiver_uri(), '/');
+		$uri = trim($this->receiver_uri(), '/');
 		return $this->domain().$uri;
 	}
 	
@@ -368,6 +380,10 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		if ( ! is_string($post_auth_uri) )
 		{
 			trigger_error('set_post_auth_uri expects argument 1 to be type string', E_USER_WARNING);
+		}
+		if ( strlen($post_auth_uri) < 1 OR strlen($post_auth_uri) > 127 )
+		{
+			throw new Exception("Please enter a valid sender uri", 1);
 		}
 		$this->dao->post_auth_uri = $post_auth_uri;
 		if ( ! $lazy)
@@ -395,7 +411,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	 */
 	public function post_auth_url()
 	{
-		$uri = ltrim($this->post_auth_uri(), '/');
+		$uri = trim($this->post_auth_uri(), '/');
 		return $this->domain().$uri;
 	}
 	
@@ -412,6 +428,10 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		if ( ! is_int($delivery_method) )
 		{
 			trigger_error('set_delivery_method expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ( $delivery_method < 0 OR $delivery_method > 1000 )
+		{
+			throw new Exception("Please enter a valid delivery method");
 		}
 		$this->dao->delivery_method = $delivery_method;
 		if ( ! $lazy)
@@ -444,6 +464,11 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		if ( ! is_int($storage_method) )
 		{
 			trigger_error('set_storage_method expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ( $storage_method < 0 OR $storage_method > 1000 )
+		{
+			throw new Exception('Please enter a valid storage method', 1);
+			
 		}
 		$this->dao->storage_method = $storage_method;
 		if ( ! $lazy)
@@ -506,6 +531,10 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			trigger_error('set_picture_width expects argument 1 to be type int', E_USER_WARNING);
 		}
+		if ( $picture_width < 0 OR $picture_width > 100000) 
+		{
+			throw new Exception('Invalid picture width', 1);
+		}
 		$this->dao->picture_width = $picture_width;
 		if ( ! $lazy)
 		{
@@ -538,6 +567,10 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			trigger_error('set_picture_height expects argument 1 to be type int', E_USER_WARNING);
 		}
+		if ( $picture_height < 0 OR $picture_height > 100000) 
+		{
+			throw new Exception('Please enter a valid picture height', 1);
+		}
 		$this->dao->picture_height = $picture_height;
 		if ( ! $lazy)
 		{
@@ -555,18 +588,6 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	{
 		return( (int) $this->dao->picture_height);
 	}
-	
-	/**
-	 * get message
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function message()
-	{
-		return($this->dao->message);
-	}
-	
 	
 	/**
 	 * set facebook_app_id
@@ -609,6 +630,10 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		if ( ! is_string($facebook_secret) )
 		{
 			trigger_error('set_facebook_secret expects argument 1 to be type string', E_USER_WARNING);
+		}
+		if ( strlen($facebook_secret) < 5 OR strlen($facebook_secret) > 127 ) 
+		{
+			throw new Exception('Invalid Facebook secret. Please try again.', 1);
 		}
 		$this->dao->facebook_secret = $facebook_secret;
 		if ( ! $lazy)

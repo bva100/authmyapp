@@ -23,7 +23,7 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 			$pre_exists = self::exists($dao, $email, $app_id);
 			if ($pre_exists)
 			{
-				return(TRUE);
+				return( Factory_Model::create($dao) );
 			}
 			else
 			{
@@ -35,9 +35,16 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			throw new Exception('Invalid email address');
 		}
-		if (isset($app_id) AND ! is_int($app_id)) 
+		if (isset($app_id)) 
 		{
-			trigger_error('create_with_email_and_app_id expects argument 3, app_id, to be int', E_USER_WARNING);
+			if ( ! is_int($app_id))
+			{
+				trigger_error('create_with_email_and_app_id expects argument 3, app_id, to be int', E_USER_WARNING);
+			}
+			if ( $app_id < 0 ) 
+			{
+				throw new Exception('Invalid app id. Please try again soon.', 1);
+			}
 		}
 		
 		$dao->email            = $email;
@@ -142,6 +149,11 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			trigger_error('set_picture expects argument 1 to be type string', E_USER_WARNING);
 		}
+		if ( ! Valid::url($picture)) 
+		{
+			throw new Exception('Invalid picture url. Please try again', 1);
+		}
+		
 		$this->dao->picture = $picture;
 		if ( ! $lazy)
 		{
@@ -173,6 +185,10 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		if ( ! is_string($first_name) )
 		{
 			trigger_error('set_first_name expects argument 1 to be type string', E_USER_WARNING);
+		}
+		if ( strlen($first_name) < 0 OR strlen($first_name) > 127) 
+		{
+			throw new Exception('Please enter a valid first name', 1);
 		}
 		$this->dao->first_name = $first_name;
 		if ( ! $lazy)
@@ -206,6 +222,10 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			trigger_error('set_last_name expects argument 1 to be type string', E_USER_WARNING);
 		}
+		if ( strlen($last_name) < 0 OR strlen($last_name) > 127) 
+		{
+			throw new Exception('Please enter a valid first name', 1);
+		}
 		$this->dao->last_name = $last_name;
 		if ( ! $lazy)
 		{
@@ -237,6 +257,10 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		if ( ! is_int($birthday) )
 		{
 			trigger_error('set_birthday expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ( $birthday < -2524500000 OR $birthday > time() ) 
+		{
+			throw new Exception('Invalid birthday. Please try again', 1);
 		}
 		$this->dao->birthday = $birthday;
 		if ( ! $lazy)
@@ -270,6 +294,11 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			trigger_error('set_timezone expects argument 1 to be type int', E_USER_WARNING);
 		}
+		if ( $timezone < -24 OR $timezone > 1) 
+		{
+			throw new Exception('Timezone offset is invalid. Please try again.', 1);
+			
+		}
 		$this->dao->timezone = $timezone;
 		if ( ! $lazy)
 		{
@@ -302,6 +331,10 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			trigger_error('set_employer_name expects argument 1 to be type string', E_USER_WARNING);
 		}
+		if ( strlen($employer_name) < 1 OR strlen($employer_name) > 127 ) 
+		{
+			throw new Exception('Invalid employer name. Please try again', 1);
+		}
 		$this->dao->employer_name = $employer_name;
 		if ( ! $lazy)
 		{
@@ -333,6 +366,10 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		if ( ! is_string($job_title) )
 		{
 			trigger_error('set_job_title expects argument 1 to be type string', E_USER_WARNING);
+		}
+		if ( strlen($job_title) < 1 OR strlen($job_title) > 127 ) 
+		{
+			throw new Exception('Invalid employer name. Please try again', 1);
 		}
 		$this->dao->job_title = $job_title;
 		if ( ! $lazy)
@@ -395,9 +432,13 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	 */
 	public function set_country_code($country_code, $lazy = FALSE)
 	{
-		if ( ! is_string($country_code) OR strlen($country_code) !== 2)
+		if ( ! is_string($country_code) )
 		{
 			trigger_error('set_country_code expects argument 1 to be type string and have a length of 2', E_USER_WARNING);
+		}
+		if ( strlen($country_code) !== 2 ) 
+		{
+			throw new Exception('Invalid country code. Country code must be 2 characters. Please try again.', 1);
 		}
 		$this->dao->country_code = $country_code;
 		if ( ! $lazy)
@@ -427,9 +468,13 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	 */
 	public function set_gender($gender, $lazy = FALSE)
 	{
-		if ( ! is_string($gender) AND strlen($gender) !== 1)
+		if ( ! is_string($gender))
 		{
 			trigger_error('set_gender expects argument 1 to be type string and have a length of 1', E_USER_WARNING);
+		}
+		if ( $gender !== 'm' OR $gender !== 'f' )
+		{
+			throw new Exception('Invalid gender. Genders must be either M or Y. Please try again.', 1);
 		}
 		$this->dao->gender = $gender;
 		if ( ! $lazy)
@@ -525,6 +570,10 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			trigger_error('set_facebook_token expects argument 1 to be type string', E_USER_WARNING);
 		}
+		if ( strlen($facebook_token) < 5 OR strlen($facebook_token) > 127 ) 
+		{
+			throw new Exception('Invalid facebook token. Please try again', 1);
+		}
 		$this->dao->facebook_token = $facebook_token;
 		if ( ! $lazy)
 		{
@@ -557,6 +606,10 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			trigger_error('set_facebook_token_created expects argument 1 to be type int', E_USER_WARNING);
 		}
+		if ( $timestamp < 946706400 OR $timestamp > 20000 + time() ) 
+		{
+			throw new Exception('Facebook token created is invalid. Please try again.', 1);
+		}
 		$this->dao->facebook_token_created = $timestamp;
 		if ( ! $lazy)
 		{
@@ -588,6 +641,10 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		if ( ! is_int($timestamp) )
 		{
 			trigger_error('set_facebook_token_expires expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ( $timestamp < time() ) 
+		{
+			throw new Exception('Invalid facebook token expires. Please try again', 1);
 		}
 		$this->dao->facebook_token_expires = $timestamp;
 		if ( ! $lazy)

@@ -32,6 +32,10 @@ class Model_Plan extends Model_Abstract implements Interface_Model_Plan {
 		{
 			trigger_error('set_name expects argument 1 to be type string', E_USER_WARNING);
 		}
+		if ( strlen($name) < 1 OR strlen($name) > 127 ) 
+		{
+			throw new Exception('Invalid name. Please try again.', 1);
+		}
 		$this->dao->name = $name;
 		if ( ! $lazy)
 		{
@@ -63,6 +67,10 @@ class Model_Plan extends Model_Abstract implements Interface_Model_Plan {
 		if ( ! is_int($signup_limit) )
 		{
 			trigger_error('set_signup_limit expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ($signup_limit < 1 OR $signup_limit > 1000000) 
+		{
+			throw new Exception('Invalid signup limit. Please try again.', 1);
 		}
 		$this->dao->signup_limit = $signup_limit;
 		if ( ! $lazy)
@@ -96,6 +104,10 @@ class Model_Plan extends Model_Abstract implements Interface_Model_Plan {
 		if ( ! is_int($monthly_login_limit) )
 		{
 			trigger_error('set_monthly_login_limit expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ( $monthly_login_limit < 1 OR $monthly_login_limit > 1000000) 
+		{
+			throw new Exception('Invalid monthly login rate. Please try again.', 1);
 		}
 		$this->dao->monthly_login_limit = $monthly_login_limit;
 		if ( ! $lazy)
@@ -157,6 +169,10 @@ class Model_Plan extends Model_Abstract implements Interface_Model_Plan {
 	 */
 	public function set_price($price, $lazy = FALSE)
 	{
+		if ( ! is_numeric($price)) 
+		{
+			throw new Exception('invalid decimal', 1);
+		}
 		$this->dao->price = $price;
 		if ( ! $lazy)
 		{

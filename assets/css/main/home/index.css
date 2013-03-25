@@ -50,11 +50,26 @@ body {
 	cursor: pointer;
 }
 .app-name {
-	font-size: 22px;
-	font-weight: 550;
+	font-size: 30px;
+	font-weight: 600;
+	text-align: center;
 }
 .app-body {
-	padding: 5px 14px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.app-body .btn {
+	color: black;
+	margin: 10px 20px;
+	width: 185px;
+	padding: 5px 12px;
+}
+.app-btn-text {
+	font-size: 18px;
+	padding-top: 10px;
+}
+.app-body .app-btn-img {
+	margin: 0px 5px 0px 0px;
 }
 /*new app*/
 #new-app-primary-wrapper {

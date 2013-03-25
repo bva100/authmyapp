@@ -124,8 +124,8 @@ class Controller_Home extends Controller_Abstract {
 		else
 		{
 			// if using premium plan redirect to downloads page with app_id
-			$message = urlencode($app->name().' has been successfully added to your account');
-			$this->redirect('downloads/connectButton?app_id='.$app->id().'&new_app='.TRUE.'&type=connect_facebook', 302);
+			$message = urlencode($app->name().' has been successfully added to your account. The programming has already been completed and you can begin your downloads right away. Start with your Facebook Connect button.');
+			$this->redirect('downloads/connectButton?app_id='.$app->id().'&new_app='.TRUE.'&type=connect_facebook&message='.$message.'&message_type=info', 302);
 		}
 	}
 	
@@ -195,7 +195,8 @@ class Controller_Home extends Controller_Abstract {
 			{
 				$dao = Factory_Dao::create('kohana', 'app', $app_id);
 				$app = Factory_Model::create($dao);
-				$this->redirect('downloads?app_id='.$app->id().'&new_app='.TRUE, 302);
+				$message = urlencode('The programming for '.$app->name().' has already been completed and you can begin your downloads right away. Start with your Facebook Connect button.');
+	$this->redirect('downloads/connectButton?app_id='.$app->id().'&new_app='.TRUE.'&type=connect_facebook&message='.$message.'&message_type=info', 302);
 			}
 			else
 			{

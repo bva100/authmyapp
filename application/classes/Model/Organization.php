@@ -21,10 +21,7 @@ class Model_Organization extends Model_Abstract implements Interface_Model_Organ
 		{
 			trigger_error('create_with_name expects argument 2, name, to be string', E_USER_WARNING);
 		}
-		else
-		{
-			$name = NULL;
-		}
+		
 		if ($dao->loaded()) 
 		{
 			$dao->clear();
@@ -43,6 +40,10 @@ class Model_Organization extends Model_Abstract implements Interface_Model_Organ
 				$dao->clear();
 			}
 			$name = str_replace(' ', '_', $name);
+			if ( strlen($name) > 127 OR strlen($name) < 0 ) 
+			{
+				throw new Exception('Invalid name. Please try again.', 1);
+			}
 			$dao->name = $name;
 		}
 		
@@ -109,7 +110,10 @@ class Model_Organization extends Model_Abstract implements Interface_Model_Organ
 		{
 			trigger_error('set_name expects argument 1 to be type string', E_USER_WARNING);
 		}
-		
+		if ( strlen($name) < 1 OR strlen($name) > 127) 
+		{
+			throw new Exception('Name invalid. Please try again.', 1);
+		}
 		// format
 		$name = str_replace(' ', '_', $name);
 		$this->dao->name = $name;
@@ -145,7 +149,6 @@ class Model_Organization extends Model_Abstract implements Interface_Model_Organ
 		{
 			throw new Exception('Url is not valid', 1);
 		}
-		
 		$this->dao->url = $url;
 		if ( ! $lazy)
 		{

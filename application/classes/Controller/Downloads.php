@@ -45,9 +45,11 @@ class Controller_Downloads extends Controller_Home {
 	
 	public function action_connectButton()
 	{
-		$app_id  = (int)   get('app_id', 0);
-		$new_app = (bool) get('new_app', FALSE);
-		$type    = (string) get('type', 'connect_facebook');
+		$app_id       = (int)    get('app_id', 0);
+		$new_app      = (bool)   get('new_app', FALSE);
+		$type         = (string) get('type', 'connect_facebook');
+		$message      = (string) get('message', '');
+		$message_type = (string) get('message_type', '');
 		
 		// check access
 		if ( ! $this->user->plan()->downloads()) 
@@ -66,15 +68,18 @@ class Controller_Downloads extends Controller_Home {
 			$app = FALSE;
 		}
 		
-		$view                = new View('main/downloads/connectButton');
-		$view->app           = $app;
-		$view->new_app       = $new_app;
-		$view->type          = $type;
-		$view->user          = $this->user();
-		$view->header        = new View('main/home/header');
-		$view->header->user  = $this->user();
-		$view->sidebar       = new View('main/home/sidebar');
-		$view->sidebar->page = 'downloads';
+		$view                 = new View('main/downloads/connectButton');
+		$view->app            = $app;
+		$view->new_app        = $new_app;
+		$view->type           = $type;
+		$view->alert          = new View('alert');
+		$view->alert->message = $message;
+		$view->alert->type    = $message_type;
+		$view->user           = $this->user();
+		$view->header         = new View('main/home/header');
+		$view->header->user   = $this->user();
+		$view->sidebar        = new View('main/home/sidebar');
+		$view->sidebar->page  = 'downloads';
 		$this->template->set('content', $view);
 		$this->add_js('main/downloads/index');
 		$this->add_css('main/downloads/index');

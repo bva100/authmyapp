@@ -12,6 +12,7 @@ abstract class Model_Abstract {
 	 */
 	const STATE_ACTIVE  = 1;
 	const STATE_DELETED = 2;
+	const STATE_PAUSED  = 3;
 	
 	/**
 	 * DAO. Database access object.

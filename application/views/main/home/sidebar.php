@@ -20,6 +20,12 @@
 			Account Settings
 		</a>
 	</li>
+	<li <?php if ($page === 'Organizations') {echo 'class="active"'; } ?>>
+		<a href="/home/account">
+			<img src="/assets/img/briefcase.png" width="20" height="13" class='sidebar-img'>
+			Organizations
+		</a>
+	</li>
 	<li <?php if($page === 'billing'){echo 'class="active"';} ?>>
 		<a href="/home/billing">
 			<img src="/assets/img/credit.png" width="18" height="18" class='sidebar-img'>

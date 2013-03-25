@@ -17,6 +17,15 @@
 				
 				<div class='download-setup-body span9'>
 					
+					<!-- alert -->
+					<?php if ($alert->message): ?>
+						<div class='row'>
+							<div class='span9'>
+								<?php echo $alert ?>
+							</div>
+						</div>
+					<?php endif ?>
+					
 					<!-- header -->
 					<div class='row'>
 						

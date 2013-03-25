@@ -86,6 +86,10 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		{
 			trigger_error('set_first_name expects argument 1 to be type string', E_USER_WARNING);
 		}
+		if ( strlen($first_name) < 1 OR strlen($first_name) > 127 ) 
+		{
+			throw new Exception('Invalid first name. Please try again', 1);
+		}
 		$this->dao->first_name = $first_name;
 		if ( ! $lazy)
 		{
@@ -117,6 +121,10 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		if ( ! is_string($last_name) )
 		{
 			trigger_error('set_last_name expects argument 1 to be type string', E_USER_WARNING);
+		}
+		if ( strlen($last_name) < 1 OR strlen($last_nam) > 127) 
+		{
+			throw new Exception('Invalid last name. Please try again.', 1);
 		}
 		$this->dao->last_name = $last_name;
 		if ( ! $lazy)
@@ -150,6 +158,10 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		{
 			trigger_error('set_birthday expects argument 1 to be type int', E_USER_WARNING);
 		}
+		if ( $birthday < -2524500000 OR $birthday > time())
+		{
+			throw new Exception('Invalid birthday. Please try again.', 1);
+		}
 		$this->dao->birthday = $birthday;
 		if ( ! $lazy)
 		{
@@ -181,6 +193,10 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		if ( ! is_int($timezone) )
 		{
 			trigger_error('set_timezone expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ( $timezone < -24 OR $timezone > 1) 
+		{
+			throw new Exception('Invalid timezone offset', 1);
 		}
 		$this->dao->timezone = $timezone;
 		if ( ! $lazy)
@@ -312,7 +328,7 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	/**
 	 * set picture
 	 *
-	 * @param string $picture
+	 * @param string $picture URL
 	 * @param bool $lazy
 	 * @return void
 	 * @author BRIAN ANDERSON
@@ -322,6 +338,10 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		if ( ! is_string($picture) )
 		{
 			trigger_error('set_picture expects argument 1 to be type string', E_USER_WARNING);
+		}
+		if ( ! Valid::url($picture) ) 
+		{
+			throw new Exception('Invalid picture. Please try again.', 1);
 		}
 		$this->dao->picture = $picture;
 		if ( ! $lazy)
@@ -340,7 +360,6 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	{
 		return($this->dao->picture);
 	}
-	
 	
 	/**
 	 * set facebook_id
@@ -384,6 +403,10 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		{
 			trigger_error('set_facebook_token expects argument 1 to be type string', E_USER_WARNING);
 		}
+		if ( strlen($facebook_token) < 5 OR strlen($facebook_token) > 127 ) 
+		{
+			throw new Exception('Invalid facebook token. Please try again', 1);
+		}
 		$this->dao->facebook_token = $facebook_token;
 		if ( ! $lazy)
 		{
@@ -416,6 +439,10 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		{
 			trigger_error('set_facebook_token_created expects argument 1 to be type int', E_USER_WARNING);
 		}
+		if ( $timestamp < 946706400 OR $timestamp > 20000 + time() ) 
+		{
+			throw new Exception('Facebook token created is invalid. Please try again.', 1);
+		}
 		$this->dao->facebook_token_created = $timestamp;
 		if ( ! $lazy)
 		{
@@ -447,6 +474,10 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		if ( ! is_int($timestamp) )
 		{
 			trigger_error('set_facebook_token_expires expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ( $timestamp < time() ) 
+		{
+			throw new Exception('Invalid facebook token expires. Please try again', 1);
 		}
 		$this->dao->facebook_token_expires = $timestamp;
 		if ( ! $lazy)

@@ -39,7 +39,7 @@
 								The programming has been completed for you
 							</h3>
 							<p>
-								Download each file then click on the help button for step by step instructions
+								Download each file then, if needed, view step by step instructions
 							</p>
 						</div><!-- .well -->
 					<?php endif ?>
