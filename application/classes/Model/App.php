@@ -46,7 +46,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 			}
 			else
 			{
-				$dao->name = str_replace(' ', '_', $name);
+				$this->set_name($name);
 			}
 		}
 		if (isset($organization_id))
@@ -57,7 +57,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 			}
 			else
 			{
-				$dao->organization_id = $organization_id;
+				$this->set_organization_id($organization_id);
 			}
 		}
 		$dao->create_timestamp = time();
@@ -115,6 +115,78 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
+	 * set organization_id
+	 *
+	 * @param int $organization_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_organization_id($organization_id, $lazy = FALSE)
+	{
+		if ( ! is_int($organization_id))
+		{
+			trigger_error('set_organization_id expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ( $organization_id < 0 )
+		{
+			throw new Exception("Please enter a valid organization id", 1);
+		}
+		$this->dao->organization_id = $organization_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get organization_id
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function organization_id()
+	{
+		return( (int) $this->dao->organization_id);
+	}
+	
+	/**
+	 * set name
+	 *
+	 * @param string $name
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_name($name, $lazy = FALSE)
+	{
+		if ( ! is_string($name) )
+		{
+			trigger_error('set_name expects argument 1 to be type string', E_USER_WARNING);
+		}
+		if ( strlen($name) < 1 OR strlen($name) > 127 )
+		{
+			throw new Exception("Please enter a valid app name", 1);
+		}
+		$this->dao->name = $name;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get name
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function name()
+	{
+		return(ucwords(str_replace('_', ' ', $this->dao->name)));
+	}
+	
+	/**
 	 * set secret
 	 *
 	 * @param bool $lazy
@@ -140,70 +212,6 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	public function secret()
 	{
 		return($this->dao->secret);
-	}
-	
-	/**
-	 * set organization_id
-	 *
-	 * @param int $organization_id
-	 * @param bool $lazy
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_organization_id($organization_id, $lazy = FALSE)
-	{
-		if ( ! is_int($organization_id) )
-		{
-			trigger_error('set_organization_id expects argument 1 to be type int', E_USER_WARNING);
-		}
-		$this->dao->organization_id = $organization_id;
-		if ( ! $lazy)
-		{
-			$this->db_update();
-		}
-	}
-	
-	/**
-	 * get organizaton_id
-	 *
-	 * @return int
-	 * @author BRIAN ANDERSON
-	 */
-	public function organization_id()
-	{
-		return( (int) $this->dao->organization_id);
-	}
-	
-	/**
-	 * set name
-	 *
-	 * @param string $name
-	 * @param bool $lazy
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public function set_name($name, $lazy = FALSE)
-	{
-		if ( ! is_string($name) )
-		{
-			trigger_error('set_name expects argument 1 to be type string', E_USER_WARNING);
-		}
-		$this->dao->name = $name;
-		if ( ! $lazy)
-		{
-			$this->db_update();
-		}
-	}
-	
-	/**
-	 * get name
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function name()
-	{
-		return(ucwords(str_replace('_', ' ', $this->dao->name)));
 	}
 	
 	/**
@@ -266,6 +274,12 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			trigger_error('set_sender_uri expects argument 1 to be type string', E_USER_WARNING);
 		}
+		if ( strlen($sender_uri) < 1 OR strlen($sender_uri) > 127 )
+		{
+			throw new Exception("Please enter a valid sender uri", 1);
+		}
+		
+		
 		$this->dao->sender_uri = $sender_uri;
 		if ( ! $lazy)
 		{
@@ -388,27 +402,33 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	/**
 	 * set delivery_method
 	 *
-	 * @param string $delivery_method
+	 * @param int $delivery_method. Consts defined at top of class.
 	 * @param bool $lazy
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
 	public function set_delivery_method($delivery_method, $lazy = FALSE)
 	{
-		if ( $delivery_method === 'post' OR $delivery_method === 'get') 
+		if ( ! is_int($delivery_method) )
 		{
-			$valid = TRUE;
+			trigger_error('set_delivery_method expects argument 1 to be type int', E_USER_WARNING);
 		}
-		else
-		{
-			trigger_error('delivery method must be either "post" or "get"', E_USER_WARNING);
-		}
-		
 		$this->dao->delivery_method = $delivery_method;
 		if ( ! $lazy)
 		{
 			$this->db_update();
 		}
+	}
+	
+	/**
+	 * get delivery_method
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function delivery_method()
+	{
+		return($this->dao->delivery_method);
 	}
 	
 	/**
@@ -535,18 +555,6 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	{
 		return( (int) $this->dao->picture_height);
 	}
-	
-	/**
-	 * get delivery_method
-	 *
-	 * @return string
-	 * @author BRIAN ANDERSON
-	 */
-	public function delivery_method()
-	{
-		return($this->dao->delivery_method);
-	}
-	
 	
 	/**
 	 * get message

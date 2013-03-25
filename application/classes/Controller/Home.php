@@ -63,32 +63,12 @@ class Controller_Home extends Controller_Abstract {
 	public function action_addAppProcess()
 	{
 		$name         = (string) post('name', '');
-		$domain       = (string) post('domain', '');
 		$organization = (int)    post('organization', 0);
 		$new_org      = (string) post('newOrganization', '');
-		$uri          = (string) post('uri', '');
-		
-		if ( ! $name) 
-		{
-			throw new Exception('Please enter a valid name');
-		}
-		if ( ! $domain) 
-		{
-			throw new Exception('Please enter a valid domain');
-		}
-		else if ( ! Valid::url($domain))
-		{
-			throw new Exception('Please enter a valid domain', 1);
-		}
-		if ( ! $uri)
-		{
-			$uri = Model_App::DEFAULT_REDIRECT_URI;
-		}
-		else if (substr($uri, 0, 1) !== '/')
-		{
-			$uri = '/'.$uri;
-		}
-		$uri = str_replace(' ', '', $uri);
+		$domain       = (string) post('domain', '');
+		$postAuthUrl  = (string) post('postAuthUrl', '');
+		$senderUri    = (string) post('senderUir', '');
+		$receiverUri  = (string) post('receiverUri', '');
 		
 		if ( ! $organization) 
 		{
@@ -100,33 +80,52 @@ class Controller_Home extends Controller_Abstract {
 			
 			// add user to organization
 			$this->user->add_organization($org->id());
-		}
-		else
-		{
+		}else{
 			// create org object
 			$dao_org = Factory_Dao::create('kohana', 'organization', $organization);
 			$org     = Factory_Model::create($dao_org);
+		}
+		if ( ! $postAuthUrl) 
+		{
+			$postAuthUri = '/welcome';
+		}
+		else
+		{
+			$postAuthUri = str_replace($domain, '', $postAuthUrl);
+		}
+		if ( ! $senderUri ) 
+		{
+			$senderUri = '/AuthMyAppDirectionSender';
+		}
+		if ( ! $receiverUri ) 
+		{
+			$receiverUri = '/AuthMyAppReceiver';
 		}
 		
 		// create app
 		$dao_app = Factory_Dao::create('kohana', 'app');
 		$app     = Model_App::create_with_name_and_organization_id($dao_app, $name, $org->id());
 		$app->set_secret(TRUE);
-		$app->set_redirect_url($domain.$uri, TRUE);
-		$app->set_delivery_method('get', TRUE);
+		$app->set_domain($domain, TRUE);
+		$app->set_post_auth_uri($postAuthUri, TRUE);
+		$app->set_sender_uri($senderUri, TRUE);
+		$app->set_receiver_uri($receiverUri, TRUE);
+		$app->set_delivery_method(Model_App::DELIVERY_GET, TRUE); // hardcoded until options are available. Can change in app settings or on receiver download.
+		$app->set_storage_method(Model_App::STORAGE_PHP_SESSION, TRUE); // user can change this when downloading receiver or in app options
+		$app->set_salt(TRUE);
 		$app->set_state(Model_App::STATE_ACTIVE);
 		
 		// redirect
-		if ($this->user->plan()->name() === 'free') 
+		if ($this->user->plan()->name() === 'free' OR  ! $this->user->plan()->downloads()) 
 		{
 			// if using free plan redirect to account upgrade page with app_id
-			$this->redirect('home/plans?app_id='.$app->id.'&new_app='.TRUE, 302);
+			$this->redirect('home/plans?app_id='.$app->id().'&new_app='.TRUE, 302);
 		}
 		else
 		{
 			// if using premium plan redirect to downloads page with app_id
 			$message = urlencode($app->name().' has been successfully added to your account');
-			$this->redirect('downloads?message='.$message.'&alert_type="success"', 302);
+			$this->redirect('downloads/connectButton?app_id='.$app->id().'&new_app='.TRUE.'&type=connect_facebook', 302);
 		}
 	}
 	

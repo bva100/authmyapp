@@ -1,11 +1,13 @@
 $(document).ready(function() {
 	
 	$("#submit-addapp").click(function(event) {
-		var name    = $("#inputName").val();
-		var domain  = $("#inputDomain").val();
-		var org     = $('input[name=organization]:checked', '#new-app-form').val();
-		var new_org = $("#new-org-name").val();
-		var uri     = $("#inputUri").val();
+		var name        = $("#inputName").val();
+		var domain      = $("#inputDomain").val();
+		var org         = $('input[name=organization]:checked', '#new-app-form').val();
+		var new_org     = $("#new-org-name").val();
+		var postAuthUrl = $("#inputPostAuthUrl").val();
+		var senderUri   = $("#inputSenderUri").val();
+		var receiverUri = $("#inputReceiverUri").val();
 		
 		// validate
 		if ( ! name) {
@@ -32,11 +34,38 @@ $(document).ready(function() {
 				return(0);
 			};
 		};
+		if ( postAuthUrl && ! valid_url(postAuthUrl) ) {
+			// attempt to append http:// to string
+			var postAuthUrl = 'http://' + postAuthUrl;
+			// set new val to dom element
+			$("#inputPostAuthUrl").val(postAuthUrl);
+			// re-check
+			if ( ! valid_url(postAuthUrl)) {
+				event.preventDefault();
+				alert('That redirect URL doesn\'t look quite right. Please ensure you are entering a valid URL.');
+				$("#inputPostAuthUrl").focus();
+				return(0);
+			};
+		};
+		if ( postAuthUrl.indexOf(domain) == -1 ) {
+			event.preventDefault();
+			alert('Your redirect URL must belong to your domain. For example, if my redirect url is www.barkingdoggiedog.com/welcome, my domain must be www.barkingdoggiedog.com');
+			$("#inputPostAuthUrl").val(domain + '/').focus();
+			return(0);
+		};
+		if ( senderUri.charAt(0) !== '/') {
+			var senderUri = '/' + senderUri;
+			$('#inputSenderUri').val(senderUri);
+		};
+		if (receiverUri.charAt(0) !== '/') {
+			var receiverUri = '/' + receiverUri;
+			$("#inputReceiverUri").val(receiverUri);
+		};
 	});
 	
 	$("#help-post-auth-url").popover({
 			'title': 'Where Should We Send Them Next?',
-			'content': 'Type in the URL of the page you\'d like to send the user after they\'ve successfully signed up using Facebook Connect.',
+			'content': 'Type in the URL of the page you\'d like to send the user to after they\'ve successfully signed up using Facebook Connect. Feel free to skip this step if you are unsure.',
 			'trigger': 'hover',
 		});
 	

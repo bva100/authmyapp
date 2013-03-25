@@ -563,7 +563,7 @@ header( "Location: '.$this->app->post_auth_url().'" );';
 		
 		// set archive path. Ensure first letter is capitalized and string should begin with "/"
 		$archive_path = $this->app->receiver_uri();
-		$archive_path = ucfirst( ltrim( $archive_path, '/' ) );
+		$archive_path = ucfirst( trim( $archive_path, '/' ) );
 		$archive_path = '/'.$archive_path;
 		$this->set_archive_path( $archive_path );
 		

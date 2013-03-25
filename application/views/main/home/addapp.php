@@ -68,15 +68,15 @@
 									Optional Nerdy Stuff
 								</legend>
 								<div class='control-group'>
-									<label class="control-label" for="inputSenderUri">Directions Sender Uri</label>
+									<label class="control-label" for="inputSenderUri">Directory To Sender</label>
 									<div class='controls'>
-										<input type="text" id="inputSenderUri" placeholder="/AuthMyAppDirectionSender" name='uri'>
+										<input type="text" id="inputSenderUri" placeholder="/AuthMyAppDirectionSender/" name='uri'>
 									</div><!-- .controls -->
 								</div>
 								<div class='control-group'>
-									<label class="control-label" for="inputReceiverUri">Data Receiver Uri</label>
+									<label class="control-label" for="inputReceiverUri">Directory To Receiver</label>
 									<div class="controls">
-										<input type="text" id="inputReceiverUri" placeholder="/AuthMyAppReceiver">
+										<input type="text" id="inputReceiverUri" placeholder="/AuthMyAppReceiver/">
 									</div>
 								</div><!-- .control-group -->
 								
