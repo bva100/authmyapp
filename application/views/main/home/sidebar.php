@@ -14,8 +14,8 @@
 			Get Downloads
 		</a>
 	</li>
-	<li <?php if($page === 'account'){echo 'class="active"';} ?>>
-		<a href="/home/account">
+	<li <?php if($page === 'setingsAccount'){echo 'class="active"';} ?>>
+		<a href="/settings/account">
 			<img src="/assets/img/cog.png" width="20" height="20" class='sidebar-img'>
 			Account Settings
 		</a>

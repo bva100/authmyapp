@@ -28,3 +28,47 @@
 #all-done-with-facebook {
 	text-align: center;
 }
+/*settings for app*/
+#app-settings-form h3 {
+	text-align: center;
+	margin-bottom: 30px;
+}
+.app-settings-form-label {
+	margin-left: 57px;
+	width: 120px;
+	display: inline-block;
+	position: relative;
+	text-align: right;
+	bottom: 4px;
+}
+#app-settings-form input {
+	width: 300px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+#app-settings-form .btn {
+	position: relative;
+	bottom: 4px;
+}
+#app-settings-form legend {
+	text-align: center;
+	margin-bottom: 30px;
+}
+.app-settings-form-name {
+	position: relative;
+	bottom: 4px;
+	left: 10px;
+	margin-right: 200px;
+}
+.change-org-opener {
+	position: relative;
+	left: 90px;
+}
+.org-selector {
+	font-size: 18px;
+	line-height: 40px;
+}
+#change-org-opener {
+	position: relative;
+	right: 100px;
+}

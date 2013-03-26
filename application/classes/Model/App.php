@@ -443,12 +443,29 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	/**
 	 * get delivery_method
 	 *
+	 * @param $text bool
 	 * @return string
 	 * @author BRIAN ANDERSON
 	 */
-	public function delivery_method()
+	public function delivery_method($text = FALSE)
 	{
-		return($this->dao->delivery_method);
+		if ( ! $text) 
+		{
+			return($this->dao->delivery_method);	
+		}
+		else
+		{
+			switch ($this->dao->delivery_method) {
+				case self::DELIVERY_GET:
+					return 'get';
+					break;
+				case self::DELIVERY_GET_ENCRYPTED:
+					return 'get_encrypted';
+					break;
+				default:
+					break;
+			}
+		}
 	}
 	
 	/**

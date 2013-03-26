@@ -37,7 +37,7 @@ interface Interface_Model_App
 	public function post_auth_url();
 	
 	public function set_delivery_method($delivery_method, $lazy = FALSE);
-	public function delivery_method();
+	public function delivery_method($text = FALSE);
 	
 	public function set_storage_method($storage_method, $lazy = FALSE);
 	public function storage_method();

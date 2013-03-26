@@ -9,7 +9,28 @@ class Controller_Settings extends Controller_Home {
 	
 	public function action_app()
 	{
-		echo 'app settings here'; die();
+		$app_id = (int) get('app_id', 0);
+		
+		if ( ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('Access denied. You cannot change the settings for this app at this time', 1);
+		}
+		$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
+		$app     = Factory_Model::create($dao_app);
+		$dao_org = Factory_Dao::create('kohana', 'organization', $app->organization_id());
+		$org     = Factory_Model::create($dao_org);
+		
+		$view = new View('main/settings/index');
+		$view->app           = $app;
+		$view->org           = $org;
+		$view->user          = $this->user();
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
+		$view->sidebar->page = 'setingsApp';
+		$this->template->set('content', $view);
+		$this->add_css('main/settings/index');
+		$this->add_js('main/settings/index');
 	}
 	
 	public function action_appProcessState()
@@ -66,6 +87,37 @@ class Controller_Settings extends Controller_Home {
 		$app = Factory_Model::create($dao);
 		$app->set_facebook_app_id($facebook_app_id, TRUE);
 		$app->set_facebook_secret($facebook_secret);
+		$this->redirect($redirect, 302);
+	}
+	
+	public function action_updateAppSecret()
+	{
+		$app_id = (int) post('app_id', 0);
+		$this->auto_render = FALSE;
+		if ( ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('Access denied. You cannot change the settings for this app at this time', 1);
+		}
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		$app->set_secret();
+		echo $app->secret();
+	}
+	
+	public function action_updateAppOrg()
+	{
+		$app_id = (int) post('app_id', 0);
+		$org_id = (int) post('org_id', 0);
+		$redirect = (string) post('redirect', '/settings/app?app_id='.$app_id);
+		
+		$this->auto_render = FALSE;
+		if ( ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('Access denied. You cannot change the settings for this app at this time', 1);
+		}
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		$app->set_organization_id($org_id);
 		$this->redirect($redirect, 302);
 	}
 	

@@ -101,7 +101,7 @@
 														</a>
 													</div><!-- .span3 -->
 													<div class='span3'>
-														<a href="/home/settings?app_id=<?php echo $app->id() ?>" class='btn btn-block clearfix'>
+														<a href="/settings/app?app_id=<?php echo $app->id() ?>" class='btn btn-block clearfix'>
 															<span class='app-btn-text pull-left'>Settings</span>
 															<img src="assets/img/cogs.png" width="36" height="36" class='app-btn-img pull-right'>
 														</a>
