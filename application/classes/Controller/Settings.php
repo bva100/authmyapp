@@ -121,6 +121,91 @@ class Controller_Settings extends Controller_Home {
 		$this->redirect($redirect, 302);
 	}
 	
+	public function action_updateAppName()
+	{
+		$app_id = (int) post('app_id', 0);
+		$name = (string) post('name', '');
+		$redirect = (string) post('redirect', '/settings/app?app_id='.$app_id);
+		
+		$this->auto_render = FALSE;
+		if ( ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('Access denied. You cannot change the settings for this app at this time', 1);
+		}
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		$app->set_name($name);
+		$this->redirect($redirect, 302);
+	}
+	
+	public function action_updateAppDomain()
+	{
+		$app_id = (int) post('app_id', 0);
+		$domain = (string) post('domain', '');
+		$redirect = (string) post('redirect', '/settings/app?app_id='.$app_id.'#domain');
+		
+		$this->auto_render = FALSE;
+		if ( ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('Access denied. You cannot change the settings for this app at this time', 1);
+		}
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		$app->set_domain($domain);
+		$this->redirect($redirect, 302);
+	}
+	
+	public function action_updateAppSenderUri()
+	{
+		$app_id = (int) post('app_id', 0);
+		$sender_uri = (string) post('sender_uri', '');
+		$redirect = (string) post('redirect', '/settings/app?app_id='.$app_id.'#sender-uri');
+		
+		$this->auto_render = FALSE;
+		if ( ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('Access denied. You cannot change the settings for this app at this time', 1);
+		}
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		$app->set_sender_uri($sender_uri);
+		$this->redirect($redirect, 302);
+	}
+	
+	public function action_updateAppReceiverUri()
+	{
+		$app_id = (int) post('app_id', 0);
+		$receiver_uri = (string) post('receiver_uri', '');
+		$redirect = (string) post('redirect', '/settings/app?app_id='.$app_id.'#receiver-uri');
+		
+		$this->auto_render = FALSE;
+		if ( ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('Access denied. You cannot change the settings for this app at this time', 1);
+		}
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		$app->set_receiver_uri($receiver_uri);
+		$this->redirect($redirect, 302);
+	}
+	
+	public function action_updateAppPostAuthUri()
+	{
+		$app_id = (int) post('app_id', 0);
+		$post_auth_uri = (string) post('post_auth_uri', '');
+		$redirect = (string) post('redirect', '/settings/app?app_id='.$app_id.'#post-auth-uri');
+		
+		$this->auto_render = FALSE;
+		if ( ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('Access denied. You cannot change the settings for this app at this time', 1);
+		}
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		$app->set_post_auth_uri($post_auth_uri);
+		$this->redirect($redirect, 302);
+	}
+	
 	public function action_account()
 	{
 		echo 'account settings here'; die();

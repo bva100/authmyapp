@@ -46,9 +46,9 @@
 	margin-left: 10px;
 	margin-right: 10px;
 }
-#app-settings-form .btn {
+#app-settings-form .btn-small {
 	position: relative;
-	bottom: 4px;
+	bottom: 5px;
 }
 #app-settings-form legend {
 	text-align: center;

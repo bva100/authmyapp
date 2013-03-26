@@ -47,7 +47,8 @@
 				<p style='text-align: center'>
 					<strong>Secret:</strong> <span id="app-secret"><?php echo $app->secret() ?></span> <a href="#" id='update-secret'>refresh</a>
 				</p>
-				<legend>
+				<hr />
+				<legend id='basic-info-legend'>
 					Basic Info
 				</legend>
 				<p>
@@ -62,31 +63,43 @@
 					</span>
 				</p>
 				<p>
-					<span class='app-settings-form-label'>Name:</span> <input type="text" name="name" value="<?php echo $app->name() ?>" id="name">
-					<a href="#" id='update-name' class='btn btn-small'>update</a>
+					<?php echo Form::open("/settings/updateAppName"); ?>
+						<?php echo Form::hidden("app_id", $app->id()); ?>
+						<span class='app-settings-form-label'>Name:</span> 
+						<input type="text" name="name" value="<?php echo $app->name() ?>" id="name">
+						<button type='submit' id='update-name' class='btn btn-small'>update</button>
+					<?php echo Form::close(); ?>
 				</p>
-				<legend>
+				<legend id='tech-legend'>
 					Technical Details
 				</legend>
 				<p>
-					<span class='app-settings-form-label'>Domain:</span> <input type="text" name="domain" value="<?php echo $app->domain() ?>" id="domain">
-					<a href="#" id='update-domain' class='btn btn-small'>update</a>
+					<?php echo Form::open("/settings/updateAppDomain"); ?>
+						<?php echo Form::hidden("app_id", $app->id()); ?>
+						<span class='app-settings-form-label'>Domain:</span> <input type="text" name="domain" value="<?php echo $app->domain() ?>" id="domain">
+						<button type='submit' id='update-domain' class='btn btn-small' onclick='redownload()'>update</button>
+					<?php echo Form::close(); ?>
 				</p>
 				<p>
-					<span class='app-settings-form-label'>Sender Uri:</span> <input type="text" name="sender-uri" value="<?php echo $app->sender_uri() ?>" id="sender-uri">
-					<a href="#" id='update-sender-uri' class='btn btn-small' onclick='redownload'>update</a>
+					<?php echo Form::open("/settings/updateAppSenderUri"); ?>
+						<?php echo Form::hidden("app_id", $app->id()); ?>
+						<span class='app-settings-form-label'>Sender Uri:</span> <input type="text" name="sender_uri" value="<?php echo $app->sender_uri() ?>" id="sender-uri">
+						<button type='submit' id='update-sender-uri' class='btn btn-small' onclick='redownload()'>update</button>
+					<?php echo Form::close(); ?>
 				</p>
 				<p>
-					<span class='app-settings-form-label'>Receiver Uri:</span> <input type="text" name="receiver-uri" value="<?php echo $app->receiver_uri() ?>" id="receiver-uri">
-					<a href="#" id='update-receiver-uri' class='btn btn-small' onclick='redownload'>update</a>
+					<?php echo Form::open("/settings/updateAppReceiverUri"); ?>
+						<?php echo Form::hidden("app_id", $app->id()); ?>
+						<span class='app-settings-form-label'>Receiver Uri:</span> <input type="text" name="receiver_uri" value="<?php echo $app->receiver_uri() ?>" id="receiver-uri">
+						<button type='submit' id='update-receiver-uri' class='btn btn-small' onclick='redownload()'>update</button>
+					<?php echo Form::close(); ?>
 				</p>
 				<p>
-					<span class='app-settings-form-label'>Post Auth Uri:</span> <input type="text" name="post-auth-uri" value="<?php echo $app->post_auth_uri() ?>" id="post-auth-uri">
-					<a href="#" id='update-post-auth-uri' class='btn btn-small' onclick='redownload'>update</a>
-				</p>
-				<p>
-					<span class='app-settings-form-label'>Delivery Method:</span> <input type="text" name="delivery-method" value="<?php echo $app->delivery_method(TRUE) ?>" id="deliver-method">
-					<a href="#" id='update-post-auth-uri' class='btn btn-small' onclick='redownload'>update</a>
+					<?php echo Form::open("/settings/updateAppPostAuthUri"); ?>
+						<?php echo Form::hidden("app_id", $app->id()); ?>
+						<span class='app-settings-form-label'>Post Auth Uri:</span> <input type="text" name="post_auth_uri" value="<?php echo $app->post_auth_uri() ?>" id="post-auth-uri">
+						<button type='submit' id='update-post-auth-uri' class='btn btn-small' onclick='redownload()'>update</button>
+					<?php echo Form::close(); ?>
 				</p>
 			</div><!-- .app-settings-form well -->
 		</div><!-- .span9 -->

@@ -28,10 +28,11 @@ $(document).ready(function() {
 
 // redownload confirm
 function redownload() {
-	var answer = confirm("After changing you'll have to update (download from AuthMyApp then re-upload to your server) your data receiver and directions sender scripts. Are you sure you want to proceed?")
+	var answer = confirm("After changing you'll have to update your data receiver and directions sender scripts. To do this, you'll have to re-download these files from AuthMyApp then re-upload them to your server. Are you sure you want to proceed?")
 	if (answer){
 		return(true)
 	}else{
+		event.preventDefault();
 		return(false)
 	}
 }
