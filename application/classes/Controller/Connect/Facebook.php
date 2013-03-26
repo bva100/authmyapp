@@ -271,6 +271,10 @@ class Controller_Connect_Facebook extends Controller {
 			$sender->set_access_token($access_token);
 			$sender->set_access_token_expires($expires);
 		}
+		
+		// record login
+		$app_user->record_login( Factory_Dao::create('kohana', 'app_user_login') );
+		
 		$url = $sender->redirect_url();
 		$this->redirect($url, 302);
 	}

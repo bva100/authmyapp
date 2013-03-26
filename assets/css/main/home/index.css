@@ -122,9 +122,6 @@ body {
 	padding: 20px;
 	font-weight: 550;
 }
-#plan-table #signup-limit {
-/*	width: 52px;*/
-}
 #plan-table th {
 	background-color: #f1f1f1;
 }
@@ -146,4 +143,42 @@ body {
 .alert {
 	padding: 20px;
 	padding-right: 40px;
+}
+.download-content .app-name {
+	font-size: 22px;
+	text-align: left;
+}
+#select-app-title {
+	font-size: 28px;
+	text-align: center;
+	margin: 0px;
+}
+/*analytics*/
+.chart-title {
+	margin-left: 55px;
+	margin-top: 3px;
+}
+#logins-days-ago, #signups-days-ago {
+	width: 30px;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: center;
+	position: relative;
+	top: 4px;
+	margin-right: 4px;
+}
+#signup-counter, #login-counter {
+	position: relative;
+	font-size: 21px;
+	bottom: 2px;
+	left: 5px;
+	padding: 6px;
+}
+#update-logins-chart, #update-signups-chart {
+	position: relative;
+	top: 6px;
+}
+#chart-logins, #chart-signups {
+	height: 450px;
+	width: 708px;
 }

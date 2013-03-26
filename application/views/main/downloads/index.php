@@ -281,7 +281,7 @@
 					<!-- list apps -->
 					
 					<div class='well'>
-						<h3>
+						<h3 id="select-app-title">
 							Select an App or Website
 						</h3>
 					</div><!-- .well well-unit -->

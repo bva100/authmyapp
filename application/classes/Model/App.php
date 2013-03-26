@@ -627,11 +627,15 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	 */
 	public function set_facebook_secret($facebook_secret, $lazy = FALSE)
 	{
-		if ( ! is_string($facebook_secret) )
+		if ( ! $facebook_secret) 
+		{
+			$facebook_secret = NULL;
+		}
+		if ( isset($facebook_secret) AND ! is_string($facebook_secret) )
 		{
 			trigger_error('set_facebook_secret expects argument 1 to be type string', E_USER_WARNING);
 		}
-		if ( strlen($facebook_secret) < 5 OR strlen($facebook_secret) > 127 ) 
+		if ( isset($facebook_secret) AND ( strlen($facebook_secret) < 5 OR strlen($facebook_secret) > 127 ) )
 		{
 			throw new Exception('Invalid Facebook secret. Please try again.', 1);
 		}
@@ -667,4 +671,96 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		);
 	}
 	
+	/**
+	 * Get users associated with this app
+	 *
+	 * @return array of Model_App_User
+	 * @author BRIAN ANDERSON
+	 */
+	public function app_users()
+	{
+		$daos = $this->dao->app_users->find_all();
+		$array = array();
+		foreach ($daos as $dao) 
+		{
+			$array[] = Factory_Model::create($dao);
+		}
+		return $array;
+	}
+	
+	/**
+	 * Count logins
+	 *
+	 * @param string $min_timestamp 
+	 * @param string $max_timestamp 
+	 * @param array $options (string) 'iterate'
+	 * @return mixed
+	 * @author BRIAN ANDERSON
+	 */
+	public function count_logins($min_timestamp, $max_timestamp, array $options = array())
+	{
+		$app_users = $this->app_users();
+		if (isset($options['iterate'])) 
+		{
+			$day_counter = 1; //base 1
+			$array = array();
+			for ($unix_timestamp = $min_timestamp; $unix_timestamp <= $max_timestamp; $unix_timestamp += 86400)
+			{
+				$this_days_count = 0;
+				// how many logins occured for this day? Include each app user
+				foreach ($app_users as $app_user) 
+				{
+					$this_days_count += $app_user->count_logins($unix_timestamp, $unix_timestamp + 86400);
+				}
+				$array[$day_counter] = $this_days_count;
+				$day_counter++;
+			}
+			return $array;
+		}
+		else
+		{
+			$count = 0;
+			foreach ($app_users as $app_user) 
+			{
+				$count += $app_user->count_logins($min_timestamp, $max_timestamp);
+			}
+			return $count;
+		}
+	}
+	
+	/**
+	 * Count signups for a given day. add the Iterate option (iterate => true) to get an array for each day
+	 *
+	 * @param int $min_timestamp unix timestamp
+	 * @param int $max_timestamp  unix timestamp
+	 * @param array $options 
+	 * @return mixed
+	 * @author BRIAN ANDERSON
+	 */
+	public function count_signups($min_timestamp, $max_timestamp, array $options = array())
+	{
+		$app_users = $this->dao->app_users;
+		if (isset($options['iterate'])) 
+		{
+			$day_counter = 1; //base 1
+			$array = array();
+			for ($unix_timestamp = $min_timestamp; $unix_timestamp <= $max_timestamp; $unix_timestamp += 86400)
+			{
+				$this_days_count = (int) $app_users
+					->where('app_id', '=', $this->id())
+					->where('create_timestamp', '>=', $unix_timestamp)
+					->and_where('create_timestamp', '<=', $unix_timestamp + 86400)
+					->count_all();
+				$array[$day_counter] = $this_days_count;
+				$day_counter++;
+			}
+			return $array;
+		}
+		$count = $app_users
+			->where('app_id', '=', $this->id())
+			->where('create_timestamp', '>=', $min_timestamp)
+			->and_where('create_timestamp', '<=', $max_timestamp)
+			->count_all();
+		return $count;
+	}
 }

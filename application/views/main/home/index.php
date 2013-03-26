@@ -55,15 +55,29 @@
 												<div class='row'>
 													<div class='span3'>
 														<?php if ($app->state() === Model_App::STATE_PAUSED): ?>
-															<a href="/home/settingsProcessAppState?app_id=<?php echo $app->id() ?>&state=active" class='btn btn-block clearfix'>
-																<span class='app-btn-text pull-left'>Now Paused</span>
-																<img src="/assets/img/pause.png" width="21" height="32" class='app-btn-img pull-right'>
-															</a>
+															
+															<!-- currently paused -->
+															<?php echo Form::open("settings/appProcessState"); ?>
+																<?php echo Form::hidden("app_id", $app->id()); ?>
+																<?php echo Form::hidden("state", Model_App::STATE_ACTIVE); ?>
+																<button type='submit' class='btn btn-block clearfix app-btn-state' id='change-to-active-state'>
+																	<span class='app-btn-text pull-left'>Now Paused</span>
+																	<img src='/assets/img/pause.png' width='21' height='32' class='app-btn-img pull-right'>
+																</button>
+															<?php echo Form::close(); ?>
+															
 														<?php else: ?>
-															<a href="/home/settingsProcessAppState?app_id=<?php echo $app->id() ?>&state=paused" class='btn btn-block clearfix'>
-																<span class='app-btn-text pull-left'>Now Active</span>
-																<img src="/assets/img/play.png" width="36" height="36" class='app-btn-img pull-right'>
-															</a>
+															
+															<!-- currently active -->
+															<?php echo Form::open("settings/appProcessState"); ?>
+																<?php echo Form::hidden("app_id", $app->id()); ?>
+																<?php echo Form::hidden("state", Model_App::STATE_PAUSED); ?>
+																<button type='submit' class='btn btn-block clearfix app-btn-state' id='change-to-paused-state'>
+																	<span class='app-btn-text pull-left'>Now Active</span>
+																	<img src="/assets/img/play.png" width="36" height="36" class='app-btn-img pull-right'>
+																</button>
+															<?php echo Form::close(); ?>
+															
 														<?php endif ?>
 													</div><!-- .span3 -->
 													<div class='span3'>
@@ -73,7 +87,7 @@
 														</a>
 													</div>
 													<div class='span3'>
-														<a href="#dialog" class='btn btn-block clearfix'>
+														<a href="/settings/appFacebookDialog?app_id=<?php echo $app->id() ?>" class='btn btn-block clearfix' id='facebook-customize'>
 															<span class='app-btn-text pull-left'>Customize</span>
 															<img src="/assets/img/facebook.png" width="36" height="36" class='app-btn-img pull-right'>
 														</a>
@@ -81,11 +95,11 @@
 												</div><!-- .row -->
 												<div class='row'>
 													<div class='span3'>
-														<a href="/help" class='btn btn-block clearfix'>
-															<span class='app-btn-text pull-left'>Get Help</span>
-															<img src="/assets/img/question.png" width="36" height="36" class='app-btn-img pull-right'>
+														<a href="/home/analytics?app_id=<?php echo $app->id() ?>" class='btn btn-block clearfix'>
+															<span class='app-btn-text pull-left'>Analytics</span>
+															<img src="/assets/img/graph_pie.png" width="36" height="36" class='app-btn-img pull-right'>
 														</a>
-													</div>
+													</div><!-- .span3 -->
 													<div class='span3'>
 														<a href="/home/settings?app_id=<?php echo $app->id() ?>" class='btn btn-block clearfix'>
 															<span class='app-btn-text pull-left'>Settings</span>
@@ -93,11 +107,11 @@
 														</a>
 													</div>
 													<div class='span3'>
-														<a href="/analyze" class='btn btn-block clearfix'>
-															<span class='app-btn-text pull-left'>Analytics</span>
-															<img src="/assets/img/graph_pie.png" width="36" height="36" class='app-btn-img pull-right'>
+														<a href="/help" class='btn btn-block clearfix'>
+															<span class='app-btn-text pull-left'>Get Help</span>
+															<img src="/assets/img/question.png" width="36" height="36" class='app-btn-img pull-right'>
 														</a>
-													</div><!-- .span3 -->
+													</div>
 												</div><!-- .row -->
 											</div>
 										</div><!-- .row -->

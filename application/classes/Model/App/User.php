@@ -472,7 +472,7 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			trigger_error('set_gender expects argument 1 to be type string and have a length of 1', E_USER_WARNING);
 		}
-		if ( $gender !== 'm' OR $gender !== 'f' )
+		if ( $gender !== 'm' AND $gender !== 'f' )
 		{
 			throw new Exception('Invalid gender. Genders must be either M or Y. Please try again.', 1);
 		}
@@ -662,6 +662,58 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	public function facebook_token_expires()
 	{
 		return( (int) $this->dao->facebook_token_expires);
+	}
+	
+	/**
+	 * Count the amount of logins given a range of unix timestamps. Pass min_timestamp and max_timestamp as null or leave empty.
+	 *
+	 * @param int $min_date Unix timestamp
+	 * @param int $max_date Unix timestamp
+	 * @param array $options 'iterate'
+	 * @return mixed. If iterate returns array of int timestamps, else returns a single int timestamp
+	 * @author BRIAN ANDERSON
+	 */
+	public function count_logins($min_timestamp, $max_timestamp, array $options = array())
+	{
+		if (isset($options['iterate']))
+		{
+			$logins_dao = $this->dao->logins;
+			$array = array();
+			$day_counter = 1; // base 1
+			for ( $timestamp_counter = $min_timestamp; $timestamp_counter <= $max_timestamp; $timestamp_counter += 86400) 
+			{
+				// on this day, how many logins occured?
+				$this_days_count = $logins_dao->where('create_timestamp', '>', $timestamp_counter)->and_where('create_timestamp', '<', $timestamp_counter + 86400)->count_all();
+				$array[$day_counter] = $this_days_count;
+				$day_counter++;
+			}
+			return($array);
+		}
+		else
+		{
+			$logins_dao = $this->dao->logins;
+			$results = $logins_dao->where('create_timestamp', '>=', $min_timestamp)->where('create_timestamp', '<=', $max_timestamp)->count_all();
+			return (int) $results;
+		}
+	}
+	
+	/**
+	 * Record a login for this user
+	 *
+	 * @return Model_App_User_Login object
+	 * @author BRIAN ANDERSON
+	 */
+	public function record_login(Dao_Abstract $dao)
+	{
+		$login = Model_App_User_Login::create($dao, $this);
+		if ($login->dao->loaded()) 
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 	
 }

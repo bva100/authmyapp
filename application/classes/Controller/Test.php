@@ -283,4 +283,42 @@ class Controller_Test extends Controller {
 		echo Debug::vars($app->set_salt(), $app->salt()); die;
 	}
 	
+	public function action_appUserLogin()
+	{
+		$app_user_id = (int) get('app_user_id', 4);
+		$dao = Factory_Dao::create('kohana', 'app_user', $app_user_id);
+		$app_user = Factory_Model::create($dao);
+		
+		$dao_login = Factory_Dao::create('kohana', 'app_user_login');
+		echo Debug::vars($app_user->record_login($dao_login)); die;
+	}
+	
+	public function action_loginIterateAppUser($value='')
+	{
+		$dao = Factory_Dao::create('kohana', 'app_user', 4);
+		$app_user = Factory_Model::create($dao);
+		
+		$results = $app_user->count_logins(1361772000, time(), array('iterate' => TRUE));
+		echo gettype($results);
+		print_r($results);
+	}
+	
+	public function action_loginIterateApp()
+	{
+		$app_id = (int) get('app_id', 1);
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		print_r( $app->count_logins(1362117600, time(), array('iterate' => TRUE)) );
+	}
+	
+	public function action_signupsApp()
+	{
+		$app_id = (int) get('app_id', 1);
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		print_r( $app->count_signups(1362117600, time(), array('iterate' => TRUE)) );
+	}
+	
 }

@@ -5,14 +5,14 @@
  *
  * @author BRIAN ANDERSON
  */
-class Model_Orm_App_User extends ORM {
+class Model_Orm_App_User_Login extends ORM {
 	
 	/**
 	 * mapped to the app_users table
 	 *
 	 * @var string
 	 */
-	protected $_table_name = 'app_users';
+	protected $_table_name = 'app_user_logins';
 	
 	/**
 	 * belongs to relationship
@@ -20,16 +20,9 @@ class Model_Orm_App_User extends ORM {
 	 * @var array
 	 */
 	protected $_belongs_to = array(
-			'app' => array(
-				'foreign_key' => 'app_id',
-				'model'       => 'Orm_App',
-			)
-		);
-	
-	protected $_has_many	= array(
-			'logins' => array(
+			'app_user' => array(
 				'foreign_key' => 'app_user_id',
-				'model'       => 'Orm_App_User_Login',
+				'model'       => 'Orm_App_User',
 			)
 		);
 }

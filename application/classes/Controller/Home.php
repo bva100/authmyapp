@@ -208,7 +208,89 @@ class Controller_Home extends Controller_Abstract {
 		{
 			$this->redirect('home/plans', 302);
 		}
+	}
+	
+	public function action_analytics()
+	{
+		$app_id = (int) get('app_id', 0);
 		
+		if ( ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('Access Denied. You do not have access to see these analytics at this time.', 1);
+		}
+		
+		$app_dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($app_dao);
+		
+		$view = new View('main/home/analytics');
+		$view->app           = $app;
+		$view->user          = $this->user();
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
+		$view->sidebar->page = 'analytics';
+		$this->template->set('content', $view);
+		$this->add_css('jqplot/jquery.jqplot.min');
+		$this->add_js('jqplot/jquery.jqplot.min');
+		$this->add_js('jqplot/jqplot.canvasTextRenderer.min');
+		$this->add_js('jqplot/jqplot.canvasAxisLabelRenderer.min');
+		$this->add_js('main/home/analytics');
+	}
+	
+	public function action_getAppAnalytics()
+	{
+		$app_id        = (int) get('app_id', 0);
+		$type          = (string) get('type', 'logins');
+		$min_timestamp = (int) get('min_timestamp', 1362117600);
+		$max_timestamp = (int) get('max_timestamp', time());
+		$days_ago      = (int) get('days_ago', 0); // pass this instead of min timestamp to get logins/signups from this many days ago until right now
+		$format        = (string) get('format', 'json');
+		
+		if ($days_ago) 
+		{
+			$days_ago_seconds = $days_ago*86400;
+			$min_timestamp = time() - $days_ago_seconds;
+		}
+		
+		// validate
+		if ($min_timestamp < 0 OR $max_timestamp > time())
+		{
+			throw new Exception('Invalid dates passed. Please try again', 1);
+		}
+		
+		// check access
+		if ( ! $this->user()->has_app_id($app_id))
+		{
+			throw new Exception('Access Denied. You cannot view this apps analytics at this time', 1);
+		}
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		$this->auto_render = FALSE;
+		
+		switch ($type) {
+			case 'logins':
+				if ($format === 'json') 
+				{
+					echo json_encode( array_values($app->count_logins($min_timestamp, $max_timestamp, array('iterate' => TRUE))) );
+				}
+				break;
+			case 'login_counter':
+				echo $app->count_logins($min_timestamp, $max_timestamp);
+				break;
+			case 'signups':
+				if ($format === 'json')
+				{
+					echo json_encode( array_values($app->count_signups($min_timestamp, $max_timestamp, array('iterate' => TRUE))) );
+				}
+				break;
+			case 'signup_counter':
+				echo $app->count_signups($min_timestamp, $max_timestamp);
+				break;
+			default:
+				trigger_error('GetAppAnalytics does not recognize type '.$type, E_USER_WARNING);
+				break;
+		}
 	}
 	
 }

@@ -35,7 +35,7 @@
 					<li>
 						<a href="/home">
 							<img src="/assets/img/dashboard.png" width="22" height="22" class='header-pulldown-img'>
-							Manage Apps
+							Dashboard
 						</a>
 					</li>
 					<li>

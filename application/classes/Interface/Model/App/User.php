@@ -49,4 +49,7 @@ interface Interface_Model_App_User
 	public function set_facebook_token_expires($timestamp, $lazy = FALSE);
 	public function facebook_token_expires();
 	
+	public function count_logins($min_timestamp, $max_timestamp, array $options = array());
+	public function record_login(Dao_Abstract $dao);
+	
 } // END interface Model_App_User

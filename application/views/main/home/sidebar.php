@@ -5,7 +5,7 @@
 	<li <?php if($page === 'manage'){echo 'class="active"';} ?> >
 		<a href="/home">
 			<img src="/assets/img/dashboard.png" width="20" height="20" class='sidebar-img'>
-			Apps and Websites
+			My Dashboard
 		</a>
 	</li>
 	<li <?php if($page === 'downloads'){echo 'class="active"';} ?>>

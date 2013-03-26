@@ -1,0 +1,30 @@
+/*upgrade*/
+.well-unit #upgrade-account {
+	margin-top: 10px;
+}
+/*add facebook app data*/
+#facebook-app-form {
+	margin: 0px auto;
+	padding: 15px;
+	border-radius: 4px;
+}
+#facebook-app-form form {
+	display: inline-block;
+	margin: 0px 170px 20px 170px;
+}
+#facebook-app-form input[type="text"] {
+	width: 327px;
+	height: 28px;
+	font-size: 17px;
+}
+#facebook-app-form label {
+	font-size: 17px;
+	margin-top: 10px;
+}
+#facebook-app-form input[type="submit"] {
+	margin-top: 10px;
+	margin-left: 55px;
+}
+#all-done-with-facebook {
+	text-align: center;
+}

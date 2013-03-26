@@ -68,5 +68,7 @@ interface Interface_Model_User
 	public function organizations();
 	
 	public function apps();
+	public function app_ids();
+	public function has_app_id($app_id);
 	
 } // END interface Interface_Model_User

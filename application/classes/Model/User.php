@@ -122,7 +122,7 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		{
 			trigger_error('set_last_name expects argument 1 to be type string', E_USER_WARNING);
 		}
-		if ( strlen($last_name) < 1 OR strlen($last_nam) > 127) 
+		if ( strlen($last_name) < 1 OR strlen($last_name) > 127) 
 		{
 			throw new Exception('Invalid last name. Please try again.', 1);
 		}
@@ -573,11 +573,14 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	 */
 	public function set_gender($gender, $lazy = FALSE)
 	{
-		if ($gender !== 'm' AND $gender === 'f') 
+		if ( ! is_string($gender)) 
 		{
-			trigger_error('set_gender expects argument 1, gender, to be string with char "m" or char "f" ', E_USER_WARNING);
+			trigger_error('set_gender expects argument 1, gender, to be string', E_USER_WARNING);
 		}
-		
+		if ($gender !== 'm' AND $gender !== 'f') 
+		{
+			throw new Exception('Invalid gender. Please try again', 1);
+		}
 		$this->dao->gender = $gender;
 		if ( ! $lazy)
 		{
@@ -751,6 +754,50 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 			}
 		}
 		return $array;
+	}
+	
+	/**
+	 * Returns an array of app_ids which are associated with this use
+	 *
+	 * @return array
+	 * @author BRIAN ANDERSON
+	 */
+	public function app_ids()
+	{
+		$dao_orgs = $this->dao->organizations->find_all();
+		$array = array();
+		foreach ($dao_orgs as $org) 
+		{
+			foreach ($org->apps->find_all() as $app)
+			{
+				$array[] = (int) $app->id;
+			}
+		}
+		return $array;
+	}
+	
+	/**
+	 * Is this user associated with the given app_id?
+	 *
+	 * @return bool
+	 * @author BRIAN ANDERSON
+	 */
+	public function has_app_id($app_id)
+	{
+		if ( ! is_int($app_id)) 
+		{
+			trigger_error('Has_app_id() expects argument 1, app_id, to be an int', E_USER_WARNING);
+		}
+		
+		$app_ids = $this->app_ids();
+		if ( in_array($app_id, $app_ids, TRUE) )
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 	
 }

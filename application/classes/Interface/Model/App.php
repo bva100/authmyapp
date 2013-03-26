@@ -56,4 +56,9 @@ interface Interface_Model_App
 	public function facebook_secret();
 	public function facebook_config();
 	
+	public function app_users();
+	
+	public function count_logins($min_timestamp, $max_timestamp, array $options = array());
+	public function count_signups($min_timestamp, $max_timestamp, array $options = array());
+	
 } // END interface Interface_Model_App
