@@ -27,16 +27,16 @@ class Controller_Home extends Controller_Abstract {
 	
 	public function action_index()
 	{
-		$message    = (string) get('message', '');
-		$alert_type = (string) get('alert_type', 'warning');
+		$message     = (string) get('message', '');
+		$message_type = (string) get('message_type', 'success');
 		
 		$view                      = new View('main/home/index');
 		$view->user                = $this->user();
-		if ($message AND $alert_type) 
+		if ($message AND $message_type) 
 		{
 			$view->alert               = new View('alert');
 			$view->alert->message      = $message;
-			$view->alert->type         = $alert_type;
+			$view->alert->type         = $message_type;
 		}
 		$view->header              = new View('main/home/header');
 		$view->header->user        = $this->user();
@@ -214,6 +214,19 @@ class Controller_Home extends Controller_Abstract {
 	{
 		$app_id = (int) get('app_id', 0);
 		
+		if ( ! $app_id) 
+		{
+			if (count($this->user->apps()) === 1)
+			{
+				$app_arr = $this->user->apps();
+				$app_id = $app_arr['0']->id();
+			}
+			else
+			{
+				$this->redirect('home/analyticSelector', 302);
+			}
+		}
+		
 		if ( ! $this->user->has_app_id($app_id)) 
 		{
 			throw new Exception('Access Denied. You do not have access to see these analytics at this time.', 1);
@@ -291,6 +304,55 @@ class Controller_Home extends Controller_Abstract {
 				trigger_error('GetAppAnalytics does not recognize type '.$type, E_USER_WARNING);
 				break;
 		}
+	}
+	
+	public function action_analyticSelector()
+	{
+		$view                = new View('main/home/analyticSelector');
+		$view->user          = $this->user();
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
+		$view->sidebar->page = 'analytics';
+		$this->template->set('content', $view);
+	}
+	
+	public function action_organizations()
+	{
+		$message = (string) get('message', '');
+		$message_type = (string) get('message_type', 'success');
+		
+		$view                = new View('main/home/organizations');
+		$view->user          = $this->user();
+		if ($message AND $message_type) 
+		{
+			$view->alert = new View('alert');
+			$view->alert->message = $message;
+			$view->alert->type = $message_type;
+		}
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
+		$view->sidebar->page = 'organizations';
+		$this->template->set('content', $view);
+	}
+	
+	public function action_addNewOrganizationProcess()
+	{
+		$name = (string) post('name', '');
+		
+		if ( ! $name) 
+		{
+			throw new Exception('Please add a name and try again', 1);
+		}
+		
+		$dao = Factory_Dao::create('kohana', 'organization');
+		$org = Model_Organization::create_with_name($dao, $name);
+		$org->set_state(Model_Organization::STATE_ACTIVE);
+		$this->user->add_organization($org->id());
+		
+		$message = urlencode($org->name().' has been added to your account. If you\'d like to add an app or website to '.$org->name().', you can do so in that apps settings page');
+		$this->redirect('/home/organizations?message='.$message.'&message_type=success', 302);
 	}
 	
 }

@@ -20,7 +20,7 @@
 		<?php endforeach ?>
 	</div>
 	<div class="modal-footer">
-		<a href="#addOrg" class=" pull-left">Add a New Organization</a>
+		<a href="/home/organizations#create-new-org" class=" pull-left">Add a New Organization</a>
 		<a href="#" class="btn" data-dismiss='modal'>Close</a>
 	</div>
 </div>

@@ -48,6 +48,7 @@ body {
 }
 .app-header:hover {
 	cursor: pointer;
+	color: #0088cc;
 }
 .app-name {
 	font-size: 30px;
@@ -154,9 +155,12 @@ body {
 	margin: 0px;
 }
 /*analytics*/
-.chart-title {
-	margin-left: 55px;
-	margin-top: 3px;
+.analytics-app-container a{
+	width: 100%;
+	text-align: left;
+	display: block;
+	font-size: 21px;
+	padding: 10px;
 }
 #logins-days-ago, #signups-days-ago {
 	width: 30px;
@@ -181,4 +185,19 @@ body {
 #chart-logins, #chart-signups {
 	height: 450px;
 	width: 708px;
+}
+/*organizations*/
+#new-org-label {
+	margin-left: 15px;
+	position: relative;
+	bottom: 5px;
+	right: 4px;
+	display: inline;
+}
+#new-organization {
+	width: 300px;
+}
+#submit-new-org {
+	position: relative;
+	bottom: 5px;
 }

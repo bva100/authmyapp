@@ -32,10 +32,10 @@
 	
 </head>
 <body>
-
-	<?php echo $content ?>
 	
-	<div id="fb-root"></div>
+	<?php if (isset($content)): ?>
+		<?php echo $content ?>
+	<?php endif ?>
 	
 </body>
 </html>

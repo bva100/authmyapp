@@ -95,7 +95,7 @@
 							<li>A user support E-mail</li>
 						</ul>
 						<p>
-							Shoot us an email with the above information. We will do our best to get you your custom dialog box as soon as possible. We'll only charge you once the job has been completed.
+							Shoot us an email with the above information. We will do our best to get you your custom dialog box as soon as possible.
 						</p>
 						<p>
 							<?php echo HTML::mailto('hello@authmyapp.com?subject=Facebook+App+Request&body=(please+write+your+message+below+this+top+line)+app_id+is+'.$app->id(), 'Email Us', array('class' => 'btn btn-blue btn-large', 'target' => '_blank')); ?>

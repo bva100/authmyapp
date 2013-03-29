@@ -351,11 +351,11 @@ abstract class Controller_Abstract extends Controller_Template {
 		{
 			//meta
 			$this->template->title            = 'Facebook Connect For Your App &#8212; AuthMyApp';
-			$this->template->meta_description = 'Auth My App makes it surprisingly simply to add Facebook connect to your app. Sign up today for a free.';
+			$this->template->meta_description = 'Easily connect your app or website to Facebook and simplify your user signup process. Sign up today for a free account.';
 			$this->template->meta_copywrite   = 'AuthMyApp, INC';
-			$this->template->favicon          = 'assets/images/favicon/favicon.ico';
-			$this->template->favicon_image    = 'assets/images/favicon/favicon.png';
-			$this->template->apple_touch_icon = 'assets/images/favicon/apple-touch-icon.png';
+			$this->template->favicon          = '/assets/img/favicon/favicon.ico';
+			$this->template->favicon_image    = '/assets/img/favicon/favicon.png';
+			$this->template->apple_touch_icon = '/assets/img/favicon/apple-touch-icon.png';
 			
 			// fb meta
 			$this->template->fb_site_name   = 'Auth My App';

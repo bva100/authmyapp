@@ -167,4 +167,21 @@ class Model_Organization extends Model_Abstract implements Interface_Model_Organ
 		return($this->dao->url);
 	}
 	
+	/**
+	 * Get all apps associated with this organization
+	 *
+	 * @return array of Model_App obejcts
+	 * @author BRIAN ANDERSON
+	 */
+	public function apps()
+	{
+		$dao_apps = $this->dao->apps->find_all();
+		$array = array();
+		foreach ($dao_apps as $dao_app) 
+		{
+			$array[] = Factory_Model::create($dao_app);
+		}
+		return $array;
+	}
+	
 }

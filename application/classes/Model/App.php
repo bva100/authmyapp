@@ -607,6 +607,38 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
+	 * set facebook_app_paid
+	 *
+	 * @param bool $facebook_app_paid
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_facebook_app_paid($facebook_app_paid, $lazy = FALSE)
+	{
+		if ( ! is_bool($facebook_app_paid) )
+		{
+			trigger_error('set_facebook_app_paid expects argument 1 to be type bool', E_USER_WARNING);
+		}
+		$this->dao->facebook_app_paid = $facebook_app_paid;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get facebook_app_paid
+	 *
+	 * @return bool
+	 * @author BRIAN ANDERSON
+	 */
+	public function facebook_app_paid()
+	{
+		return( (bool) $this->dao->facebook_app_paid);
+	}
+	
+	/**
 	 * set facebook_app_id
 	 *
 	 * @param int| float $facebook_app_id

@@ -4,7 +4,7 @@
 <div id="header">
 	<p class="header-message">
 		<span id='primary-message'>
-			Auth-My-App
+			<img src="/assets/img/logo_small.png" width="100" height="76" alt="Logo Small">
 		</span>
 		<span class='pull-right header-btns'>
 			<?php echo HTML::anchor("welcome/login", "Login", array('class' => 'btn btn-blue')) ?>

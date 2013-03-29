@@ -44,14 +44,14 @@
 						<div class='span9'>
 							<div class='apps'>
 								<?php foreach ($user->apps() as $app): ?>
-									<div class='app-container'>
+									<div class='app-container index-app-container'>
 										<div class='row'>
 											<div class='app-header span9'>
 												<span class='app-name'><?php echo $app->name() ?></span>
 											</div>
 										</div><!-- .row -->
 										<div class='row'>
-											<div class='app-body span9'>
+											<div class='app-body index-app-body span9'>
 												<div class='row'>
 													<div class='span3'>
 														<?php if ($app->state() === Model_App::STATE_PAUSED): ?>

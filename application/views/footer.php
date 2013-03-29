@@ -2,10 +2,9 @@
 ?>
 
 <div id="footer">
-	<?php echo HTML::anchor("tutorial", "tutorials") ?>
 	<?php echo HTML::anchor("faq", "faq") ?>
 	<?php echo HTML::anchor("fees", "fees") ?>
-	<?php echo HTML::anchor("blog", "blog") ?>
+	<?php echo HTML::anchor("http://blog.authmyapp.com", "blog") ?>
 	<?php echo HTML::anchor("help", "help") ?>
 	<a href="http://www.facebook.com/authmyapp">
 		<img src="/assets/img/facebook.png" width="25" height="25" alt="Facebook" class='footer-social-btn'>

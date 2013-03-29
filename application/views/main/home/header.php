@@ -6,7 +6,9 @@
 		<div class='row'>
 			<div class='span12'>
 				<span class='pull-left' id='logo'>
-					<a href="/home">Auth-My-App</a>
+					<a href="/home">
+						<img src="/assets/img/logo_small.png" width="90" height="76" alt="Logo Small">
+					</a>
 				</span>
 				<span class='pull-right header-btns'>
 					<a href="<?php echo URL::base(TRUE).'base/profile?'.$user->id() ?>" id='header-profile'>
@@ -39,9 +41,9 @@
 						</a>
 					</li>
 					<li>
-						<a href="/home/account">
+						<a href="/home/plans">
 							<img src="/assets/img/cog.png" width="22" height="22" class='header-pulldown-img'>
-							Settings
+							Account
 						</a>
 					</li>
 					<li>

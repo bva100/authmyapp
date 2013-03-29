@@ -321,4 +321,24 @@ class Controller_Test extends Controller {
 		print_r( $app->count_signups(1362117600, time(), array('iterate' => TRUE)) );
 	}
 	
+	public function action_orgApps()
+	{
+		$org_id = (int) get('org_id', 1);
+		$dao = Factory_Dao::create('kohana', 'organization', $org_id);
+		$org = Factory_Model::create($dao);
+		
+		print_r($org->apps());
+	}
+	
+	public function action_facebookAppPaid()
+	{
+		$app_id = (int) get('app_id', 24);
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		$app->set_facebook_app_paid(TRUE);
+		
+		echo Debug::vars($app->facebook_app_paid()); die;
+	}
+	
 }

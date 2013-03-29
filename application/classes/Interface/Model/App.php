@@ -50,6 +50,9 @@ interface Interface_Model_App
 	public function set_picture_height($picture_height, $lazy = FALSE);
 	public function picture_height();
 	
+	public function set_facebook_app_paid($facebook_app_paid, $lazy = FALSE);
+	public function facebook_app_paid();
+	
 	public function set_facebook_app_id($facebook_app_id, $lazy = FALSE);
 	public function facebook_app_id();
 	public function set_facebook_secret($facebook_secret, $lazy = FALSE);

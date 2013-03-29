@@ -19,4 +19,6 @@ interface Interface_Model_Organization
 	public function set_url($url, $lazy = FALSE);
 	public function url();
 	
+	public function apps();
+	
 } // END interface Interface_Model_Organization
