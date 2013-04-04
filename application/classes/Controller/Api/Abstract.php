@@ -2,6 +2,7 @@
 
 /**
  * Api Controller. Abstract class. All api controllers extend this class
+ * errors and exceptions: In general, do not trigger exceptions as it will break api calls. Trigger errors with status codes instead.
  *
  * @author BRIAN ANDERSON
  */
@@ -12,6 +13,11 @@ Abstract class Controller_Api_Abstract extends Controller {
 	 */
 	const CONNECT_VERSION = '0.8';
 	const API_VERSION = '0.8'; // current api version
+	
+	/**
+	 * API error codes
+	 */
+	const ERROR_INVALID_AUTH = 401;
 	
 	/**
 	 * The method in which this request was made. IE: GET, POST, DELETE, PUT
@@ -80,7 +86,7 @@ Abstract class Controller_Api_Abstract extends Controller {
 				$this->method = 'PUT';
 				break;
 			default:
-				throw new Exception('Invalid method requested', 1);
+				throw new ApiException(405);
 				break;
 		}
 	}
@@ -96,34 +102,32 @@ Abstract class Controller_Api_Abstract extends Controller {
 		$format = Request::current()->param('format');
 		
 		switch ($format) {
-			case 'json':
-				$this->format = 'json';
-				break;
 			case 'xml':
 				$this->format = 'xml';
 				break;
+			case 'json':
 			default:
-				throw new Exception('invalid format', 1);
+				$this->format = 'json';
 				break;
 		}
 	}
 	
 	/**
-	 * Set requested version. Defaults to current API version as defined in this as this class' API_VERSION const. Cast as float.
+	 * Set requested version.
 	 *
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
 	public function set_version()
 	{
-		$version = Request::current()->query('version');
+		$version = Request::current()->query('v');
 		if ($version) 
 		{
 			$this->version = (double) $version;
 		}
 		else
 		{
-			$this->version = (double) self::API_VERSION;
+			throw new ApiException(400);
 		}
 	}
 	
@@ -142,7 +146,8 @@ Abstract class Controller_Api_Abstract extends Controller {
 	/**
 	 * Formats data given client's requested version and requested format
 	 *
-	 * @param mixed $data 
+	 * @param mixed $data
+	 * @param float $version
 	 * @return array . (mixed) data, (string) content_type.
 	 * @author BRIAN ANDERSON
 	 */
@@ -150,10 +155,8 @@ Abstract class Controller_Api_Abstract extends Controller {
 	{
 		switch ($this->format) {
 			case 'json':
-				return array( 'data' => json_encode($data), 'content_type' => 'application/json' );	
-				break;
 			default:
-				throw new Exception('Format not recognized');
+				return array( 'data' => json_encode($data), 'content_type' => 'application/json' );	
 				break;
 		}
 	}
@@ -169,7 +172,7 @@ Abstract class Controller_Api_Abstract extends Controller {
 	{
 		if ( ! $encrypted_access_token)
 		{
-			throw new Exception('This API call requires a valid access_token', 1);
+			throw new ApiException(401);
 		}
 		
 		$token_array = array();
@@ -178,18 +181,18 @@ Abstract class Controller_Api_Abstract extends Controller {
 		$str_array = explode('_', $access_token);
 		if ( ! $str_array OR empty($str_array)) 
 		{
-			throw new Exception('Invalid access token', 1);
+			throw new ApiException(401);
 		}
 		$token_array['type'] = $str_array['0'];
 		
 		// set remaining token_array vars
 		switch ($token_array['type']) {
 			case 'app':
-				$token_array['id'] = (int)$str_array['1'];
-				$token_array['secret'] = $str_array['2'];
+				$token_array['app_id'] = (int)$str_array['1'];
+				$token_array['app_secret'] = $str_array['2'];
 				break;
 			default:
-				throw new Exception('Invalid access token', 1);
+				throw new ApiException(401);
 				break;
 		}
 		return $token_array;
@@ -211,9 +214,9 @@ Abstract class Controller_Api_Abstract extends Controller {
 		
 		switch ($token_array['type']) {
 			case 'app':
-				$dao = Factory_Dao::create($dao_type, 'app', $token_array['id']);
+				$dao = Factory_Dao::create($dao_type, 'app', $token_array['app_id']);
 				$app = Factory_Model::create($dao);
-				if ( $app->secret() === $token_array['secret'])
+				if ( $app->secret() === $token_array['app_secret'])
 				{
 					return TRUE;
 				}
@@ -223,7 +226,7 @@ Abstract class Controller_Api_Abstract extends Controller {
 				}
 				break;
 			default:
-				throw new Exception('Invalid access token.', 1);
+				throw new ApiException(401);
 				break;
 		}
 	}

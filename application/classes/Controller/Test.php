@@ -364,6 +364,7 @@ class Controller_Test extends Controller {
 	{
 		$app_id = (int) get('app_id', 2);
 		$app_user_id = (int) get('app_user_id', 6);
+		$version = (double) get('version', Controller_Api_Users::API_VERSION);
 		
 		$dao = Factory_Dao::create('kohana', 'app', $app_id);
 		$app = Factory_Model::create($dao);
@@ -374,7 +375,7 @@ class Controller_Test extends Controller {
 			$headers[] = 'Authorization: Bearer '.$app->access_token();
 		}
 		
-		$uri = URL::base(TRUE).'api/users.json?user_id='.$app_user_id.'&access_token='.$app->access_token();
+		$uri = URL::base(TRUE).'api/users.json?user_id='.$app_user_id.'&access_token='.$app->access_token().'&v='.$version;
 		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_USERAGENT, 'AuthMyApp PHP SENDER api_version='.Controller_Api_Abstract::API_VERSION);
@@ -382,9 +383,17 @@ class Controller_Test extends Controller {
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
 		curl_setopt($ch, CURLOPT_URL, $uri);
-		$raw = curl_exec($ch);
-		$user = json_decode($raw);
-		echo $user->facebook->picture;
+		// response
+		$response = curl_exec($ch);
+		// status
+		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		// close
+		curl_close($ch);
+		
+		// get data
+		echo 'response status = '.$http_status.'<hr />';
+		$data = json_decode($response);
+		print_r($data);
 	}
 	
 	public function action_apiUsers()
@@ -399,10 +408,59 @@ class Controller_Test extends Controller {
 			$headers[] = 'Authorization: Bearer '.$app->access_token();
 		}
 		
-		$uri = URL::base(TRUE).'api/users/all.json?access_token='.$app->access_token();
+		$uri = URL::base(TRUE).'api/users/all.json?access_token='.$app->access_token().'&v='.CONTROLLER_API_USERS::API_VERSION;
 		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_USERAGENT, 'AuthMyApp PHP SDK api_version='.Controller_Api_Abstract::API_VERSION);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+		curl_setopt($ch, CURLOPT_URL, $uri);
+		// response
+		$response = curl_exec($ch);
+		// status
+		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		// close
+		curl_close($ch);
+		
+		// get data
+		echo 'response status = '.$http_status.'<hr />';
+		$data = json_decode($response);
+		
+		if (isset($data['error_code'])) 
+		{
+			echo 'Error found <hr>';
+			foreach ($data as $error) 
+			{
+				echo $error.'<br>';
+			}
+		}
+		else
+		{
+			foreach ($data as $user) 
+			{
+				echo $user->name->full.' id is '.$user->id.' <br>';
+			}	
+		}
+	}
+	
+	public function action_apiUsersSearch()
+	{
+		$email = (string ) get('email', '');
+		$app_id = (int) get('app_id', 0);
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		$headers = array('Content-Type: application/json');
+		if ($app->access_token())
+		{
+			$headers[] = 'Authorization: Bearer '.$app->access_token();
+		}
+		
+		$uri = URL::base(TRUE).'api/users/search.json?access_token='.$app->access_token().'&email='.$email;
+		
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_USERAGENT, 'AuthMyApp PHP SDK VERSION='.Controller_Api_Abstract::API_VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
@@ -416,5 +474,29 @@ class Controller_Test extends Controller {
 		}
 	}
 	
+	public function action_apiError()
+	{
+		$email = (string ) get('email', '');
+		$app_id = (int) get('app_id', 6);
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		$headers = array('Content-Type: application/json');
+		if ($app->access_token())
+		{
+			$headers[] = 'Authorization: Bearer '.$app->access_token();
+		}
+
+		$uri = URL::base(TRUE).'api/users/test.json?access_token='.$app->access_token().'&email='.$email;
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_USERAGENT, 'AuthMyApp PHP SDK VERSION='.Controller_Api_Abstract::API_VERSION);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+		curl_setopt($ch, CURLOPT_URL, $uri);
+		$raw = curl_exec($ch);
+		echo Debug::vars($raw); die;
+	}
 	
 }

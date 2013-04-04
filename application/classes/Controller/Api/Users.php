@@ -31,16 +31,16 @@ class Controller_Api_Users extends Controller_Api_Abstract {
 		}
 		else
 		{
-			throw new Exception('An access token is required for this API call', 1);
+			throw new ApiException(401);
 		}
 		$token_array = $this->convert_access_token($encrypted_access_token);
 		if ( ! $this->validate_access_token('kohana', $token_array) ) 
 		{
-			throw new Exception('Invalid access token', 1);
+			throw new ApiException(401);
 		}
 		
 		// set app property
-		$dao = Factory_Dao::create('kohana', 'app', $token_array['id']);
+		$dao = Factory_Dao::create('kohana', 'app', $token_array['app_id']);
 		$app = Factory_Model::create($dao);
 		$this->app = $app;
 	}
@@ -56,21 +56,26 @@ class Controller_Api_Users extends Controller_Api_Abstract {
 		$user_id = (int) get('user_id', 0);
 		if ( ! $user_id) 
 		{
-			throw new Exception('This API call requires a user_id parameter to be passed', 1);
+			throw new ApiException(400);
 		}
 		
-		// create Model_App_User object and esnure this user belongs to this app
-		$dao = Factory_Dao::create('kohana', 'app_user', $user_id)->where('app_id', '=', $this->app->id());
-		$user = Factory_Model::create($dao);
-
-		// convert to api_user with adopter and format
-		$adopter = Factory_Adopter::create('appuser_to_api', $user, new stdClass());
-		$api_user = $adopter->convert();
-		$data_array = $this->format($api_user);
-		
-		//output
-		$this->response->headers('Content-Type', $data_array['content_type']);
-		$this->response->body($data_array['data']);
+		if ($this->method === 'GET') 
+		{
+			// create Model_App_User object and esnure this user belongs to this app
+			$dao = Factory_Dao::create('kohana', 'app_user', $user_id)->where('app_id', '=', $this->app->id());
+			$user = Factory_Model::create($dao);
+			// convert to api_user with adopter and format
+			$adopter = Factory_Adopter::create('appuser_to_api', $user, new stdClass());
+			$api_user = $adopter->convert();
+			$data_array = $this->format($api_user);
+			// send headers and echo body
+			$this->response->headers('Content-Type', $data_array['content_type']);
+			$this->response->body($data_array['data']);
+		}
+		else
+		{
+			throw new ApiException(405);
+		}
 	}
 	
 	/**
@@ -85,28 +90,37 @@ class Controller_Api_Users extends Controller_Api_Abstract {
 		$offset = (int) get('offset', 0);
 		$limit =  (int) get('limit', 50);
 		
-		$model_array = array();
-		$api_array = array();
-		$daos = Factory_Dao::create('kohana', 'app_user')
-			->where('app_id', '=', $this->app->id())
-			->offset($offset)
-			->limit($limit)
-			->find_all();
-		foreach ($daos as $dao) 
+		if ($this->method === 'GET') 
 		{
-			$model_array[] = Factory_Model::create($dao);
+			$model_array = array();
+			$api_array = array();
+			$daos = Factory_Dao::create('kohana', 'app_user')
+				->where('app_id', '=', $this->app->id())
+				->offset($offset)
+				->limit($limit)
+				->find_all();
+			// store results as an array of Model_App_User objects
+			foreach ($daos as $dao) 
+			{
+				$model_array[] = Factory_Model::create($dao);
+			}
+			// convert each Model_App_User object into an api_user object
+			foreach ($model_array as $model_app_user) 
+			{
+				$adopter = Factory_Adopter::create('appuser_to_api', $model_app_user, new stdClass());
+				$api_array[] = $adopter->convert();
+			}
+			//format results
+			$results = $this->format($api_array);
+			// send headers and echo body
+			$this->response->headers('Content-Type', $results['content_type']);
+			$this->response->body($results['data']);
 		}
-		
-		//convert
-		foreach ($model_array as $model_app_user) 
+		else
 		{
-			$adopter = Factory_Adopter::create('appuser_to_api', $model_app_user, new stdClass());
-			$api_array[] = $adopter->convert();
+			throw new ApiException(405);
+			
 		}
-		$results = $this->format($api_array);
-		
-		$this->response->headers('Content-Type', $results['content_type']);
-		$this->response->body($results['data']);
 	}
 	
 	/**
@@ -115,15 +129,48 @@ class Controller_Api_Users extends Controller_Api_Abstract {
 	 * @param string $email
 	 * @param integer $offset
 	 * @param integer $limit. default is 50.
-	 * @return void
+	 * @return array of stdClasses representing api_user objects
 	 */
 	public function action_search()
 	{
-		$email  = (string ) get('email', '');
+		$email  = get('email', NULL);
 		$offset = (int) get('offset', 0);
-		$limit  = (int) get('limit', 0);
+		$limit  = (int) get('limit', 50);
 		
-		
+		if ($this->method === 'GET') 
+		{
+			// to make this more robust in the future, implement a builder pattern
+			$model_array = array();
+			$api_array = array();
+			$daos = Factory_Dao::create('kohana', 'app_user')
+				->where('email', '=', $email)
+				->and_where('app_id', '=', $this->app->id())
+				->offset($offset)
+				->limit($limit)
+				->find_all();
+			// store results as an array of Model_App_User objects
+			foreach ($daos as $dao) 
+			{
+				$model_array[] = Factory_Model::create($dao);
+			}
+			// convert each Model_App_User object into an api_user object
+			foreach ($model_array as $model_app_user) 
+			{
+				$adopter = Factory_Adopter::create('appuser_to_api', $model_app_user, new stdClass());
+				$api_array[] = $adopter->convert();
+			}
+			// format results
+			$results = $this->format($api_array);
+			// send headers and echo body
+			$this->response->headers('Content-type', $results['content_type']);
+			$this->response->body($results['data']);
+		}
+		else
+		{
+			throw new ApiException(405);
+			
+		}
 	}
 	
 }
+

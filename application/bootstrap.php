@@ -101,6 +101,7 @@ Kohana::init(array(
 	'charset '    => 'UTF-8',
 	'caching'    => TRUE,
 	'index_file' => FALSE,
+	'errors' => strpos($_SERVER['REQUEST_URI'], 'api/') ? FALSE: TRUE,
 ));
 
 /**
@@ -127,11 +128,16 @@ Kohana::modules(array(
 	'unittest'   => MODPATH.'unittest',   // Unit testing
 	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
-	
+
 /**
  * api routes
  */
-Route::set('api/users', 'api/users(/<action>).<format>')
+Route::set('api/docs', 'api/docs(/<action>(/<error_code>))')
+	->defaults(array(
+		'controller' => 'Api_Docs',
+		'action'     => 'index',
+	));
+Route::set('api/users', 'api/users(/<action>)(.<format>)')
 	->defaults(array(
 		'controller' => 'Api_Users',
 		'action'     => 'index',
