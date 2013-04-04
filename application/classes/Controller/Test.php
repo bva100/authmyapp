@@ -337,8 +337,31 @@ class Controller_Test extends Controller {
 		$app = Factory_Model::create($dao);
 		
 		$app->set_facebook_app_paid(TRUE);
-		
-		echo Debug::vars($app->facebook_app_paid()); die;
 	}
+	
+	public function action_accessToken()
+	{
+		$app_id = (int) get('app_id', 1);
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		$app->set_access_token();
+		echo $app->access_token();
+	}
+	
+	public function action_decodeAccessToken()
+	{
+		$app_id = (int) get('app_id', 1);
+		$dao = Factory_Dao::create('kohana', 'app', $app_id);
+		$app = Factory_Model::create($dao);
+		
+		$token_array = Controller_Api::convert_access_token( $app->access_token() );
+		$valid = Controller_Api::validate_access_token('kohana', $token_array);
+		echo Debug::vars($valid); die;
+	}
+	
+	
+	
+	
 	
 }

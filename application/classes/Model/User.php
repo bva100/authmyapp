@@ -542,6 +542,71 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
+	 * set plan_wepay_preapproval_id
+	 *
+	 * @param int $plan_wepay_preapproval_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_plan_wepay_preapproval_id($plan_wepay_preapproval_id, $lazy = FALSE)
+	{
+		if ( ! is_int($plan_wepay_preapproval_id) )
+		{
+			trigger_error('set_plan_wepay_preapproval_id expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->plan_wepay_preapproval_id = $plan_wepay_preapproval_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get plan_wepay_preapproval_id
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function plan_wepay_preapproval_id()
+	{
+		return( (int) $this->dao->plan_wepay_preapproval_id);
+	}
+	
+	/**
+	 * set plan_wepay_preapproval_uri
+	 *
+	 * @param string $plan_wepay_preapproval_uri
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_plan_wepay_preapproval_uri($plan_wepay_preapproval_uri, $lazy = FALSE)
+	{
+		if ( ! is_string($plan_wepay_preapproval_uri) )
+		{
+			trigger_error('set_plan_wepay_preapproval_uri expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->plan_wepay_preapproval_uri = $plan_wepay_preapproval_uri;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get plan_wepay_preapproval_uri
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function plan_wepay_preapproval_uri()
+	{
+		return($this->dao->plan_wepay_preapproval_uri);
+	}
+	
+	
+	/**
 	 * get login_count
 	 *
 	 * @return int

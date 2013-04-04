@@ -172,7 +172,7 @@ $securityCode = SecurityHelper::md5_rand();
 $sessionHelper->set("authMyAppSecurityToken", $securityCode);
 
 // redirect
-header( "Location: '.URL::base(TRUE).'connect_facebook?app_id='.$this->app->id().'&security_code=$securityCode&connect_version='.Controller_Api::CONNECT_VERSION.'" );';
+header( "Location: '.URL::base(TRUE).'connect_facebook?app_id='.$this->app->id().'&security_code=$securityCode&connect_version='.Controller_Api_Abstract::CONNECT_VERSION.'" );';
 	}
 	
 	/**

@@ -7,7 +7,7 @@
 			<h2>
 				Create your Auth-My-App account
 			</h2>
-			<?php echo HTML::anchor('connect_facebook?app_id=1&security_code='.$security_code.'&connect_version='.Controller_Api::CONNECT_VERSION, "Signup using Facebook", array('class' => 'btn btn-facebook btn-large btn-cta')) ?>
+			<?php echo HTML::anchor('connect_facebook?app_id=1&security_code='.$security_code.'&connect_version='.Controller_Api_Abstract::CONNECT_VERSION, "Signup using Facebook", array('class' => 'btn btn-facebook btn-large btn-cta')) ?>
 		</div><!-- .span10 offset1 -->
 	</div><!-- .row -->
 </div><!-- .container -->

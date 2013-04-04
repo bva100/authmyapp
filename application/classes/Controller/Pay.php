@@ -26,7 +26,7 @@ class Controller_Pay extends Controller_Home {
 		$response = $wepay->request('checkout/create', array(
 			'account_id'        => Factory_Payment::account_id('wepay'),
 			'amount'            => '25.00',
-			'short_description' => 'Service charge for creating Facebook App',
+			'short_description' => 'Service charge for creating Facebook App and Custom dialog for app id '.$app_id,
 			'type'              => 'SERVICE',
 			'redirect_uri'      => URL::base(TRUE).'/pay/facebookAppProcess?payFacebookApp_token='.$payFacebookApp_token.'&app_id='.$app_id,
 			'mode'              => 'iframe',
@@ -79,6 +79,7 @@ class Controller_Pay extends Controller_Home {
 		$dao = Factory_Dao::create('kohana', 'app', $app_id);
 		$app = Factory_Model::create($dao);
 		$app->set_facebook_app_paid(TRUE);
+		$app->set_facebook_app_checkout_id($checkout_id);
 		
 		$message = urlencode('Thank you. Your Facebook App payment for '.$app->name().' has been received.');
 		$redirect = URL::base(TRUE).'home/?message='.$message.'&message_type=success';

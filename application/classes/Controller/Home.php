@@ -106,6 +106,7 @@ class Controller_Home extends Controller_Abstract {
 		$dao_app = Factory_Dao::create('kohana', 'app');
 		$app     = Model_App::create_with_name_and_organization_id($dao_app, $name, $org->id());
 		$app->set_secret(TRUE);
+		$app->set_access_token(TRUE);
 		$app->set_domain($domain, TRUE);
 		$app->set_post_auth_uri($postAuthUri, TRUE);
 		$app->set_sender_uri($senderUri, TRUE);
@@ -177,13 +178,24 @@ class Controller_Home extends Controller_Abstract {
 		$plan_id = (int) post('plan_id', 1);
 		$app_id  = (int) post('app_id', 0);
 		$new_app = (bool) post('new_app', FALSE);
+		$free_dao_plan = Factory_Dao::create('kohana', 'plan')->where('name', '=', 'free')->find();
 		
+		// does user have a plan? If YES, cancel it
+		if ($this->user()->plan_wepay_preapproval_id()) 
+		{
+			// wepay cancel call
+			
+		}
+		
+		// if free plan was selected skip to redirect section
+		if ( ! (int) $free_dao_plan->id === $plan_id)
+		{
+			// premium plans requires new preapproval
+			
+		}
+		
+		// set plan id
 		$this->user->set_plan_id($plan_id);
-		
-		// wepay integration here...
-		
-		$dao_plan = Factory_Dao::create('kohana', 'plan')->where('name', '=', 'free')->find();
-		$plan = Factory_Model::create($dao_plan);
 		
 		// redirect
 		if ($app_id AND $new_app )

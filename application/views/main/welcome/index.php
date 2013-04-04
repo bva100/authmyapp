@@ -15,7 +15,7 @@
 					<p>
 						Connect your app or website to Facebook and simplify your user signup process.
 					</p>
-					<?php echo HTML::anchor("connect_facebook?app_id=1&security_code=".$security_code.'&connect_version='.Controller_Api::CONNECT_VERSION, "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
+					<?php echo HTML::anchor("connect_facebook?app_id=1&security_code=".$security_code.'&connect_version='.Controller_Api_Abstract::CONNECT_VERSION, "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
 				</div><!-- .hero-unit -->
 			</div><!-- .span12 -->
 		</div><!-- .row -->
@@ -284,7 +284,7 @@
 		<div class='row'>
 			<div class='span12'>
 				<h2>Auth-My-App Simplifies Facebook Connect</h2>
-				<?php echo HTML::anchor("connect_facebook?app_id=1&security_code=".$security_code.'&connect_version='.Controller_Api::CONNECT_VERSION, "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
+				<?php echo HTML::anchor("connect_facebook?app_id=1&security_code=".$security_code.'&connect_version='.Controller_Api_Abstract::CONNECT_VERSION, "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
 			</div><!-- .span12 -->
 		</div><!-- .row -->
 	</div><!-- .container -->

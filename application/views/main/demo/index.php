@@ -29,7 +29,7 @@
 					<br />
 					Sign up now for a free account with just <i>one very simple click</i>!
 				</p>
-				<?php echo HTML::anchor("connect_facebook?app_id=2&security_code=".$security_code.'&connect_version='.Controller_Api::CONNECT_VERSION, "Connect with Auth-My-App Facebook button", array('class' => 'btn btn-primary btn-large')) ?>
+				<?php echo HTML::anchor("connect_facebook?app_id=2&security_code=".$security_code.'&connect_version='.Controller_Api_Abstract::CONNECT_VERSION, "Connect with Auth-My-App Facebook button", array('class' => 'btn btn-primary btn-large')) ?>
 			</div><!-- .hero-unit -->
 		</div><!-- .span12 -->
 	</div><!-- .row -->
@@ -74,7 +74,7 @@
 		
 		<div class='span12'>
 			<h2>
-				Best service ever. <span class='muted'>It'll really blow your mind.</span> <a href="<?php echo URL::base(TRUE) ?>connect_facebook?app_id=2&security_code=<?php echo $security_code ?>&connect_version=<?php echo Controller_Api::CONNECT_VERSION ?>">Get started now.</a>
+				Best service ever. <span class='muted'>It'll really blow your mind.</span> <a href="<?php echo URL::base(TRUE) ?>connect_facebook?app_id=2&security_code=<?php echo $security_code ?>&connect_version=<?php echo Controller_Api_Abstract::CONNECT_VERSION ?>">Get started now.</a>
 			</h2>
 		</div><!-- .span8 -->
 		

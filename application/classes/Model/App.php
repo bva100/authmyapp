@@ -223,6 +223,39 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
+	 * Create and set an access token
+	 *
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_access_token($lazy = FALSE)
+	{
+		if ( ! $this->secret()) 
+		{
+			trigger_error('set access token expects secret to be set prior to being called', E_USER_WARNING);
+		}
+		$encrypt = Encrypt::instance();
+		$access_token = $encrypt->encode( 'app_'.$this->id().'_'.$this->secret() );
+		$this->dao->access_token = $access_token;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get access_token
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function access_token()
+	{
+		return($this->dao->access_token);
+	}
+	
+	/**
 	 * set domain
 	 *
 	 * @param string $domain
@@ -637,6 +670,39 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	{
 		return( (bool) $this->dao->facebook_app_paid);
 	}
+	
+	/**
+	 * set facebook_app_checkout_id
+	 *
+	 * @param int $facebook_app_checkout_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_facebook_app_checkout_id($facebook_app_checkout_id, $lazy = FALSE)
+	{
+		if ( ! is_int($facebook_app_checkout_id) )
+		{
+			trigger_error('set_facebook_app_checkout_id expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->facebook_app_checkout_id = $facebook_app_checkout_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get facebook_app_checkout_id
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function facebook_app_checkout_id()
+	{
+		return( (int) $this->dao->facebook_app_checkout_id);
+	}
+	
 	
 	/**
 	 * set facebook_app_id

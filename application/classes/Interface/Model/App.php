@@ -15,6 +15,9 @@ interface Interface_Model_App
 	public function set_secret($lazy = FALSE);
 	public function secret();
 	
+	public function set_access_token($lazy = FALSE);
+	public function access_token();
+	
 	public function set_organization_id($organization_id, $lazy = FALSE);
 	public function organization_id();
 	
@@ -52,6 +55,8 @@ interface Interface_Model_App
 	
 	public function set_facebook_app_paid($facebook_app_paid, $lazy = FALSE);
 	public function facebook_app_paid();
+	public function set_facebook_app_checkout_id($facebook_app_checkout_id, $lazy = FALSE);
+	public function facebook_app_checkout_id();
 	
 	public function set_facebook_app_id($facebook_app_id, $lazy = FALSE);
 	public function facebook_app_id();

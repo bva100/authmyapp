@@ -77,7 +77,7 @@ class Script_Connect_Button_Facebook extends Script_Abstract {
 		// create html and css
 		$this->file_data = '
 		
-		<a href="'.$this->app->sender_url().'/Facebook.php?button_version='.Controller_Api::CONNECT_VERSION.'" class="btn-facebook" target="_top">'.$this->data['text'].'</a>
+		<a href="'.$this->app->sender_url().'/Facebook.php?button_version='.Controller_Api_Abstract::CONNECT_VERSION.'" class="btn-facebook" target="_top">'.$this->data['text'].'</a>
 		
 		<style type="text/css" media="screen">
 			.btn-facebook {
