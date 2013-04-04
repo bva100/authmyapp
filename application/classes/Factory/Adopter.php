@@ -29,6 +29,11 @@ class Factory_Adopter extends Factory_Abstract {
 			case 'facebookUser':
 				return new Adopter_FacebookUser($from, $to);
 				break;
+			case 'appuserApi':
+			case 'app_user_api':
+			case 'appuser_to_api':
+				return new Adopter_AppuserApi($from, $to);
+				break;
 			default:
 				trigger_error('Factory_Adoper::create does not recognize adopter_type '.$adopter_type, E_USER_WARNING);
 				break;

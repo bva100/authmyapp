@@ -42,11 +42,18 @@ Abstract class Controller_Api_Abstract extends Controller {
 	protected $user_agent;
 	
 	/**
-	 * The content type requested by client, set in header.
+	 * Constructor/Before. Set method, format, version and user agent properties
 	 *
-	 * @var string
+	 * @return void
+	 * @author BRIAN ANDERSON
 	 */
-	protected $content_type;
+	public function before()
+	{
+		$this->set_method();
+		$this->set_format();
+		$this->set_version();
+		$this->set_user_agent();
+	}
 	
 	/**
 	 * Set method
@@ -55,7 +62,7 @@ Abstract class Controller_Api_Abstract extends Controller {
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_method(array $_SERVER)
+	public function set_method()
 	{
 		$method = strtoupper($_SERVER['REQUEST_METHOD']);
 		
@@ -127,7 +134,7 @@ Abstract class Controller_Api_Abstract extends Controller {
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_user_agent(array $_SERVER)
+	public function set_user_agent()
 	{
 		$this->user_agent = $_SERVER['HTTP_USER_AGENT'];
 	}
@@ -141,10 +148,9 @@ Abstract class Controller_Api_Abstract extends Controller {
 	 */
 	public function format($data)
 	{
-		$results = array();
 		switch ($this->format) {
 			case 'json':
-				$results = array( 'data' => json_encode($data), 'content_type' => 'application/json' );
+				return array( 'data' => json_encode($data), 'content_type' => 'application/json' );	
 				break;
 			default:
 				throw new Exception('Format not recognized');
