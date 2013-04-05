@@ -135,30 +135,11 @@ class SessionHelper {
 }
 
 /**
- * SecurityHelper for generating salts, hashing strings, and encrypting data
- *
- * @author BRIAN ANDERSON
- */
-class SecurityHelper {
-
-	/**
-	 * Creates a random salt using mt_rand, uniqid with more entropy and md5 hash
-	 *
-	 * @return void
-	 * @author BRIAN ANDERSON
-	 */
-	public static function md5_rand()
-	{
-		return md5(uniqid(mt_rand(), TRUE));
-	}
-}
-
-/**
  * Request Helper for setting GET and POST vars
  *
  * @author BRIAN ANDERSON
  */
-class RequestHelper {
+class ParamHelper {
 
 	/**
 	 * safely set GET vars
@@ -213,229 +194,21 @@ class RequestHelper {
 		$_REQUEST[$key] = htmlentities($_REQUEST[$key], ENT_QUOTES, "UTF-8");
 		return($_REQUEST[$key]);
 	}
-
 }
-
-
-/**
- * ValidateHelper
- *
- * @author BRIAN ANDERSON
- */
-class Validate {
-
-	/**
-	 * check email
-	 *
-	 * @param string $email 
-	 * @return bool
-	 * @author BRIAN ANDERSON
-	 */
-	public static function email($email)
-	{
-		if ( ! filter_var($email, FILTER_VALIDATE_EMAIL))
-		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-
-	/**
-	 * Check urk
-	 *
-	 * @param string $url 
-	 * @return bool
-	 * @author BRIAN ANDERSON
-	 */
-	public static function url($url)
-	{
-		if ( ! filter_var($url, FILTER_VALIDATE_URL)) 
-		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-
-	/**
-	 * check name
-	 *
-	 * @param string $name 
-	 * @param int $max_length 
-	 * @return bool
-	 * @author BRIAN ANDERSON
-	 */
-	public static function name($name, $maxLength = 63)
-	{
-		if ( ! is_string($name)) 
-		{
-			return FALSE;
-		}
-		else if ( strlen($name) < 1 OR strlen($name) > $maxLength )
-		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-
-	/**
-	 * check ip
-	 *
-	 * @param string $ip 
-	 * @return bool
-	 * @author BRIAN ANDERSON
-	 */
-	public static function ip($ip)
-	{
-		if ( ! filter_var($ip, FILTER_VALIDATE_IP))
-		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-
-	/**
-	 * Validates a birthday. Only works with unix timestamps.
-	 *
-	 * @param int $birthday 
-	 * @return bool
-	 * @author BRIAN ANDERSON
-	 */
-	public static function birthday($birthday)
-	{
-		if ( ! is_int($birthday)) 
-		{
-			return FALSE;
-		}
-		else if ($birthday < -2524521600 OR $birthday > time() ) 
-		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-
-	/**
-	 * check gender
-	 *
-	 * @param string $gender 
-	 * @param bool $abbr 
-	 * @return bool
-	 * @author BRIAN ANDERSON
-	 */
-	public static function gender($gender, $abbr = TRUE)
-	{
-		if ($abbr) 
-		{
-			if ($gender === "m" OR $gender === "f") 
-			{
-				return TRUE;
-			}
-			else
-			{
-				return FALSE;
-			}
-		}
-		else
-		{
-			if ($gender !== "male" OR $gender !== "female") 
-			{
-				return FALSE;
-			}
-			else
-			{
-				return TRUE;
-			}
-		}
-	}
-
-	/**
-	 * Check country code
-	 *
-	 * @param string $countryCode 
-	 * @param int $length 
-	 * @return bool
-	 * @author BRIAN ANDERSON
-	 */
-	public static function countryCode($countryCode, $length = 2)
-	{
-		if ( ! is_string($countryCode)) 
-		{
-			return FALSE;
-		}
-		else if ( strlen($countryCode) > $length ) 
-		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-
-	public static function timezoneOffset($timezoneOffset)
-	{
-		if ( ! is_numeric($timezoneOffset)) 
-		{
-			return FALSE;
-		}
-		else if ($timezoneOffset < -24 OR $timezoneOffset > 0)
-		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-
-	public static function invalidMsg()
-	{
-		return "<br /><br /><center><h1>Your request cannot be completed at this time. <br /> Please try again soon. <a href="">Click Here to Return.</a></h1></center>";
-	}
-
-
-}
-
 
 /* Begin main */
 
 $sessionHelper = new SessionHelper();
 $sessionHelper->secure();
 
-// hardcoded App vars. This can be changed in your apps settings on AuthMyApp.com. After changing settings, please re-install this file onto your server.
+// hardcoded App vars. This can be changed in your apps settings on AuthMyApp.com. After changing settings, please re-download and upload the new AmaReciver.
 $storage_method = "'.$this->app->storage_method().'";
 
-// GET vars
-$email         = RequestHelper::request("email");
-$firstName     = RequestHelper::request("first_name");
-$lastName      = RequestHelper::request("last_name");
-$birthday      = (int) RequestHelper::request("birthday");
-$picture       = RequestHelper::request("picture");
-$gender        = RequestHelper::request("gender");
-$ip            = RequestHelper::request("ip");
-$employerName  = RequestHelper::request("employer_name");
-$jobTitle      = RequestHelper::request("job_title");
-$countryCode   = RequestHelper::request("country_code");
-$timezone      = (int) RequestHelper::request("timezone");
-$facebookId    = RequestHelper::request("facebook_id");
-$method        = RequestHelper::request("method"); // source of data
-$accessToken   = RequestHelper::request("access_token");
-$tokenExpires  = (int) RequestHelper::request("tokenExpires");
-$securityCode  = RequestHelper::request("security_code");
+// vars
+$security_code = ParamHelper::get("security_code", "nada");
+$data_source   = ParamHelper::get("data_source", "");
+$user_id       = ParamHelper::get("user_id", 0);
+$access_token  = "'.$this->app->access_token().'";
 
 // check security code
 if ( $sessionHelper->get("authMyAppSecurityToken") !== $securityCode )
@@ -443,111 +216,103 @@ if ( $sessionHelper->get("authMyAppSecurityToken") !== $securityCode )
 	trigger_error("An incorrect security code has been passed. Please try again.", E_USER_WARNING);
 }
 
-// validate data
-if ( ! Validate::email($email) )
-{
-	trigger_error("An incorrect email has been passed. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( isset($firstName) AND ! Validate::name($firstName) )
-{
-	trigger_error("An incorrect first name has been passed. Please try again", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( isset($lastName) AND ! Validate::name($lastName) ) 
-{
-	trigger_error("An incorrect last name has been passed. Please try again", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( $birthday AND ! Validate::birthday($birthday) ) 
-{
-	trigger_error("an incorrect birthday has been passed. Please try again", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( isset($picture) AND ! Validate::url($picture) ) 
-{
-	trigger_error("an incorrect picture url has been passed. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( isset($gender) AND ! Validate::gender($gender, TRUE) ) 
-{
-	trigger_error("an incorrect gender has been passed. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( ! Validate::ip($ip) )
-{
-	trigger_error("an incorrect IP has been passed. Please try again", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if( isset($employerName) AND ! Validate::name($employerName, 127) )
-{
-	trigger_error("an incorrect employer name has been passed. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( isset($jobTitle) AND ! Validate::name($jobTitle, 127) )
-{
-	trigger_error("an incorrect job title has been passed expects. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( isset($countryCode) AND ! Validate::countryCode($countryCode, 2) ) 
-{
-	trigger_error("An incorrect country code was passed. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( $timezone AND ! Validate::timezoneOffset($timezone) ) 
-{
-	trigger_error("An incorrect timezone was passed. please try again expects.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( isset($facebookId) AND ( ! strlen($facebookId) > 200 OR strlen($facebookId) < 1) ) 
-{
-	trigger_error("An incorrect facebook id was passed. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( ! Validate::name($method, 127) ) 
-{
-	trigger_error("An incorrect method name was passed. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( isset($accessToken) AND ( strlen($accessToken) > 256 OR strlen($accessToken) < 1) )
-{
-	trigger_error("An incorrect access token was passed. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
-}
-if ( $tokenExpires AND ( $tokenExpires > 20000000 OR $tokenExpires < 1)) 
-{
+// get user data via api using cURL
+$headers = array("Content-Type: application/json", "Authorization: Bearer '.$this->app->access_token().'");
 
-	trigger_error("An incorrect access token has been passed. Please try again.", E_USER_WARNING);
-	die(Validate::invalidMsg());
+// create uri
+$uri = "'.URL::base(TRUE).'api/users.json?user_id=".$user_id."&access_token='.$this->app->access_token().'&v='.Controller_Api_Abstract::API_VERSION.'";
+
+//cURL
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_USERAGENT, "AuthMyApp PHP SDK api_version='.Controller_Api_Abstract::API_VERSION.'");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+curl_setopt($ch, CURLOPT_URL, $uri);
+
+// response
+$response = curl_exec($ch);
+$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+$response = json_decode($response);
+
+// check response for errors
+if ($http_status !== 200) 
+{
+	// error occurred.
+	echo "<pre>";
+	var_dump($response);
+	echo "</pre>";
+	trigger_error("A $data_source error has occurred. PLease try again soon.", E_USER_WARNING);
+	die();
+}
+if ( ! $response->email) 
+{
+	trigger_error("The e-mail permissions must be accepted in order to continue. Please try again and be sure to accept email permissions so we can identify you.", E_USER_WARNING);
 }
 
 // which storage method is being used?
 switch ($storage_method) {
-	case "'.Model_App::STORAGE_MYSQL.'":
+	case '.Model_App::STORAGE_MYSQL.':
 		break;
-	case "'.Model_App::STORAGE_PHP_SESSION.'":
+	case '.Model_App::STORAGE_PHP_SESSION.':
 	default:
-
-		$sessionHelper->massSet(array(
-			"email"          => $email,
-			"firstName"      => $firstName,
-			"lastName"       => $lastName,
-			"birthday"       => $birthday,
-			"picture"        => $picture,
-			"gender"         => $gender,
-			"ip"             => $ip,
-			"employerName"   => $employerName,
-			"jobTitle"       => $jobTitle,
-			"countryCode"    => $countryCode,
-			"timezoneOffset" => $timezone,
-			"facebookId"     => $facebookId,
-			"method"         => $method,
-		));
-		
+		if (isset($response->email))
+		{
+			$sessionHelper->set("email", $response->email);
+		}
+		if (isset($response->name->first)) 
+		{
+			$sessionHelper->set("firstName", $response->name->first);
+		}
+		if (isset($response->name->last))
+		{
+			$sessionHelper->set("lastName", $response->name->last);
+		}
+		if (isset($response->birthday)) 
+		{
+			$sessionHelper->set("birthday", $response->birthday);
+		}
+		if (isset($response->facebook->picture))
+		{
+			$sessionHelper->set("pictureFacebook", $response->facebook->picture);
+		}
+		if (isset($response->gender)) 
+		{
+			$sessionHelper->set("gender", $response->gender);
+		}
+		if (isset($response->ip)) 
+		{
+			$sessionHelper->set("ip", $response->ip);
+		}
+		if (isset($response->job->employer))
+		{
+			$sessionHelper->set("employer", $response->job->employer);
+		}
+		if (isset($response->job->title)) 
+		{
+			$sessionHelper->set("jobTitle", $response->job->title);
+		}
+		if (isset($response->countryCode))
+		{
+			$sessionHelper->set("countryCode", $response->countryCode);
+		}
+		if (isset($response->timezone)) 
+		{
+			$sessionHelper->set("timezone", $response->timezone);
+		}
+		if (isset($response->facebook->id)) 
+		{
+			$sessionHelper->set("facebookId", $response->facebook->id);
+		}
+		if (isset($response->data_source)) 
+		{
+			$sessionHelper->set("dataSource", $response->data_source);
+		}
 		break;
 }
 
-//redirect
+//redirect to post auth url. This can be changed in '.$this->app->name().'\'s settings. Settings can be found on the AuthMyApp dashboard.
 header( "Location: '.$this->app->post_auth_url().'" );';
 	}
 	

@@ -404,7 +404,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	public function receiver_url()
 	{
 		$uri = trim($this->receiver_uri(), '/');
-		return $this->domain().$uri;
+		return $this->domain().$uri.'/Index.php';
 	}
 	
 	/**

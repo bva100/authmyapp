@@ -36,6 +36,13 @@ class Controller_Connect_Facebook extends Controller {
 	 */
 	public function set_app_id($app_id = NULL)
 	{
+		if ( ! $app_id) 
+		{
+			// use default
+			$dao = Factory_Dao::create('kohana', 'app', 1);
+			$app = Factory_Model::create($dao);
+			$app_id = $app->facebook_app_id();
+		}
 		$this->app_id = $app_id;
 	}
 	
@@ -59,7 +66,14 @@ class Controller_Connect_Facebook extends Controller {
 	 */
 	public function set_secret($secret)
 	{
-		if ( ! is_string($secret) )
+		if ( ! $secret) 
+		{
+			// use default
+			$dao = Factory_Dao::create('kohana', 'app', 1);
+			$app = Factory_Model::create($dao);
+			$secret = $app->facebook_secret();
+		}
+		if (! is_string($secret) )
 		{
 			trigger_error('set_secret expects argument 1 to be type string', E_USER_WARNING);
 		}
