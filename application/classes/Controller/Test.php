@@ -264,13 +264,21 @@ class Controller_Test extends Controller {
 	
 	public function action_appDomain()
 	{
-		$domain_var = (string) get('var', 'www.doggiedoggie.com');
-		$app_id = (int) get('app_id', 12);
-
+		$app_id = (int) get('app_id', 1);
 		$dao = Factory_Dao::create('kohana', 'app', $app_id);
 		$app = Factory_Model::create($dao);
 		
-		$this->response->body($app->domain());
+		// $sender_uri = 'amadirectionsender/index.php';
+		// $app->set_sender_uri($sender_uri);
+		// $this->response->body($app->sender_url());
+		
+		// $receiver_uri = '/welcome/amaconnect';
+		// $app->set_receiver_uri($receiver_uri);
+		// $this->response->body($app->receiver_url());
+		
+		// $post_auth_uri = '/demo/app.php';
+		// $app->set_post_auth_uri($post_auth_uri);
+		// $this->response->body($app->post_auth_url());
 	}
 	
 	public function action_appSalt()

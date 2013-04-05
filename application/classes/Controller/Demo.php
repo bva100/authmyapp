@@ -36,7 +36,7 @@ class Controller_Demo extends Controller_Abstract {
 		$this->add_js('main/demo/index');
 	}
 	
-	public function action_AmaConnect()
+	public function action_amaconnect()
 	{
 		$security_code = (string ) get('security_code', 'nada');
 		$data_source   = (string ) get('data_source', '');

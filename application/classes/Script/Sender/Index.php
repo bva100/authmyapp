@@ -153,7 +153,7 @@ class SecurityHelper {
 $sessionHelper = new SessionHelper();
 $sessionHelper->secure();
 
-// GET vars
+// get button version
 if ( isset($_GET["button_version"]) ) 
 {
 	$buttonVersion = $_GET["button_version"];
@@ -171,8 +171,16 @@ else
 $securityCode = SecurityHelper::md5_rand();
 $sessionHelper->set("authMyAppSecurityToken", $securityCode);
 
-// redirect
-header( "Location: '.URL::base(TRUE).'connect_facebook?app_id='.$this->app->id().'&security_code=$securityCode&connect_version='.Controller_Api_Abstract::CONNECT_VERSION.'" );';
+// get data_source
+if (isset($_GET["data_source"]))
+{
+	switch ($_GET["data_source"]) {
+		case "facebook":
+		default:
+			header( "Location: '.URL::base(TRUE).'connect_facebook?app_id='.$this->app->id().'&security_code=$securityCode&connect_version='.Controller_Api_Abstract::CONNECT_VERSION.'" );
+			break;
+	}
+}';
 	}
 	
 	/**

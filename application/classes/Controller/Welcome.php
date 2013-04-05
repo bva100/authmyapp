@@ -31,7 +31,7 @@ class Controller_Welcome extends Controller_Abstract {
 		echo Debug::vars('login here'); die;
 	}
 	
-	public function action_AmaConnect()
+	public function action_amaconnect()
 	{
 		$security_code = (string ) get('security_code', 'nada');
 		$data_source   = (string ) get('data_source', 'facebook');

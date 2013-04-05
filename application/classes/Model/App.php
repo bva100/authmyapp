@@ -264,6 +264,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	 */
 	public function set_domain($domain, $lazy = FALSE)
 	{
+		$domain = strtolower($domain);
 		$valid = Valid::url($domain);
 		if ( ! $valid) 
 		{
@@ -291,7 +292,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * get domain
+	 * get domain. Domains always include http:// (or https://) and a trailing slash
 	 *
 	 * @return string
 	 * @author BRIAN ANDERSON
@@ -302,7 +303,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * set sender_uri
+	 * set sender_uri. Typically includes filename, but does not need to.
 	 *
 	 * @param string $sender_uri
 	 * @param bool $lazy
@@ -319,7 +320,11 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			throw new Exception("Please enter a valid sender uri", 1);
 		}
-		if ( stripos($sender_uri, 'authmyapp') !== FALSE ) 
+		// format
+		$sender_uri = strtolower($sender_uri);
+		$sender_uri = ltrim($sender_uri, '/');
+		// ensure uri does not contain "authmyapp"
+		if ( strpos($sender_uri, 'authmyapp') !== FALSE ) 
 		{ 
 			throw new Exception('Sender Uri cannot contain "AuthMyApp". Please change your Sender Uri and try again ', 1);
 		}
@@ -332,7 +337,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * get sender_uri
+	 * get sender_uri. Uri's never include a beginning slash but typically include a filename
 	 *
 	 * @return string
 	 * @author BRIAN ANDERSON
@@ -343,19 +348,18 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * Get absolute path to sender url
+	 * Get absolute path to sender url. Does not include file (ex: facebook.php), only path. Always includes one trailing slash.
 	 *
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
 	public function sender_url()
 	{
-		$uri = trim($this->sender_uri(), '/');
-		return $this->domain().$uri;
+		return $this->domain().$this->sender_uri();
 	}
 	
 	/**
-	 * set receiver_uri
+	 * set receiver_uri. Typically include filename, but not always.
 	 *
 	 * @param string $receiver_uri
 	 * @param bool $lazy
@@ -372,10 +376,15 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			throw new Exception("Please enter a valid sender uri", 1);
 		}
-		if ( stripos($receiver_uri, 'authmyapp') !== FALSE ) 
+		// format
+		$receiver_uri = strtolower($receiver_uri);
+		$receiver_uri = ltrim($receiver_uri, '/');
+		// ensure uri does not container "authmyapp"
+		if ( strpos($receiver_uri, 'authmyapp') !== FALSE ) 
 		{ 
 			throw new Exception('Receiver Uri cannot contain "AuthMyApp". Please change your Receiver Uri and try again ', 1);
 		}
+		
 		$this->dao->receiver_uri = $receiver_uri;
 		if ( ! $lazy)
 		{
@@ -384,7 +393,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * get receiver_uri
+	 * get receiver_uri. Never begins with a forward slash, typically include filename but does not have to.
 	 *
 	 * @return string
 	 * @author BRIAN ANDERSON
@@ -396,26 +405,18 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	
 	
 	/**
-	 * get absolute url to to receiver
+	 * get absolute url to to receiver. Typically includes filename but does not have to.
 	 *
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
 	public function receiver_url()
 	{
-		$uri = trim($this->receiver_uri(), '/');
-		if ($this->id() === 1 OR $this->id() === 2) 
-		{
-			return $this->domain().'/'.$uri;
-		}
-		else
-		{
-			return $this->domain().$uri.'/Index.php';
-		}
+		return $this->domain().$this->receiver_uri();
 	}
 	
 	/**
-	 * set post_auth_uri
+	 * set post_auth_uri. Typically includes filename.
 	 *
 	 * @param string $post_auth_uri
 	 * @param bool $lazy
@@ -432,7 +433,9 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			throw new Exception("Please enter a valid sender uri", 1);
 		}
-		if ( stripos($post_auth_uri, 'authmyapp') !== FALSE ) 
+		$post_auth_uri = strtolower($post_auth_uri);
+		$post_auth_uri = ltrim($post_auth_uri, '/');
+		if ( strpos($post_auth_uri, 'authmyapp') !== FALSE ) 
 		{ 
 			throw new Exception('Post Auth Uri cannot contain "AuthMyApp". Please change your Post Auth Uri and try again ', 1);
 		}
@@ -444,7 +447,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * get post_auth_uri
+	 * get post_auth_uri. Never begins with a forward slash and typically includes filename, but does not have to.
 	 *
 	 * @return string
 	 * @author BRIAN ANDERSON
@@ -455,15 +458,14 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
-	 * Get absolute url to post auth
+	 * Get absolute url to post auth.
 	 *
 	 * @return string
 	 * @author BRIAN ANDERSON
 	 */
 	public function post_auth_url()
 	{
-		$uri = trim($this->post_auth_uri(), '/');
-		return $this->domain().$uri;
+		return $this->domain().$this->post_auth_uri();
 	}
 	
 	/**
