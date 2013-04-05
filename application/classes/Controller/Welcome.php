@@ -52,6 +52,9 @@ class Controller_Welcome extends Controller_Abstract {
 		{
 			$headers[] = 'Authorization: Bearer '.$app->access_token();
 		}
+		
+		echo Debug::vars($app->access_token()); die;
+		
 		// create uri
 		$uri = URL::base(TRUE).'api/users.json?user_id='.$user_id.'&access_token='.$app->access_token().'&v=.8';
 		//cURL
