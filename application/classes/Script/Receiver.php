@@ -220,7 +220,7 @@ if ( $sessionHelper->get("authMyAppSecurityToken") !== $securityCode )
 $headers = array("Content-Type: application/json", "Authorization: Bearer '.$this->app->access_token().'");
 
 // create uri
-$uri = "'.URL::base(TRUE).'api/users.json?user_id=".$user_id."&access_token=urlencode('.$this->app->access_token().')&v='.Controller_Api_Abstract::API_VERSION.'";
+$uri = "'.URL::base(TRUE).'api/users.json?user_id=".$user_id."&access_token='.urlencode($this->app->access_token()).'&v='.Controller_Api_Abstract::API_VERSION.'";
 
 //cURL
 $ch = curl_init();
