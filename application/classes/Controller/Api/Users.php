@@ -31,13 +31,12 @@ class Controller_Api_Users extends Controller_Api_Abstract {
 		}
 		else
 		{
-			echo Debug::vars('no access token found'); die;
 			throw new ApiException(401);
 		}
 		$token_array = $this->convert_access_token($encrypted_access_token);
 		if ( ! $this->validate_access_token('kohana', $token_array) ) 
 		{
-			echo Debug::vars('invalid access token'); die;
+			echo Debug::vars($token_array); die;
 			throw new ApiException(401);
 		}
 		
