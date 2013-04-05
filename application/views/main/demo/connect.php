@@ -53,7 +53,7 @@
 				<tr>
 					<td>Picture Url</td>
 					<td>
-						<?php echo $picture ?>
+						<?php echo HTML::anchor($picture, $picture, array('target' => '_blank')) ?>
 					</td>
 				</tr>
 			</table>
@@ -68,7 +68,7 @@
 				<?php echo Form::hidden("country_code", $country_code); ?>
 				<?php echo Form::hidden("facebook_id", $facebook_id); ?>
 				<?php echo Form::hidden("picture", $picture); ?>
-				<?php echo Form::hidden("method", $method); ?>
+				<?php echo Form::hidden("data_source", $data_source); ?>
 				<?php echo Form::submit("submit", "Look Inside Example Company's App", array('class' => 'btn btn-large btn-danger', 'id' => 'view-app')); ?>
 			<?php echo Form::close(); ?>
 			

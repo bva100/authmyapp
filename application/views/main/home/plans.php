@@ -17,7 +17,7 @@
 							<?php echo $app->name() ?> has been added to your account
 						</h3>
 						<p>
-							To ensure AuthMyApp can send signup data to <?php echo $app->name() ?>, please choose a plan below
+							Next Step: to ensure AuthMyApp can send signup data to <?php echo $app->name() ?>, please choose a plan below.
 						</p>
 					</div>
 			<?php endif ?>

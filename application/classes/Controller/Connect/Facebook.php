@@ -266,11 +266,6 @@ class Controller_Connect_Facebook extends Controller {
 		
 		// create sender object and redirect
 		$sender = Factory_Sender::create('signup', 'facebook', $app, $app_user);
-		if ($app_id === 1) 
-		{
-			$sender->set_access_token($access_token);
-			$sender->set_access_token_expires($expires);
-		}
 		
 		// record login
 		$app_user->record_login( Factory_Dao::create('kohana', 'app_user_login') );

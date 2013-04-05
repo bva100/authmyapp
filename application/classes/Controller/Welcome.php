@@ -31,82 +31,111 @@ class Controller_Welcome extends Controller_Abstract {
 		echo Debug::vars('login here'); die;
 	}
 	
-	public function action_connectWithFacebook()
+	public function action_AmaConnect()
 	{
-		$email                  = (string) get('email', '');
-		$first_name             = (string) get('first_name', '');
-		$last_name              = (string) get('last_name', '');
-		$picture                = (string) get('picture', '');
-		$birthday               = (int)    get('birthday', '');
-		$gender                 = (string) get('gender', '');
-		$ip                     = (string) get('ip', '');
-		$country_code           = (string) get('country_code', '');
-		$timezone               = (int)    get('timezone', 0);
-		$facebook_id            = (string) get('facebook_id', '');
-		$method                 = (string) get('method', '');
-		$facebook_token         = (string) get('access_token', '');
-		$security_code          = (string) get('security_code', '');
-		$facebook_token_expires = (int)    get('token_expires', 0);
-		if ($facebook_token_expires)
-		{
-			$facebook_token_expires = time() + $facebook_token_expires;
-		}
+		$security_code = (string ) get('security_code', 'nada');
+		$data_source   = (string ) get('data_source', 'facebook');
+		$user_id       = (int) get('user_id', 0);
 		
-		// check security code
+		// validate security code
 		if ( ! $security_code OR $security_code !== Session::instance()->get('original_security_code', FALSE))
 		{
 			throw new Exception('Access Denied. Please try again by clicking <a href="'.URL::base(TRUE).'">here</a>', 1); die;
 		}
+		// create authmyapp Model_App object
+		$app_dao = Factory_Dao::create('kohana', 'app', 1);
+		$app = Factory_Model::create($app_dao);
 		
-		// does user with given facebook_id already exist in system?
-		$dao = Factory_Dao::create('kohana', 'user')->where('facebook_id', '=', $facebook_id)->find();
+		// get user data via api via curl
+		$headers = array('Content-Type: application/json');
+		if ($app->access_token())
+		{
+			$headers[] = 'Authorization: Bearer '.$app->access_token();
+		}
+		// create uri
+		$uri = URL::base(TRUE).'api/users.json?user_id='.$user_id.'&access_token='.$app->access_token().'&v=.8';
+		//cURL
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_USERAGENT, 'AuthMyApp PHP SDK api_version=.8');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+		curl_setopt($ch, CURLOPT_URL, $uri);
+		// response
+		$response = curl_exec($ch);
+		// status
+		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		// close
+		curl_close($ch);
+		$response = json_decode($response);
+		
+		// check status
+		if ($http_status !== 200) 
+		{
+			// error occured. Log.
+			Kohana::$log->add(Log::ERROR, 'AmaConnect error code = '.$response->error_code.' with message '.$response->message);
+			throw new Exception('A '.$data_source.' error has occurred. Please try again soon.', 1);
+		}
+		if ( ! $response->email) 
+		{
+			throw new Exception('Email permissions must be accepted in order to continue. Please try again.', 1);
+		}
+		
+		// create auth object
+		$auth = Factory_Authenticate::create( Auth::instance() );
+		
+		// does user with given email already exist in system?
+		$dao = Factory_Dao::create('kohana', 'user')->where('email', '=', $response->email)->find();
 		if ($dao->loaded()) 
 		{
-			// create Model_User object and authenticate object
+			// create Model_User object
 			$user = Factory_Model::create($dao);
-			$auth = Factory_Authenticate::create( Auth::instance() );
 			
 			// update data
-			if ($first_name) 
+			if (isset($response->name->first))
 			{
-				$user->set_first_name($first_name, TRUE);
+				$user->set_first_name($response->name->first, TRUE);
 			}
-			if ($last_name) 
+			if (isset($response->name->last))
 			{
-				$user->set_last_name($last_name, TRUE);
+				$user->set_last_name($response->name->last, TRUE);
 			}
-			if ($picture) 
+			if (isset($response->birthday))
 			{
-				$user->set_picture($picture, TRUE);
+				$user->set_birthday($response->birthday, TRUE);
 			}
-			if ($birthday) 
+			if (isset($response->gender))
 			{
-				$user->set_birthday($birthday, TRUE);
+				$user->set_gender($response->gender, TRUE);
 			}
-			if ($gender) 
+			if (isset($response->ip))
 			{
-				$user->set_gender($gender, TRUE);
+				$user->set_ip($response->ip, TRUE);
 			}
-			if ($ip) 
+			if (isset($response->country_code))
 			{
-				$user->set_ip($ip, TRUE);
+				$user->set_country_code($response->country_code, TRUE);
 			}
-			if ($country_code)
+			if (isset($response->timezone))
 			{
-				$user->set_country_code($country_code, TRUE);
+				$user->set_timezone($response->timezone, TRUE);
 			}
-			if ($timezone) 
+			if (isset($response->facebook->id))
 			{
-				$user->set_timezone($timezone, TRUE);
+				$user->set_facebook_id($response->facebook->id, TRUE);
 			}
-			if ($facebook_token) 
+			if (isset($response->facebook->token))
 			{
-				$user->set_facebook_token($facebook_token, TRUE);
+				$user->set_facebook_token($response->facebook->token, TRUE);
 				$user->set_facebook_token_created(time(), TRUE);
 			}
-			if ($facebook_token_expires) 
+			if (isset($response->facebook->token_expires))
 			{
-				$user->set_facebook_token_expires($facebook_token_expires, TRUE);
+				$user->set_facebook_token_expires($response->facebook->token_expires, TRUE);
+			}
+			if (isset($response->facebook->picture))
+			{
+				$user->set_picture($response->facebook->picture, TRUE);
 			}
 			$user->db_update();
 			
@@ -114,14 +143,63 @@ class Controller_Welcome extends Controller_Abstract {
 			$auth->force_login( $user->email() );
 			$this->redirect('home', 302);
 		}
-		
-		//check for email
-		
-		
-		// else create new user
-		
-		
-		echo Debug::vars('complete'); die;
+		else
+		{
+			// create new user
+			$dao = Factory_Dao::create('kohana', 'user');
+			$user = Model_User::create_with_email($dao, $response->email);
+			$user->set_rand_password( Factory_Hash::create_via_type('kohana_auth') );
+			if (isset($response->name->first))
+			{
+				$user->set_first_name($response->name->first, TRUE);
+			}
+			if (isset($response->name->last))
+			{
+				$user->set_last_name($response->name->last, TRUE);
+			}
+			if (isset($response->birthday))
+			{
+				$user->set_birthday($response->birthday, TRUE);
+			}
+			if (isset($response->gender))
+			{
+				$user->set_gender($response->gender, TRUE);
+			}
+			if (isset($response->ip))
+			{
+				$user->set_ip($response->ip, TRUE);
+			}
+			if (isset($response->country_code))
+			{
+				$user->set_country_code($response->country_code, TRUE);
+			}
+			if (isset($response->timezone))
+			{
+				$user->set_timezone($response->timezone, TRUE);
+			}
+			if (isset($response->facebook->id))
+			{
+				$user->set_facebook_id($response->facebook->id, TRUE);
+			}
+			if (isset($response->facebook->token))
+			{
+				$user->set_facebook_token($response->facebook->token, TRUE);
+				$user->set_facebook_token_created(time(), TRUE);
+			}
+			if (isset($response->facebook->token_expires))
+			{
+				$user->set_facebook_token_expires($response->facebook->token_expires, TRUE);
+			}
+			if (isset($response->facebook->picture))
+			{
+				$user->set_picture($response->facebook->picture, TRUE);
+			}
+			$user->set_state(Model_User::STATE_ACTIVE);
+			
+			// login and redirect
+			$auth->force_login( $user->email() );
+			$this->redirect('home', 302);
+		}
 	}
 
 } // End Welcome

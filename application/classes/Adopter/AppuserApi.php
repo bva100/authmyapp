@@ -66,7 +66,7 @@ class Adopter_AppuserApi {
 		}
 		if ($this->user->birthday())
 		{
-			$api_user->birtday = $this->user->birthday();
+			$api_user->birthday = $this->user->birthday();
 		}
 		if ($this->user->gender()) 
 		{

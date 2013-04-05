@@ -95,11 +95,11 @@ class Controller_Home extends Controller_Abstract {
 		}
 		if ( ! $senderUri ) 
 		{
-			$senderUri = '/AuthMyAppDirectionSender';
+			$senderUri = '/AmaDirectionSender';
 		}
 		if ( ! $receiverUri ) 
 		{
-			$receiverUri = '/AuthMyAppReceiver';
+			$receiverUri = '/AmaReceiver';
 		}
 		
 		// create app
@@ -135,6 +135,12 @@ class Controller_Home extends Controller_Abstract {
 		$app_id  = (int)  get('app_id', 0);
 		$new_app = (bool) get('new_app', FALSE);
 		$limit   = get('limit', 4);
+		
+		// does this app belong to this user?
+		if ( $app_id AND ! $this->user->has_app_id($app_id)) 
+		{
+			throw new Exception('You cannot change the settings for this app at this time', 1);
+		}
 		
 		// plan name
 		$plan_name = $this->user->plan()->name();
@@ -203,11 +209,11 @@ class Controller_Home extends Controller_Abstract {
 			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
 			$app = Factory_Model::create($dao_app);
 			
-			if ($plan_id !== $plan->id()) 
+			if ($plan_id !== (int) $free_dao_plan->id) 
 			{
 				$dao = Factory_Dao::create('kohana', 'app', $app_id);
 				$app = Factory_Model::create($dao);
-				$message = urlencode('The programming for '.$app->name().' has already been completed and you can begin your downloads right away. Start with your Facebook Connect button.');
+				$message = urlencode('The programming for '.$app->name().' has been completed and you can begin your downloads right away. Start with your Facebook Connect button.');
 	$this->redirect('downloads/connectButton?app_id='.$app->id().'&new_app='.TRUE.'&type=connect_facebook&message='.$message.'&message_type=info', 302);
 			}
 			else

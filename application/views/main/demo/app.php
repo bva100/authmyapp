@@ -104,7 +104,7 @@
 							Welcome To The Example App!
 						</h2>
 						<p>
-							Welcome <?php echo $first_name ?>. Auth My App has made it easy for you to signup using <?php echo ucwords($method) ?>. If this were a real app, you would now be logged in and ready to go. All it took was one click.
+							Welcome <?php echo $first_name ?>. Auth My App has made it easy for you to signup using <?php echo ucwords($data_source) ?>. If this were a real app, you would now be logged in and ready to go. All it took was one click.
 						</p>
 					</div><!-- .hero-unit -->
 				</div><!-- .span12 -->
@@ -112,7 +112,7 @@
 			
 			<div class='row'>
 				<div class='span9'>
-					<?php echo HTML::anchor("#profile-modal", 'View '.ucwords($method).' Data', array('class' => 'span3 btn btn-large btn-info btn-cta', 'id' => 'btn-profile', 'data-toggle' => 'modal')) ?>
+					<?php echo HTML::anchor("#profile-modal", 'View '.ucwords($data_source).' Data', array('class' => 'span3 btn btn-large btn-info btn-cta', 'id' => 'btn-profile', 'data-toggle' => 'modal')) ?>
 					<?php echo HTML::anchor("", "Close Demo and Return", array('class' => 'span3 btn btn-large btn-danger btn-cta', 'id' => 'btn-close')) ?>
 				</div><!-- .span9 -->
 			</div><!-- .name -->

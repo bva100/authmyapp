@@ -319,7 +319,10 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			throw new Exception("Please enter a valid sender uri", 1);
 		}
-		
+		if ( stripos($sender_uri, 'authmyapp') !== FALSE ) 
+		{ 
+			throw new Exception('Sender Uri cannot contain "AuthMyApp". Please change your Sender Uri and try again ', 1);
+		}
 		
 		$this->dao->sender_uri = $sender_uri;
 		if ( ! $lazy)
@@ -369,6 +372,10 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			throw new Exception("Please enter a valid sender uri", 1);
 		}
+		if ( stripos($receiver_uri, 'authmyapp') !== FALSE ) 
+		{ 
+			throw new Exception('Receiver Uri cannot contain "AuthMyApp". Please change your Receiver Uri and try again ', 1);
+		}
 		$this->dao->receiver_uri = $receiver_uri;
 		if ( ! $lazy)
 		{
@@ -417,6 +424,10 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		if ( strlen($post_auth_uri) < 1 OR strlen($post_auth_uri) > 127 )
 		{
 			throw new Exception("Please enter a valid sender uri", 1);
+		}
+		if ( stripos($post_auth_uri, 'authmyapp') !== FALSE ) 
+		{ 
+			throw new Exception('Post Auth Uri cannot contain "AuthMyApp". Please change your Post Auth Uri and try again ', 1);
 		}
 		$this->dao->post_auth_uri = $post_auth_uri;
 		if ( ! $lazy)

@@ -53,13 +53,31 @@ $(document).ready(function() {
 			$("#inputPostAuthUrl").val(domain + '/').focus();
 			return(0);
 		};
+		if ( ! ama_compliant(postAuthUrl)) {
+			event.preventDefault();
+			alert('Your redirect URL cannot contain "AuthMyApp" ');
+			$("#inputPostAuthUrl").focus();
+			return(0);
+		};
 		if ( senderUri.charAt(0) !== '/') {
 			var senderUri = '/' + senderUri;
 			$('#inputSenderUri').val(senderUri);
 		};
+		if ( ! ama_compliant(senderUri)) {
+			event.preventDefault();
+			alert('Your sender uri cannot contain "AuthMyApp" ');
+			$("#inputSenderUri").focus();
+			return(0);
+		};
 		if (receiverUri.charAt(0) !== '/') {
 			var receiverUri = '/' + receiverUri;
 			$("#inputReceiverUri").val(receiverUri);
+		};
+		if ( ! ama_compliant(receiverUri)) {
+			event.preventDefault();
+			alert('Your receiver uri cannot contain "AuthMyApp" ');
+			$("#inputReceiverUri").focus();
+			return(0);
 		};
 	});
 	
@@ -70,6 +88,15 @@ $(document).ready(function() {
 		});
 	
 });
+
+function ama_compliant (str) {
+	str = str.toLowerCase();
+	if (str.indexOf('authmyapp') !== -1) {
+		return false;
+	}else{
+		return true;
+	}
+}
 
 function valid_url (url) {
 	if(url.indexOf('.') === -1)
