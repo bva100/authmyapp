@@ -293,9 +293,9 @@ switch ($storage_method) {
 		{
 			$sessionHelper->set("jobTitle", $response->job->title);
 		}
-		if (isset($response->countryCode))
+		if (isset($response->country_code))
 		{
-			$sessionHelper->set("countryCode", $response->countryCode);
+			$sessionHelper->set("countryCode", $response->country_code);
 		}
 		if (isset($response->timezone)) 
 		{
@@ -305,9 +305,17 @@ switch ($storage_method) {
 		{
 			$sessionHelper->set("facebookId", $response->facebook->id);
 		}
-		if (isset($response->data_source)) 
+		if (isset($response->facebook->token))
 		{
-			$sessionHelper->set("dataSource", $response->data_source);
+			$sessionHelper->set("facebookToken", $response->facebook->token);
+		}
+		if (isset($response->facebook->token_expires))
+		{
+			$sessionHelper->set("facebookTokenExpires", $response->facebook->token_expires);
+		}
+		if (isset($data_source)) 
+		{
+			$sessionHelper->set("dataSource", $data_source);
 		}
 		break;
 }
