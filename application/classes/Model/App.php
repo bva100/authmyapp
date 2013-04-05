@@ -406,7 +406,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		$uri = trim($this->receiver_uri(), '/');
 		if ($this->id() === 1 OR $this->id() === 2) 
 		{
-			return $this->domain().$uri;
+			return $this->domain().'/'.$uri;
 		}
 		else
 		{
