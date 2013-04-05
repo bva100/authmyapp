@@ -55,6 +55,7 @@ class Controller_Welcome extends Controller_Abstract {
 		
 		// create uri
 		$uri = URL::base(TRUE).'api/users.json?user_id='.$user_id.'&access_token='.urlencode($app->access_token()).'&v=.8';
+		
 		//cURL
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_USERAGENT, 'AuthMyApp PHP SDK api_version=.8');

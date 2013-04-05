@@ -60,7 +60,7 @@ class Controller_Demo extends Controller_Abstract {
 		}
 		
 		// create uri
-		$uri = URL::base(TRUE).'api/users.json?user_id='.$user_id.'&access_token='.$app->access_token().'&v=.8';
+		$uri = URL::base(TRUE).'api/users.json?user_id='.$user_id.'&access_token='.urlencode($app->access_token()).'&v=.8';
 		
 		//cURL
 		$ch = curl_init();
