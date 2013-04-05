@@ -404,7 +404,14 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	public function receiver_url()
 	{
 		$uri = trim($this->receiver_uri(), '/');
-		return $this->domain().$uri.'/Index.php';
+		if ($this->id() === 1 OR $this->id() === 2) 
+		{
+			return $this->domain().$uri;
+		}
+		else
+		{
+			return $this->domain().$uri.'/Index.php';
+		}
 	}
 	
 	/**
