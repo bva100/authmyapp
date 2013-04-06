@@ -184,8 +184,6 @@ class Script_Connect_Button_Facebook extends Script_Abstract {
 			$this->set_filename();
 		}
 		
-		echo Debug::vars($this->path(), $this->filename()); die;
-		
 		// create file
 		file_put_contents ($this->path().$this->filename().'.html', $this->file_data, LOCK_EX);
 		
