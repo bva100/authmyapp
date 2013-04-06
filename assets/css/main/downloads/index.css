@@ -29,6 +29,7 @@
 	background-color: #f9f9f9;
 	padding: 20px 35px;
 	text-align: center;
+	border-bottom: 1px solid #dddddd;
 }
 .downloads-name {
 	font-size: 22px;
