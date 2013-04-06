@@ -5,7 +5,7 @@
  *
  * @author BRIAN ANDERSON
  */
-class Script_Sender_Facebook extends Script_Abstract{
+class Script_Sender extends Script_Abstract{
 	
 	public function set_file_data()
 	{
@@ -196,12 +196,14 @@ if (isset($_GET["data_source"]))
 			$this->set_filename();
 		}
 		
+		echo Debug::vars($this->path(), $this->filename().'.php'); die;
+		
 		// create file
 		file_put_contents ($this->path().$this->filename().'.php', $this->file_data, LOCK_EX);
 		
 		// set archive path. Ensure first letter is capitalized and string should begin with "/"
 		$archive_path = $this->app->sender_uri();
-		$archive_path = ucfirst( trim( $archive_path, '/' ) );
+		$archive_path = trim( $archive_path, '/' );
 		$archive_path = '/'.$archive_path;
 		$this->set_archive_path( $archive_path );
 		

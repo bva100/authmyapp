@@ -176,6 +176,8 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 		{
 			throw new Exception("Please enter a valid app name", 1);
 		}
+		// format
+		$name = str_replace(' ', '_', $name);
 		$this->dao->name = $name;
 		if ( ! $lazy)
 		{
@@ -191,7 +193,7 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	 */
 	public function name()
 	{
-		return(ucwords(str_replace('_', ' ', $this->dao->name)));
+		return(str_replace('_', ' ', $this->dao->name));
 	}
 	
 	/**

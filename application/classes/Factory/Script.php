@@ -17,7 +17,7 @@ class Factory_Script extends Factory_Abstract {
 				return new Script_Connect_Button_Facebook($user, $app, $data);
 				break;
 			case 'sender':
-				return new Script_Sender_Facebook($user, $app, $data);
+				return new Script_Sender($user, $app, $data);
 			case 'receiver':
 				return new Script_Receiver($user, $app, $data);
 			default:

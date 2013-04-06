@@ -313,7 +313,7 @@ abstract class Script_Abstract {
 	{
 		if ( ! $filename) 
 		{
-			$filename = $this->hash_algo->hash( $this->app->id().$this->data['type'] ).$this->app->id().$this->data['type'].'_'.$this->app->name();
+			$filename = $this->hash_algo->hash( $this->app->id().$this->data['type'] ).$this->app->id().$this->data['type'].'_'.str_replace(' ', '_', $this->app->name());
 		}
 		$this->filename = $filename;
 	}
