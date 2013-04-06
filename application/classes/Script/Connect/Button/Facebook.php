@@ -29,6 +29,8 @@ class Script_Connect_Button_Facebook extends Script_Abstract {
 	 */
 	public function set_file_data()
 	{
+		$this->set_path( $_SERVER['DOCUMENT_ROOT'].'/assets/clients/html/' );
+		$this->set_url_path( URL::base(TRUE).'assets/clients/html/' );
 		// run create (this runs twice)
 		$this->create();
 		
@@ -155,7 +157,7 @@ class Script_Connect_Button_Facebook extends Script_Abstract {
 		// set iframe
 		$this->iframe = '
 
-<iframe src="'.URL::base(TRUE).'assets/clients/downloads/'.$this->filename().'.html" width="'.$width.'" height="'.$height.'" sandbox="allow-top-navigation" seamless></iframe>
+<iframe src="'.URL::base(TRUE).'assets/clients/html/'.$this->filename().'.html" width="'.$width.'" height="'.$height.'" sandbox="allow-top-navigation" seamless></iframe>
 
 <style type="text/css" media="screen">
 	iframe[seamless]{
@@ -181,6 +183,8 @@ class Script_Connect_Button_Facebook extends Script_Abstract {
 		{
 			$this->set_filename();
 		}
+		
+		echo Debug::vars($this->path(), $this->filename()); die;
 		
 		// create file
 		file_put_contents ($this->path().$this->filename().'.html', $this->file_data, LOCK_EX);
