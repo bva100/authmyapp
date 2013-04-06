@@ -90,7 +90,7 @@ class Controller_Settings extends Controller_Home {
 		$this->redirect($redirect, 302);
 	}
 	
-	public function action_updateAppSecret()
+	public function action_updateAppAccessToken()
 	{
 		$app_id = (int) post('app_id', 0);
 		$this->auto_render = FALSE;
@@ -100,8 +100,8 @@ class Controller_Settings extends Controller_Home {
 		}
 		$dao = Factory_Dao::create('kohana', 'app', $app_id);
 		$app = Factory_Model::create($dao);
-		$app->set_secret();
-		echo $app->secret();
+		$app->set_access_token();
+		echo $app->access_token();
 	}
 	
 	public function action_updateAppOrg()

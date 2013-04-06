@@ -10,13 +10,13 @@ $(document).ready(function() {
 		'container': 'body',
 	});
 	
-	$("#update-secret").click(function(event) {
+	$("#update-access-token").click(function(event) {
 		event.preventDefault();
 		var answer = redownload();
 		if (answer) {
-			$.post('/settings/updateAppSecret', {app_id: appId}, function(data, textStatus, xhr) {
+			$.post('/settings/updateAppAccessToken', {app_id: appId}, function(data, textStatus, xhr) {
 				if (textStatus === 'success') {
-					$("#app-secret").text(data);
+					$("#access-token").text(data);
 				}else{
 					alert(failed);
 				}

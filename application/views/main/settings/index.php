@@ -44,9 +44,14 @@
 				<p style='text-align: center'>
 					<strong>AuthMyApp Id:</strong> <?php echo $app->id() ?>
 				</p>
-				<p style='text-align: center'>
-					<strong>Secret:</strong> <span id="app-secret"><?php echo $app->secret() ?></span> <a href="#" id='update-secret'>refresh</a>
-				</p>
+				<div class='app-secrets'>
+					<p style='text-align: center'>
+						<strong>Secret:</strong> <span id="app-secret"><?php echo $app->secret() ?></span>
+					</p>
+					<p style='text-align: center'>
+						<strong>Access Token:</strong> <span id="access-token"><?php echo $app->access_token() ?></span> (<a href="#" id='update-access-token'>reset</a>)
+					</p>
+				</div><!-- .app-secrets -->
 				<hr />
 				<legend id='basic-info-legend'>
 					Basic Info
