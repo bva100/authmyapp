@@ -68,13 +68,13 @@
 									Optional Nerdy Stuff
 								</legend>
 								<div class='control-group'>
-									<label class="control-label" for="inputSenderUri">Directory To Sender</label>
+									<label class="control-label" for="inputSenderUri">Path To Sender</label>
 									<div class='controls'>
-										<input type="text" id="inputSenderUri" placeholder="/amadirectionssender/index.php" name='uri'>
+										<input type="text" id="inputSenderUri" placeholder="/amadirectionsender/index.php" name='uri'>
 									</div><!-- .controls -->
 								</div>
 								<div class='control-group'>
-									<label class="control-label" for="inputReceiverUri">Directory To Receiver</label>
+									<label class="control-label" for="inputReceiverUri">Path To Receiver</label>
 									<div class="controls">
 										<input type="text" id="inputReceiverUri" placeholder="/amareceiver/index.php">
 									</div>
