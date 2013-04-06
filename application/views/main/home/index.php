@@ -53,16 +53,16 @@
 										<div class='row'>
 											<div class='app-body index-app-body span9'>
 												<div class='row'>
-													<div class='span3'>
+													<div class='span'>
 														<?php if ($app->state() === Model_App::STATE_PAUSED): ?>
 															
 															<!-- currently paused -->
 															<?php echo Form::open("settings/appProcessState"); ?>
 																<?php echo Form::hidden("app_id", $app->id()); ?>
 																<?php echo Form::hidden("state", Model_App::STATE_ACTIVE); ?>
-																<button type='submit' class='btn btn-block clearfix app-btn-state' id='change-to-active-state'>
+																<button type='submit' class='btn btn-grey btn-block clearfix app-btn-state' id='change-to-active-state'>
 																	<span class='app-btn-text pull-left'>Now Paused</span>
-																	<img src='/assets/img/pause.png' width='21' height='32' class='app-btn-img pull-right'>
+																	<img src='/assets/img/pause.png' width='16' height='16' class='app-btn-img pull-right'>
 																</button>
 															<?php echo Form::close(); ?>
 															
@@ -72,44 +72,44 @@
 															<?php echo Form::open("settings/appProcessState"); ?>
 																<?php echo Form::hidden("app_id", $app->id()); ?>
 																<?php echo Form::hidden("state", Model_App::STATE_PAUSED); ?>
-																<button type='submit' class='btn btn-block clearfix app-btn-state' id='change-to-paused-state'>
+																<button type='submit' class='btn btn-grey btn-block clearfix app-btn-state' id='change-to-paused-state'>
 																	<span class='app-btn-text pull-left'>Now Active</span>
-																	<img src="/assets/img/play.png" width="36" height="36" class='app-btn-img pull-right'>
+																	<img src="/assets/img/play.png" width="26" height="25" class='app-btn-img pull-right'>
 																</button>
 															<?php echo Form::close(); ?>
 															
 														<?php endif ?>
 													</div><!-- .span3 -->
-													<div class='span3'>
-														<a href="/downloads?app_id=<?php echo $app->id() ?>" class='btn btn-block clearfix'>
+													<div class='span'>
+														<a href="/downloads?app_id=<?php echo $app->id() ?>" class='btn btn-grey btn-block clearfix'>
 															<span class='app-btn-text pull-left'>Downloads</span>
-															<img src="/assets/img/download_file.png" width="36" height="36" class='app-btn-img pull-right'>
+															<img src="/assets/img/download_file.png" width="25" height="25" class='app-btn-img pull-right'>
 														</a>
 													</div>
-													<div class='span3'>
-														<a href="/settings/appFacebookDialog?app_id=<?php echo $app->id() ?>" class='btn btn-block clearfix' id='facebook-customize'>
+													<div class='span'>
+														<a href="/settings/appFacebookDialog?app_id=<?php echo $app->id() ?>" class='btn btn-grey btn-block clearfix' id='facebook-customize'>
 															<span class='app-btn-text pull-left'>Customize</span>
-															<img src="/assets/img/facebook.png" width="36" height="36" class='app-btn-img pull-right'>
+															<img src="/assets/img/facebook.png" width="25" height="25" class='app-btn-img pull-right'>
 														</a>
 													</div>
 												</div><!-- .row -->
 												<div class='row'>
-													<div class='span3'>
-														<a href="/home/analytics?app_id=<?php echo $app->id() ?>" class='btn btn-block clearfix'>
+													<div class='span'>
+														<a href="/home/analytics?app_id=<?php echo $app->id() ?>" class='btn btn-grey btn-block clearfix'>
 															<span class='app-btn-text pull-left'>Analytics</span>
-															<img src="/assets/img/graph_pie.png" width="36" height="36" class='app-btn-img pull-right'>
+															<img src="/assets/img/graph_pie.png" width="25" height="25" class='app-btn-img pull-right'>
 														</a>
 													</div><!-- .span3 -->
-													<div class='span3'>
-														<a href="/settings/app?app_id=<?php echo $app->id() ?>" class='btn btn-block clearfix'>
-															<span class='app-btn-text pull-left'>Settings</span>
-															<img src="assets/img/cogs.png" width="36" height="36" class='app-btn-img pull-right'>
+													<div class='span'>
+														<a href="/settings/app?app_id=<?php echo $app->id() ?>" class='btn btn-grey btn-block clearfix'>
+															<span class='app-btn-text pull-left'>App Settings</span>
+															<img src="assets/img/cogs.png" width="25" height="25" class='app-btn-img pull-right'>
 														</a>
 													</div>
-													<div class='span3'>
-														<a href="/help" class='btn btn-block clearfix'>
+													<div class='span'>
+														<a href="/help" class='btn btn-grey btn-block clearfix'>
 															<span class='app-btn-text pull-left'>Get Help</span>
-															<img src="/assets/img/question.png" width="36" height="36" class='app-btn-img pull-right'>
+															<img src="/assets/img/question.png" width="25" height="25" class='app-btn-img pull-right'>
 														</a>
 													</div>
 												</div><!-- .row -->

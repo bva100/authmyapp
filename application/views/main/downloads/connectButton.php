@@ -77,24 +77,16 @@
 									<?php echo Form::open("downloads/process"); ?>
 										<input type="hidden" name="type" value="connect_facebook_button" id='type-input'>
 										<input type="hidden" name="app_id" value="<?php echo $app->id() ?>" class='app-id'>
-										<div class='row'>
-											<p class='span2 offset1'>
 												<label for="text">Button Text</label>
 												<input type="text" name="text" value="Connect with Facebook" id='text-input'>
-											</p>
-											<p class='offset1 span2'>
 												<label for="size">Button Size</label>
-												<select id='size-input'>
+												<select id='size-input' data-width='314px'>
 													<option value="extra-large">Extra Large</option> 
 													<option value="large" selected>Large</option>
 													<option value="medium">Medium</option>
 													<option value="small">Small</option>
 												</select>
-											</p>
-										</div><!-- .row -->
-										<div class='row'>
-											<?php echo Form::submit("submit", "Preview Signup Button", array('class' => 'btn btn-blue submitter span3')); ?>
-										</div><!-- .row -->
+											<?php echo Form::submit("submit", "Preview Signup Button", array('class' => 'btn btn-blue submitter')); ?>
 									<?php echo Form::close(); ?>
 								</div>
 							<?php endif ?>

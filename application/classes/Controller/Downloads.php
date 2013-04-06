@@ -81,6 +81,8 @@ class Controller_Downloads extends Controller_Home {
 		$view->sidebar        = new View('main/home/sidebar');
 		$view->sidebar->page  = 'downloads';
 		$this->template->set('content', $view);
+		$this->add_js('bootstrap/bootstrap-select.min');
+		$this->add_css('bootstrap/bootstrap-select.min');
 		$this->add_js('main/downloads/index');
 		$this->add_css('main/downloads/index');
 	}

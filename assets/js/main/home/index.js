@@ -21,10 +21,13 @@ $(document).ready(function() {
 	
 	// on DOM ready, hide all but first
 	$(".index-app-container .app-body:not(:first)").hide();
+	$(".index-app-container .app-header:first").css('border-bottom', '1px solid #dddddd')
 	
 	$(".index-app-container").click(function(event) {
 		$(this).siblings().find('.index-app-body').slideUp();
+		$(this).siblings().find('.app-header').css('border-bottom', 'none');
 		$(this).find('.index-app-body').slideDown();
+		$(this).find('.app-header').css('border-bottom', '1px solid #dddddd');
 	});
 	
 });

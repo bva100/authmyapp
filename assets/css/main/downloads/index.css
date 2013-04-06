@@ -89,8 +89,24 @@
 	margin-top: 3px;
 	margin-bottom: 20px;
 }
-.download-setup-form {
-	margin-top: 20px;
+.download-setup-form{
+	margin-top: 17px;
+}
+.download-setup-form form {
+	width: 330px;
+	margin-left: 145px;
+}
+.download-setup-form input[type="text"] {
+	width: 300px;
+	height: 28px;
+	font-size: 17px;
+}
+.download-setup-form #size-input {
+	font-size: 17px;
+	height: 35px;
+}
+.download-setup-form .submitter {
+	font-weight: normal;
 }
 #sender-setup, #receiver-setup {
 	padding-bottom: 35px;
@@ -119,9 +135,19 @@
 	margin-right: 4px;
 }
 /*connectButton*/
-#connect-button-setup .submitter, #login-button-setup .submitter {
+#login-button-setup .submitter {
 	margin: 0px auto;
 	display: block;
+}
+#connect-button-setup .submitter {
+	margin-top: 13px;
+	width: 313px;
+}
+#connect-button-setup label {
+	margin-top: 4px;
+	width: 310px;
+	padding-left: 2px;
+	font-size: 16px;
 }
 #connect-button-setup, #login-button-setup {
 	padding-left: 40px;

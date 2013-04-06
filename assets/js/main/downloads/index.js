@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	$('select').selectpicker();
+	
 	$("#download-setup-results-sender").show(function(){
 		var appId = $('.app-id').val();
 		$("#download-setup-results-sender").load('/downloads?app_id=' + appId + ' #tutorial-sender-body');
