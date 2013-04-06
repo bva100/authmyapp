@@ -336,14 +336,14 @@ header( "Location: '.$this->app->post_auth_url().'" );';
 		
 		// set archive path. Ensure first letter is capitalized and string should begin with "/"
 		$archive_path = $this->app->receiver_uri();
-		$archive_path = ucfirst( trim( $archive_path, '/' ) );
+		$archive_path = trim( $archive_path, '/' );
 		$archive_path = '/'.$archive_path;
 		$this->set_archive_path( $archive_path );
 		
 		if ( file_exists($this->path().$this->filename().'.php') ) 
 		{
 			// zip
-			$compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.php'), $this->path().$this->filename().'.zip', $this->archive_path(), '/Index.php', TRUE);
+			$compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.php'), $this->path().$this->filename().'.zip', $this->archive_path(), '', TRUE);
 			$results = $compress->execute();
 			
 			// remove original
