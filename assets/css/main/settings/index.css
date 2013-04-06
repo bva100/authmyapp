@@ -72,3 +72,8 @@
 	position: relative;
 	right: 100px;
 }
+#make-one-for-me {
+	font-size: 17px;
+	display: block;
+	text-align: center;
+}
