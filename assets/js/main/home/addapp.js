@@ -59,19 +59,11 @@ $(document).ready(function() {
 			$("#inputPostAuthUrl").focus();
 			return(0);
 		};
-		if ( senderUri.charAt(0) !== '/') {
-			var senderUri = '/' + senderUri;
-			$('#inputSenderUri').val(senderUri);
-		};
 		if ( ! ama_compliant(senderUri)) {
 			event.preventDefault();
 			alert('Your sender uri cannot contain "AuthMyApp" ');
 			$("#inputSenderUri").focus();
 			return(0);
-		};
-		if (receiverUri.charAt(0) !== '/') {
-			var receiverUri = '/' + receiverUri;
-			$("#inputReceiverUri").val(receiverUri);
 		};
 		if ( ! ama_compliant(receiverUri)) {
 			event.preventDefault();
