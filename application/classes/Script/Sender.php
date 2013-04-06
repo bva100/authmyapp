@@ -196,8 +196,6 @@ if (isset($_GET["data_source"]))
 			$this->set_filename();
 		}
 		
-		echo Debug::vars($this->path(), $this->filename().'.php'); die;
-		
 		// create file
 		file_put_contents ($this->path().$this->filename().'.php', $this->file_data, LOCK_EX);
 		
@@ -210,7 +208,7 @@ if (isset($_GET["data_source"]))
 		if ( file_exists($this->path().$this->filename().'.php') ) 
 		{
 			// zip
-			$compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.php'), $this->path().$this->filename().'.zip', $this->archive_path(), '/Facebook.php', TRUE);
+			$compress = Factory_Compress::create($this->compression_type(), array($this->path().$this->filename().'.php'), $this->path().$this->filename().'.zip', $this->archive_path(), '', TRUE);
 			$results = $compress->execute();
 			
 			// remove orig file
