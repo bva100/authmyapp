@@ -95,11 +95,11 @@ class Controller_Home extends Controller_Abstract {
 		}
 		if ( ! $senderUri ) 
 		{
-			$senderUri = '/AmaDirectionSender';
+			$senderUri = 'amadirectionsender/index.php';
 		}
 		if ( ! $receiverUri ) 
 		{
-			$receiverUri = '/AmaReceiver';
+			$receiverUri = 'amareceiver/index.php';
 		}
 		
 		// create app
