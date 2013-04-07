@@ -8,7 +8,7 @@
 
 <style type="text/css" media="screen">
 	#alert-update {
-		font-size: 18px;
+		font-size: 16px;
 		line-height: 23px;
 		font-size: 550;
 	}

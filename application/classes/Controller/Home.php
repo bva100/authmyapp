@@ -38,6 +38,8 @@ class Controller_Home extends Controller_Abstract {
 			$view->alert->message      = $message;
 			$view->alert->type         = $message_type;
 		}
+		$view->payment_alert       = new View('alert/payment');
+		$view->payment_alert->user = $this->user();
 		$view->header              = new View('main/home/header');
 		$view->header->user        = $this->user();
 		$view->sidebar             = new View('main/home/sidebar');

@@ -41,7 +41,7 @@ class Controller_Pay extends Controller_Home {
 			'account_id'        => Factory_Payment::account_id('wepay'),
 			'period'            => 'monthly',
 			// 'amount'            => $plan->price(),
-			'amount'            => '6.61',
+			'amount'            => '1001',
 			'mode'              => 'iframe',
 			'short_description' => 'AuthMyApp subscription for user_id '.$this->user->id(),
 			'callback_uri'      => URL::base(TRUE).'callback/wepayipn?type=preapproval',

@@ -12,6 +12,8 @@
 			</div><!-- .span3 -->
 			<div class='span9'>
 				
+				<?php echo $payment_alert ?>
+				
 				<?php if (isset($alert)): ?>
 					<div class='row'>
 						<div class='span9'>

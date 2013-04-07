@@ -15,7 +15,7 @@ class Controller_Callback extends Controller {
 		switch ($type) {
 			case 'preapproval':
 				$preapproval_id = (int) post('preapproval_id', 130173);
-				$response = $wepay->request('preapproval', array('preapproval_id' => $preapproval_id));
+				$response       = $wepay->request('preapproval', array('preapproval_id' => $preapproval_id));
 				if ( ! isset($response->state)) 
 				{
 					throw new Exception('A WePay error occurred and your payment was not processed. Please try again soon.', 1);
