@@ -46,7 +46,7 @@ class Controller_Pay extends Controller_Home {
 			'short_description' => 'AuthMyApp subscription for user_id '.$this->user->id(),
 			'callback_uri'      => URL::base(TRUE).'callback/wepayipn?type=preapproval',
 			'redirect_uri'      => URL::base(TRUE).'pay/planConfirm?app_id='.$app_id.'&new_app='.$new_app.'&plan_id='.$plan_id.'&token='.urlencode($token),
-			'auto_recur'        => 'true',
+			'auto_recur'        => TRUE,
 		));
 		
 		$view = new View('main/pay/preapproval');
