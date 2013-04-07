@@ -42,6 +42,7 @@ class Controller_Pay extends Controller_Home {
 			'period'            => 'monthly',
 			// 'amount'            => $plan->price(),
 			'amount'            => '1001',
+			'start_time'        => time(),
 			'mode'              => 'iframe',
 			'short_description' => 'AuthMyApp subscription for user_id '.$this->user->id(),
 			'callback_uri'      => URL::base(TRUE).'callback/wepayipn?type=preapproval',
