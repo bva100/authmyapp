@@ -21,6 +21,9 @@ interface Interface_Model_App
 	public function set_organization_id($organization_id, $lazy = FALSE);
 	public function organization_id();
 	
+	public function set_primary_user_id($primary_user_id, $lazy = FALSE);
+	public function primary_user_id();
+	
 	public function set_name($name, $lazy = FALSE);
 	public function name();
 	

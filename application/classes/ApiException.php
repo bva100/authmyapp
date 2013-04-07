@@ -35,7 +35,7 @@ class ApiException {
 				break;
 			case 403:
 				$data['error_type']       = 'Not Authorized';
-				$data['message']          = 'Authentication was successful, however the client does not have access to the information requested. Can also occur if client has exceeded his or her rate limit for this hour';
+				$data['message']          = 'Authentication was successful, however the client does not have access to the information requested. Although this error can occur for many reasons, it often occurs when the client has exceeded his or her rate limit for this hour or if the client\'s last payment was invalid';
 				ksort($data);
 				$this->send_output($data, 403);
 				break;

@@ -12,6 +12,20 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	 */
 	const HASH_KOHANA_AUTH = 0;
 	
+	/**
+	 * plan states
+	 */
+	const PLAN_STATE_ACTIVE       = 1;
+	const PLAN_STATE_PAYMENT_HOLD = 2;
+	
+	/**
+	 * Create a new user with email
+	 *
+	 * @param Dao_Abstract $dao 
+	 * @param string $email 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
 	public static function create_with_email(Dao_Abstract $dao, $email)
 	{
 		if ($dao->loaded()) 
@@ -498,7 +512,7 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
-	 * set plan_id
+	 * set plan_id. Automatically sets plan state to active.
 	 *
 	 * @param int $plan_id
 	 * @param bool $lazy
@@ -512,6 +526,7 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 			trigger_error('set_plan_id expects argument 1 to be type int', E_USER_WARNING);
 		}
 		$this->dao->plan_id = $plan_id;
+		$this->dao->plan_state = self::PLAN_STATE_ACTIVE;
 		if ( ! $lazy)
 		{
 			$this->db_update();
@@ -539,6 +554,38 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	{
 		$dao_plan = $this->dao->plan;
 		return Factory_Model::create($dao_plan);
+	}
+	
+	/**
+	 * set plan_state
+	 *
+	 * @param int $plan_state
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_plan_state($plan_state, $lazy = FALSE)
+	{
+		if ( ! is_int($plan_state) )
+		{
+			trigger_error('set_plan_state expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->plan_state = $plan_state;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get plan_state
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function plan_state()
+	{
+		return( (int) $this->dao->plan_state);
 	}
 	
 	/**

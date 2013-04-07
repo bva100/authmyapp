@@ -159,6 +159,38 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
+	 * set primary_user_id
+	 *
+	 * @param int $primary_user_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_primary_user_id($primary_user_id, $lazy = FALSE)
+	{
+		if ( ! is_int($primary_user_id) )
+		{
+			trigger_error('set_primary_user_id expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->primary_user_id = $primary_user_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get primary_user_id
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function primary_user_id()
+	{
+		return( (int) $this->dao->primary_user_id);
+	}
+	
+	/**
 	 * set name
 	 *
 	 * @param string $name

@@ -435,7 +435,7 @@ class Controller_Test extends Controller {
 		echo 'response status = '.$http_status.'<hr />';
 		$data = json_decode($response);
 		
-		if (isset($data['error_code'])) 
+		if (isset($data->error_code)) 
 		{
 			echo 'Error found <hr>';
 			foreach ($data as $error) 

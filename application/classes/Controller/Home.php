@@ -107,6 +107,7 @@ class Controller_Home extends Controller_Abstract {
 		$app     = Model_App::create_with_name_and_organization_id($dao_app, $name, $org->id());
 		$app->set_secret(TRUE);
 		$app->set_access_token(TRUE);
+		$app->set_primary_user_id($this->user->id(), TRUE);
 		$app->set_domain($domain, TRUE);
 		$app->set_post_auth_uri($postAuthUri, TRUE);
 		$app->set_sender_uri($senderUri, TRUE);
@@ -181,23 +182,25 @@ class Controller_Home extends Controller_Abstract {
 	
 	public function action_plansProcess()
 	{
-		$plan_id = (int) post('plan_id', 1);
-		$app_id  = (int) post('app_id', 0);
-		$new_app = (bool) post('new_app', FALSE);
+		$plan_id       = (int) post('plan_id', 1);
+		$app_id        = (int) post('app_id', 0);
+		$new_app       = (bool) post('new_app', FALSE);
+		
+		// create free dao
 		$free_dao_plan = Factory_Dao::create('kohana', 'plan')->where('name', '=', 'free')->find();
+		
+		// if anything but a free plan was created, go through wepay checkout flow
+		if ( (int) $free_dao_plan->id !== $plan_id )
+		{
+			$this->redirect( $uri = URL::base(TRUE).'pay/plan?app_id='.$app_id.'&plan_id='.$plan_id.'&new_app='.$new_app, 302);
+		}
 		
 		// does user have a plan? If YES, cancel it
 		if ($this->user()->plan_wepay_preapproval_id()) 
 		{
-			// wepay cancel call
-			
-		}
-		
-		// if free plan was selected skip to redirect section
-		if ( ! (int) $free_dao_plan->id === $plan_id)
-		{
-			// premium plans requires new preapproval
-			
+			$wepay = Factory_Payment::create('wepay');
+			$cancel_response = $wepay->request('/preapproval/cancel', array('preapproval_id' => $this->user->plan_wepay_preapproval_id()));
+			$this->user->set_plan_wepay_preapproval_id(0);
 		}
 		
 		// set plan id
@@ -208,19 +211,8 @@ class Controller_Home extends Controller_Abstract {
 		{
 			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
 			$app = Factory_Model::create($dao_app);
-			
-			if ($plan_id !== (int) $free_dao_plan->id) 
-			{
-				$dao = Factory_Dao::create('kohana', 'app', $app_id);
-				$app = Factory_Model::create($dao);
-				$message = urlencode('The programming for '.$app->name().' has been completed and you can begin your downloads right away. Start with your Facebook Connect button.');
-	$this->redirect('downloads/connectButton?app_id='.$app->id().'&new_app='.TRUE.'&type=connect_facebook&message='.$message.'&message_type=info', 302);
-			}
-			else
-			{
-				$message = urlencode( $app->name().' is ready to go. Be sure to click on the help link in the navigation bar for integration tutorials');
-				$this->redirect('home?message='.$message.'&alert_type=success', 302);
-			}
+			$message = urlencode( $app->name().' is ready to go. Be sure to click on the help link in the navigation bar for integration tutorials.');
+			$this->redirect('home?message='.$message.'&alert_type=success', 302);
 		}
 		else
 		{
