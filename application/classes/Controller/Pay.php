@@ -7,6 +7,21 @@
  */
 class Controller_Pay extends Controller_Home {
 	
+	public function action_planStripe()
+	{
+		// API fac
+		Factory_Payment::create('stripe');
+		
+		$view = new View('main/pay/stripe/checkout');
+		$view->user            = $this->user();
+		$view->header          = new View('main/home/header');
+		$view->header->user    = $this->user();
+		$view->sidebar         = new View('main/home/sidebar');
+		$view->sidebar->page   = 'payments';
+		$view->footer          = new View('footer');
+		$this->template->set('content', $view);
+	}
+	
 	public function action_plan()
 	{
 		$plan_id = (int) get('plan_id', 0);
