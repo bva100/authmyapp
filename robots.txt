@@ -1,0 +1,23 @@
+User-agent: *
+Disallow: /api/
+
+User-agent: *
+Disallow: /demo/
+
+User-agent: *
+Disallow: /pay/
+
+User-agent: *
+Disallow: /test/
+
+User-agent: *
+Disallow: /home/
+
+User-agent: *
+Disallow: /downloads/
+
+User-agent: *
+Disallow: /callback/
+
+User-agent: *
+Disallow: /api/

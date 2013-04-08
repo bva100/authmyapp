@@ -44,6 +44,7 @@ class Controller_Home extends Controller_Abstract {
 		$view->header->user        = $this->user();
 		$view->sidebar             = new View('main/home/sidebar');
 		$view->sidebar->page       = 'manage';
+		$view->footer              = new View('footer');
 		$this->template->set('content', $view);
 	}
 	
@@ -56,8 +57,9 @@ class Controller_Home extends Controller_Abstract {
 		
 		$view = new View('main/home/addapp');
 		$view->user = $this->user();
-		$view->header = new view('main/home/header');
+		$view->header = new View('main/home/header');
 		$view->header->user = $this->user();
+		$view->footer = new View('footer');
 		$this->template->set('content', $view);
 		$this->add_js('main/home/addapp');
 	}
@@ -135,9 +137,10 @@ class Controller_Home extends Controller_Abstract {
 	
 	public function action_plans()
 	{
-		$app_id  = (int)  get('app_id', 0);
-		$new_app = (bool) get('new_app', FALSE);
-		$limit   = get('limit', 4);
+		$app_id   = (int)  get('app_id', 0);
+		$new_app  = (bool) get('new_app', FALSE);
+		$limit    = get('limit', 4);
+		$payments = (bool) get('payments', FALSE);
 		
 		// does this app belong to this user?
 		if ( $app_id AND ! $this->user->has_app_id($app_id)) 
@@ -170,6 +173,7 @@ class Controller_Home extends Controller_Abstract {
 		$plans = Model_Plan::all($dao_plan, Model_Plan::STATE_ACTIVE, 'ASC', $limit);
 		
 		$view                = new View('main/home/plans');
+		$view->payments      = $payments;
 		$view->app           = $app;
 		$view->new_app       = $new_app;
 		$view->limit         = $limit;
@@ -179,6 +183,7 @@ class Controller_Home extends Controller_Abstract {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'plan';
+		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 	}
 	
@@ -254,6 +259,7 @@ class Controller_Home extends Controller_Abstract {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'analytics';
+		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 		$this->add_css('jqplot/jquery.jqplot.min');
 		$this->add_js('jqplot/jquery.jqplot.min');
@@ -326,6 +332,7 @@ class Controller_Home extends Controller_Abstract {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'analytics';
+		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 	}
 	
@@ -346,6 +353,7 @@ class Controller_Home extends Controller_Abstract {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'organizations';
+		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 	}
 	

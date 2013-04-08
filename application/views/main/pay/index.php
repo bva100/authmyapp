@@ -17,6 +17,8 @@
 	</div><!-- .row -->
 </div><!-- .container -->
 
+<?php echo $footer ?>
+
 <!-- wepay checkout iframe -->
 <script type="text/javascript" src="https://www.wepay.com/min/js/iframe.wepay.js"></script>
 <script type="text/javascript">

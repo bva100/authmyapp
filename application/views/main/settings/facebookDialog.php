@@ -66,7 +66,7 @@
 								<p id='all-done-with-facebook'>
 									All done? <?php echo HTML::anchor("/home", "Return To My Dashboard.") ?>
 									<br />
-									Confused? <a href="#">Build A New Facebook App For Me</a>.
+									Confused? <a href="#" id='redo-make-one-for-me'>Build A New Facebook App For Me</a>.
 								</p>
 							<?php endif ?>
 							
@@ -79,46 +79,44 @@
 					</div><!-- .row3 offset3 -->
 				</div><!-- .row -->
 				
-				<?php if ( ! $app->facebook_app_id() ): ?>
-					<!-- create facebook app -->
-					<div class='row' id='create-facebook-app'>
-						<div class='span9'>
-							<div class='well well-unit'>
-								<h3>
-									Don't have a Facebook App for <?php echo $app->name() ?>?
-								</h3>
-								<p>
-									We'll make one for you and automatically integrate it with your AuthMyApp account. We charge a one time fee of $25 for this service.
-								</p>
-								<br />
-								<legend>
-									What We Need From You
-								</legend>
-								<ol>
-									<li>A high quality picture of your logo</li>
-									<li>A brief 130 character description of your app or website</li>
-									<li>A more detailed description which can be up to 1000 characters.</li>
-								</ol>
-								<legend>
-									Optional Items You Can Add
-								</legend>
-								<ul>
-									<li>A tagline (up to 40 characters)</li>
-									<li>The URL to your privacy policy</li>
-									<li>The URL to your terms of service</li>
-									<li>A user support E-mail</li>
-								</ul>
-								<br />
-								<p>
-									Shoot us an email with the above information. <em>We will do our best to build you your custom dialog box and Facebook appas soon as possible</em>.
-								</p>
-								<p>
-									<?php echo HTML::mailto('hello@authmyapp.com?subject=Facebook+App+Request&body=(please+write+your+message+below+this+top+line)+app_id+is+'.$app->id(), 'Email Us', array('class' => 'btn btn-blue btn-large', 'target' => '_blank')); ?>
-								</p>
-							</div><!-- .well well-unit -->
-						</div><!-- .span9 -->
-					</div><!-- .row -->
-				<?php endif ?>
+				<!-- create facebook app -->
+				<div class='row hide' id='create-facebook-app'>
+					<div class='span9'>
+						<div class='well well-unit'>
+							<h3>
+								Don't have a Facebook App for <?php echo $app->name() ?>?
+							</h3>
+							<p>
+								We'll make one for you and automatically integrate it with your AuthMyApp account. We charge a one time fee of $25 for this service.
+							</p>
+							<br />
+							<legend>
+								What We Need From You
+							</legend>
+							<ol>
+								<li>A high quality picture of your logo</li>
+								<li>A brief 130 character description of your app or website</li>
+								<li>A more detailed description which can be up to 1000 characters.</li>
+							</ol>
+							<legend>
+								Optional Items You Can Add
+							</legend>
+							<ul>
+								<li>A tagline (up to 40 characters)</li>
+								<li>The URL to your privacy policy</li>
+								<li>The URL to your terms of service</li>
+								<li>A user support E-mail</li>
+							</ul>
+							<br />
+							<p>
+								Shoot us an email with the above information. <em>We will do our best to build you your custom dialog box and Facebook appas soon as possible</em>.
+							</p>
+							<p>
+								<?php echo HTML::mailto('hello@authmyapp.com?subject=Facebook+App+Request&body=(please+write+your+message+below+this+top+line)+app_id+is+'.$app->id(), 'Email Us', array('class' => 'btn btn-blue btn-large', 'target' => '_blank')); ?>
+							</p>
+						</div><!-- .well well-unit -->
+					</div><!-- .span9 -->
+				</div><!-- .row -->
 				
 				<div class='row hide' id='facebook-app-prompter'>
 					<div class='span9'>
@@ -144,3 +142,5 @@
 	<div id='facebook-app-id' class='hide'><?php echo $app->facebook_app_id() ?></div>
 	
 </div><!-- .container -->
+
+<?php echo $footer ?>

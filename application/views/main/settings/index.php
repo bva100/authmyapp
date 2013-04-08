@@ -114,3 +114,5 @@
 	<div class='app-id hide'><?php echo $app->id() ?></div><!-- .hide -->
 	
 </div><!-- .container -->
+
+<?php echo $footer ?>

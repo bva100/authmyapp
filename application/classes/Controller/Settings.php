@@ -28,6 +28,7 @@ class Controller_Settings extends Controller_Home {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'setingsApp';
+		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 		$this->add_css('main/settings/index');
 		$this->add_js('main/settings/index');
@@ -67,6 +68,7 @@ class Controller_Settings extends Controller_Home {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = NULL;
+		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 		$this->add_css('main/settings/index');
 		$this->add_js('main/settings/index');
@@ -174,9 +176,9 @@ class Controller_Settings extends Controller_Home {
 	
 	public function action_updateAppReceiverUri()
 	{
-		$app_id = (int) post('app_id', 0);
+		$app_id       = (int) post('app_id', 0);
 		$receiver_uri = (string) post('receiver_uri', '');
-		$redirect = (string) post('redirect', '/settings/app?app_id='.$app_id.'#receiver-uri');
+		$redirect     = (string) post('redirect', '/settings/app?app_id='.$app_id.'#receiver-uri');
 		
 		$this->auto_render = FALSE;
 		if ( ! $this->user->has_app_id($app_id)) 

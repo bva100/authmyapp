@@ -116,3 +116,5 @@
 		</div><!-- .span9 -->
 	</div><!-- .row -->
 </div><!-- .container -->
+
+<?php echo $footer ?>

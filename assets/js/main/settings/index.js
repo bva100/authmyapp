@@ -39,7 +39,7 @@ $(document).ready(function() {
 		})
 	});
 	
-	$("#make-one-for-me").click(function(event) {
+	$("#make-one-for-me, #redo-make-one-for-me").click(function(event) {
 		event.preventDefault();
 		$("#update-facebook-app").fadeOut('fast', function(){
 			$("#create-facebook-app").fadeIn('fast');

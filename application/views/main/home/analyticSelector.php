@@ -31,3 +31,5 @@
 		
 	</div><!-- .row -->
 </div><!-- .container -->
+
+<?php echo $footer ?>

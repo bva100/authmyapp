@@ -129,3 +129,5 @@
 		</div><!-- .row -->
 	</div><!-- .container -->
 </div><!-- .wrapper -->
+
+<?php echo $footer ?>

@@ -37,6 +37,7 @@ class Controller_Downloads extends Controller_Home {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'downloads';
+		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 		$this->add_js('main/downloads/index');
 		$this->add_css('main/downloads/index');
@@ -80,6 +81,7 @@ class Controller_Downloads extends Controller_Home {
 		$view->header->user   = $this->user();
 		$view->sidebar        = new View('main/home/sidebar');
 		$view->sidebar->page  = 'downloads';
+		$view->footer         = new View('footer');
 		$this->template->set('content', $view);
 		$this->add_js('bootstrap/bootstrap-select.min');
 		$this->add_css('bootstrap/bootstrap-select.min');
@@ -119,6 +121,7 @@ class Controller_Downloads extends Controller_Home {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'downloads';
+		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 		$this->add_js('main/downloads/index');
 		$this->add_css('main/downloads/index');
@@ -156,6 +159,7 @@ class Controller_Downloads extends Controller_Home {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'downloads';
+		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 		$this->add_js('main/downloads/index');
 		$this->add_css('main/downloads/index');

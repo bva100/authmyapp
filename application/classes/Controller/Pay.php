@@ -57,6 +57,7 @@ class Controller_Pay extends Controller_Home {
 		$view->header->user    = $this->user();
 		$view->sidebar         = new View('main/home/sidebar');
 		$view->sidebar->page   = 'payments';
+		$view->footer          = new View('footer');
 		$this->template->set('content', $view);
 	}
 	

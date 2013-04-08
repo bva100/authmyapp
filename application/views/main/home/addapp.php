@@ -91,4 +91,7 @@
 			</div><!-- .span12 -->
 		</div><!-- .row -->
 	</div><!-- .container -->
+	
+	<?php echo $footer ?>
+	
 </div>

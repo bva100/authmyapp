@@ -26,11 +26,11 @@
 			Organizations
 		</a>
 	</li>
-	<li <?php if($page === 'billing'){echo 'class="active"';} ?>>
-		<a href="/home/billing">
+	<li <?php if($page === 'payments'){echo 'class="active"';} ?>>
+		<a href="/home/plans?limit=4&payments=1">
 			<img src="/assets/img/credit.png" width="18" height="18" class='sidebar-img'>
 			<span id='sidebar-billing-text'>
-				Payments
+				Plan Options
 			</span>
 		</a>
 	</li>
