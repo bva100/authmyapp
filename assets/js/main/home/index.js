@@ -31,3 +31,37 @@ $(document).ready(function() {
 	});
 	
 });
+
+$(".btn-plan-cancel").click(function(event) {
+	var results = cancelPlanConfirm();
+	if ( ! results) {
+		event.preventDefault();
+	};
+});
+
+$("#add-coupon").click(function(event) {
+	event.preventDefault();
+	var coupon_code = $("#input-coupon-code").val();
+	if ( ! coupon_code || coupon_code.length < 1 ) {
+		return false;
+	}
+	// check if coupon is valid stripe coupon
+	$.post('/pay/validateStripeCoupon', {coupon_code: coupon_code}, function(data, textStatus, xhr) {
+		alert(data);
+	});
+	
+	
+});
+
+// confirm plan cancellation
+function cancelPlanConfirm() {
+	var answer = confirm("This action will cancel your subscription. Are you sure you wish to proceed?");
+	if (answer){
+		return(true);
+	}
+	else
+	{
+		return(false);
+		event.preventDefault();
+	}
+}

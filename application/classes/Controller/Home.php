@@ -141,11 +141,25 @@ class Controller_Home extends Controller_Abstract {
 		$new_app  = (bool) get('new_app', FALSE);
 		$limit    = get('limit', 4);
 		$payments = (bool) get('payments', FALSE);
+		$message = (string ) get('message', '');
+		$message_type = (string ) get('message_type', 'success');
 		
 		// does this app belong to this user?
 		if ( $app_id AND ! $this->user->has_app_id($app_id)) 
 		{
 			throw new Exception('You cannot change the settings for this app at this time', 1);
+		}
+		
+		// cannot have new_app and stripe_id, instead redirect to downloads
+		if ( $new_app AND $this->user->stripe_id() ) 
+		{
+			$this->redirect('/downloads?app_id='.$app_id, 302);
+		}
+		
+		// set app_id to false if needed
+		if ( ! $app_id) 
+		{
+			$app_id = FALSE;
 		}
 		
 		// plan name
@@ -172,12 +186,27 @@ class Controller_Home extends Controller_Abstract {
 		$dao_plan = Factory_Dao::create('kohana', 'plan');
 		$plans = Model_Plan::all($dao_plan, Model_Plan::STATE_ACTIVE, 'ASC', $limit);
 		
+		// get stripe public key
+		$stripe_pk = Factory_Payment::public_key('stripe');
+		
+		// create and set a token
+		$payment_token = md5(uniqid(mt_rand(), TRUE));
+		Session::instance()->set('payment_token', $payment_token);
+		
 		$view                = new View('main/home/plans');
 		$view->payments      = $payments;
 		$view->app           = $app;
 		$view->new_app       = $new_app;
 		$view->limit         = $limit;
 		$view->plans         = $plans;
+		$view->payment_pk    = $stripe_pk;
+		$view->payment_token = $payment_token;
+		if ($message AND $message_type) 
+		{
+			$view->alert               = new View('alert');
+			$view->alert->message      = $message;
+			$view->alert->type         = $message_type;
+		}
 		$view->user          = $this->user();
 		$view->header        = new View('main/home/header');
 		$view->header->user  = $this->user();
@@ -187,7 +216,7 @@ class Controller_Home extends Controller_Abstract {
 		$this->template->set('content', $view);
 	}
 	
-	public function action_plansProcess()
+	public function action_plansWepayProcess()
 	{
 		$plan_id       = (int) post('plan_id', 1);
 		$app_id        = (int) post('app_id', 0);

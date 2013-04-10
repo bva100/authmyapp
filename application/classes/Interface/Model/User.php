@@ -60,6 +60,8 @@ interface Interface_Model_User
 	public function plan();
 	public function set_plan_state($plan_state, $lazy = FALSE);
 	public function plan_state();
+	public function set_stripe_id($stripe_id, $lazy = FALSE);
+	public function stripe_id();
 	public function set_plan_wepay_preapproval_id($plan_wepay_preapproval_id, $lazy = FALSE);
 	public function plan_wepay_preapproval_id();
 	public function set_plan_wepay_preapproval_uri($plan_wepay_preapproval_uri, $lazy = FALSE);

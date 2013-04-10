@@ -7,19 +7,148 @@
  */
 class Controller_Pay extends Controller_Home {
 	
-	public function action_planStripe()
+	public function action_planStripeProcess()
 	{
-		// API fac
+		$stripeToken   = (string) post('stripeToken', '');
+		$plan_id       = (int) post('plan_id', 0);
+		$app_id        = (int) post('app_id', 0);
+		$new_app       = (bool) post('new_app', FALSE);
+		$payment_token = post('payment_token', FALSE);
+		$coupon_code   = (string) post('coupon_code', '');
+		
+		// set stripe tokens
 		Factory_Payment::create('stripe');
 		
-		$view = new View('main/pay/stripe/checkout');
-		$view->user            = $this->user();
-		$view->header          = new View('main/home/header');
-		$view->header->user    = $this->user();
-		$view->sidebar         = new View('main/home/sidebar');
-		$view->sidebar->page   = 'payments';
-		$view->footer          = new View('footer');
-		$this->template->set('content', $view);
+		// validate
+		if ( ! $plan_id )
+		{
+			throw new Exception('We cannot complete your request at this time, please try again soon. <a href="/home/plans">Return Here</a>.');
+		}
+		if ( $app_id AND ! $this->user->has_app_id($app_id) )
+		{
+			throw new Exception("Access Denied. You do not have access to this app", 1);
+		}
+		if ( ! $payment_token ) 
+		{
+			throw new Exception('Access Denied. Invalid payment token.', 1);
+		}
+		if ( $payment_token !== Session::instance()->get('payment_token', FALSE) ) 
+		{
+			throw new Exception('Access Denied. Invalid payment token.', 1);
+		}
+		// unset session payment token
+		Session::instance()->delete('payment_token');
+		
+		// create plan object
+		$dao = Factory_Dao::create('kohana', 'plan', $plan_id);
+		$plan = Factory_Model::create($dao);
+		
+		// same plan selected, redirect
+		if ( $plan->id() === $this->user->plan_id() )
+		{
+			$this->redirect('/home/plans?app_id='.$app_id, 302);
+		}
+		
+		// if stripe token was passed, create new stripe user with stripeToken
+		if ($stripeToken) 
+		{
+			// if user passed token...
+			if ($coupon_code) 
+			{
+				// create stripe customer with coupon
+				$customer = Stripe_Customer::create(array(
+					'card'   => $stripeToken,
+					'plan'   => (string) $plan_id,
+					'email'  => $this->user->email(),
+					'coupon' => $coupon_code,
+				));
+			}
+			else
+			{
+				// create stripe customer
+				$customer = Stripe_Customer::create(array(
+					'card'   => $stripeToken,
+					'plan'   => (string) $plan_id,
+					'email'  => $this->user->email(),
+				));	
+			}
+			// set stripe_id in db and set plan
+			$this->user->set_stripe_id($customer->id);
+			$this->user->set_plan_id($plan_id);
+			
+			// redirect
+			if ( $app_id AND $new_app )
+			{
+				// create Model_App object
+				$dao = Factory_Dao::create('kohana', 'app', $app_id);
+				$app = Factory_Model::create($dao);
+				
+				// create message for alert box
+				$message = urlencode('The programming for '.$app->name().' has been completed and you can begin your downloads right away. Start with your Facebook Connect button.');
+				
+				// execute
+		$this->redirect('downloads/connectButton?app_id='.$app->id().'&new_app='.TRUE.'&type=connect_facebook&message='.$message.'&message_type=info', 302);
+			}
+			else
+			{
+				$dao_plan = Factory_Dao::create('kohana', 'plan', $plan_id);
+				$plan = Factory_Model::create($dao);
+				$message = urlencode('Thank you. Your plan is now '.$plan->name().'.');
+				$this->redirect('home/plans?message='.$message.'&message_type=success', 302);
+			}
+		}
+		else
+		{
+			// free plan
+			if ( $plan->id() === 1 )
+			{
+				if ( $this->user->stripe_id() )
+				{
+					// cancel plan from something better than free to free
+					$cu = Stripe_Customer::retrieve ($this->user->stripe_id() );
+					$cu->cancelSubscription();
+					$this->user->set_plan_id(1);
+					$message = urlencode('Your plan has been successfully canceled.');
+					$this->redirect('home/plans?message='.$message.'&message_type=success', 302);
+				}
+				else
+				{
+					$this->user->set_plan_id(1);
+					// redirect to free plan prompt
+					if ($app_id AND $new_app )
+					{
+						$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
+						$app = Factory_Model::create($dao_app);
+						$message = urlencode( $app->name().' is ready to go. Be sure to click on the help link in the navigation bar for API integration tutorials.');
+						$this->redirect('home?message='.$message.'&alert_type=success', 302);
+					}
+					else
+					{
+						// not sure when this would happen, but it is here just in case
+						$this->redirect('home/plans', 302);
+					}
+				}
+			}
+			
+			// change to new stripe plan. if coupon exists, apply
+			$c = Stripe_Customer::retrieve( $this->user->stripe_id() );
+			if ($coupon_code) 
+			{
+				$c->updateSubscription( array( 'plan' => (string) $plan_id, 'coupon' => $coupon_code ) );
+			}
+			else
+			{
+				$c->updateSubscription( array("plan" => (string) $plan_id ) );
+			}
+			// update db
+			$this->user->set_plan_id($plan_id);
+			// redirect
+			$dao_plan = Factory_Dao::create('kohana', 'plan', $plan_id);
+			$plan = Factory_Model::create($dao_plan);
+			$message = urlencode('Your plan has been successfully changed to '.$plan->name());
+			$this->redirect('home/plans?message='.$message.'&message_type=success', 302);
+		}
+		
 	}
 	
 	public function action_plan()
@@ -74,6 +203,25 @@ class Controller_Pay extends Controller_Home {
 		$view->sidebar->page   = 'payments';
 		$view->footer          = new View('footer');
 		$this->template->set('content', $view);
+	}
+	
+	public function action_validateStripeCoupon()
+	{
+		$coupon_id = (string) post('coupon_code', '');
+		Factory_Payment::create('stripe');
+		$this->auto_render = FALSE;
+		try
+		{
+			Stripe_Coupon::retrieve( $coupon_id );
+			echo 'valid';
+		}
+		catch(Exception $e) 
+		{
+			// Since it's a decline, Stripe_CardError will be caught
+			$body = $e->getJsonBody();
+			$err  = $body['error'];
+			echo $err['message'];
+		}
 	}
 	
 	public function action_planConfirm()

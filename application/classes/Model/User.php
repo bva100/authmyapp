@@ -545,6 +545,38 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
+	 * set stripe_id
+	 *
+	 * @param string $stripe_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_stripe_id($stripe_id, $lazy = FALSE)
+	{
+		if ( ! is_string($stripe_id) )
+		{
+			trigger_error('set_stripe_id expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->stripe_id = $stripe_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get stripe_id
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function stripe_id()
+	{
+		return($this->dao->stripe_id);
+	}
+	
+	/**
 	 * Get the user's current plan
 	 *
 	 * @return Model_Plan
