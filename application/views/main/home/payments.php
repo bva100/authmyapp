@@ -38,7 +38,7 @@
 							<tr>
 								<td><?php echo date('m/d/y \a\t g:ia', $invoice->date) ?></td>
 								<td><?php echo $invoice->charge->card->type.' - '.$invoice->charge->card->last4 ?></td>
-								<td><?php echo $invoice->charge->currency.' '.num::format( ($invoice->charge->amount/100), 2, TRUE ) ?></td>
+								<td><?php echo $invoice->charge->currency.' '.Num::format( ($invoice->charge->amount/100), 2, TRUE ) ?></td>
 								<td>
 									<?php if ($invoice->charge->refunded): ?>
 										Refunded
