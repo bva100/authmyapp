@@ -29,7 +29,7 @@ class Controller_Callback extends Controller {
 				$stripe_id = $event->data->object->customer;
 				Kohana::$log->add(Log::ERROR, "STRIPE ID IS $stripe_id");
 				// use kohana's orm to find this user via stripe_id
-				$dao_user = ORM::factory('User')->where('stripe_id', '=', $stripe_id)->find();
+				$dao_user = Factory_Dao::create('kohana', 'user')->where('stripe_id', '=', $stripe_id)->find();
 				if ( $dao_user->loaded() ) 
 				{
 					$user = Factory_Model::create($dao_user);
