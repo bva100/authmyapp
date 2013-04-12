@@ -219,7 +219,7 @@ Abstract class Controller_Api_Abstract extends Controller {
 				// validate app's primary user's plan
 				$dao_primary_user = Factory_Dao::create('kohana', 'user', $app->primary_user_id());
 				$primary_user     = Factory_Model::create($dao_primary_user);
-				if ( $primary_user->plan_state() !== Model_User::PLAN_STATE_ACTIVE OR $primary_user->plan_state() !== Model_User::PLAN_STATE_OVERDUE )
+				if ( $primary_user->plan_state() !== Model_User::PLAN_STATE_ACTIVE AND $primary_user->plan_state() !== Model_User::PLAN_STATE_OVERDUE )
 				{
 					throw new ApiException(403);
 				}
