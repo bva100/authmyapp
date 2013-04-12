@@ -70,7 +70,7 @@ class Controller_Welcome extends Controller_Abstract {
 		// close
 		curl_close($ch);
 		$response = json_decode($response);
-		echo Debug::vars($http_status); die;
+		
 		// check status
 		if ($http_status !== 200) 
 		{
