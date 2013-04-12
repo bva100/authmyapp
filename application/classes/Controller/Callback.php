@@ -14,7 +14,7 @@ class Controller_Callback extends Controller {
 		Factory_Payment::create('stripe');
 		
 		// when on prod, only accept livemode
-		if (Kohana::$environment === 'prod' AND ! $data->livemode)
+		if ( (Kohana::$environment === 'prod') AND ! $data->livemode)
 		{
 			// die silently
 			die();
@@ -29,8 +29,8 @@ class Controller_Callback extends Controller {
 				$stripe_id = $event->data->object->customer;
 				Kohana::$log->add(Log::ERROR, "STRIPE ID IS $stripe_id");
 				// use kohana's orm to find this user via stripe_id
-				$dao_user = ORM::factory('user')->where('stripe_id', '=', $stripe_id)->find();
-				if ($dao_user->loaded() ) 
+				$dao_user = ORM::factory('User')->where('stripe_id', '=', $stripe_id)->find();
+				if ( $dao_user->loaded() ) 
 				{
 					$user = Factory_Model::create($dao_user);
 					// update plan state
