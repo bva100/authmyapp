@@ -570,7 +570,7 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			trigger_error('set_facebook_token expects argument 1 to be type string', E_USER_WARNING);
 		}
-		if ( strlen($facebook_token) < 5 OR strlen($facebook_token) > 127 ) 
+		if ( strlen($facebook_token) < 5 OR strlen($facebook_token) > 255 ) 
 		{
 			throw new Exception('Invalid facebook token. Please try again', 1);
 		}
