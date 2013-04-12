@@ -148,11 +148,76 @@ class Controller_Pay extends Controller_Home {
 			$message = urlencode('Your plan has been successfully changed to '.$plan->name());
 			$this->redirect('home/plans?message='.$message.'&message_type=success', 302);
 		}
-		
 	}
 	
-	public function action_plan()
+	public function action_changeStripeCc()
 	{
+		$pk = Factory_Payment::public_key('stripe');
+		$token = md5(uniqid(mt_rand(), TRUE));
+		Session::instance()->set('change_stripe_cc_token', $token);
+		
+		$view = new View('main/pay/stripe/changecc');
+		$view->pk = $pk;
+		$view->token = $token;
+		$view->header = new View('main/home/header');
+		$view->header->user = $this->user;
+		$view->footer = new View('footer');
+		$this->template->set('content', $view);
+	}
+	
+	public function action_changeStripeCcProcess()
+	{
+		$token      = (string) post('token', FALSE);
+		$stripeToken = (string) post('stripeToken', '');
+		
+		Factory_Payment::create('stripe');
+		
+		if ( ! $token OR ! $stripeToken) 
+		{
+			throw new Exception('Cannot complete credit card update: invalid token', 1);
+		}
+		if ( $token !== Session::instance()->get('change_stripe_cc_token', FALSE) )
+		{
+			throw new Exception('Cannot complete credit card update: invalid token', 1);
+		}
+		Session::instance()->delete('change_stripe_cc_token');
+		
+		// update stripe credit card
+		$cu = Stripe_Customer::retrieve($this->user->stripe_id());
+		$cu->card = $stripeToken;
+		$cu->save();
+		
+		// change state plan
+		$this->user->set_plan_state( Model_User::PLAN_STATE_ACTIVE );
+		
+		// redirect
+		$message = urlencode('Thank you. Your credit card was successfully updated.');
+		$this->redirect('home?message='.$message.'&message_type=success', 302);
+	}
+	
+	public function action_validateStripeCoupon()
+	{
+		$coupon_id = (string) post('coupon_code', '');
+		Factory_Payment::create('stripe');
+		$this->auto_render = FALSE;
+		try
+		{
+			Stripe_Coupon::retrieve( $coupon_id );
+			echo 'valid';
+		}
+		catch(Exception $e) 
+		{
+			// Since it's a decline, Stripe_CardError will be caught
+			$body = $e->getJsonBody();
+			$err  = $body['error'];
+			echo $err['message'];
+		}
+	}
+	
+	public function action_wepayplan()
+	{
+		die('currently, not in use');
+		
 		$plan_id = (int) get('plan_id', 0);
 		$app_id  = (int) get('app_id', 0);
 		$new_app = (bool) get('new_app', FALSE);
@@ -205,27 +270,11 @@ class Controller_Pay extends Controller_Home {
 		$this->template->set('content', $view);
 	}
 	
-	public function action_validateStripeCoupon()
-	{
-		$coupon_id = (string) post('coupon_code', '');
-		Factory_Payment::create('stripe');
-		$this->auto_render = FALSE;
-		try
-		{
-			Stripe_Coupon::retrieve( $coupon_id );
-			echo 'valid';
-		}
-		catch(Exception $e) 
-		{
-			// Since it's a decline, Stripe_CardError will be caught
-			$body = $e->getJsonBody();
-			$err  = $body['error'];
-			echo $err['message'];
-		}
-	}
 	
-	public function action_planConfirm()
+	public function action_WePayplanConfirm()
 	{
+		die('currently, not in use');
+		
 		$preapproval_id = (int)  get('preapproval_id', 0);
 		$app_id         = (int)  get('app_id', 0);
 		$plan_id        = (int)  get('plan_id', 0);
@@ -290,8 +339,10 @@ class Controller_Pay extends Controller_Home {
 		}
 	}
 	
-	public function action_facebookApp()
+	public function action_WePayfacebookApp()
 	{
+		die('currently, not in use');
+		
 		$app_id = (int) get('app_id', 0);
 		$wepay = Factory_Payment::create('wepay');
 		$payFacebookApp_token = md5(uniqid(mt_rand(), TRUE));
@@ -332,6 +383,8 @@ class Controller_Pay extends Controller_Home {
 	
 	public function action_facebookAppProcess()
 	{
+		die('currently, not in use');
+		
 		$app_id                       = (int) get('app_id', 0);
 		$checkout_id                  = (int) get('checkout_id', '');
 		$payFacebookApp_token         = (string) get('payFacebookApp_token', '');

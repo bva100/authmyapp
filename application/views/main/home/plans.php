@@ -6,10 +6,17 @@
 		<a class="close" data-dismiss="modal">×</a>
 		<h4>Add Your Coupon</h4>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body modal-body-primary">
+		<p id='coupon-error'></p>
 		<input type="text" name="coupon_code" value="" id="input-coupon-code" placeholder='coupon-code' style='margin-left: 15px'>
 		<a href="#" class="btn btn-blue" style='margin-bottom: 10px' id='add-coupon'>Add</a>
+		<a href="#" class="btn btn-blue hide" disabled='true' style='position: relative; bottom: 4px' id='add-coupon-loading'>
+			<img src='/assets/img/loading.gif' width='20px' height='20px' />
+		</a>
 	</div>
+	<div class='modal-body modal-body-success hide'>
+		<h4 id='coupon-modal-success-message'></h4>
+	</div><!-- .model-success -->
 </div>
 
 <?php echo $header ?>
@@ -98,6 +105,7 @@
 										<input type="hidden" name="plan_id" value="<?php echo $plan->id() ?>">
 										<input type="hidden" name="app_id" value="<?php echo $app->id() ?>">
 										<input type="hidden" name="new_app" value="<?php echo $new_app ?>">
+										<input type="hidden" name="coupon_code" value=""  class='form-input-coupon-code'>
 										<input type="hidden" name="payment_token" value="<?php echo $payment_token ?>">
 										<?php if ( $user->stripe_id()  OR $plan->id() === 1 ): ?>
 											<!-- if user has a stripe ID or is plan is free, skip stripe-modal -->
@@ -129,6 +137,7 @@
 										<?php echo Form::open("pay/planStripeProcess"); ?>
 											<input type="hidden" name="plan_id" value="<?php echo $plan->id() ?>">
 											<input type="hidden" name="payment_token" value="<?php echo $payment_token ?>">
+											<input type="hidden" name="coupon_code" value=""  class='form-input-coupon-code'>
 											<?php if ( $user->stripe_id() AND $plan->id() === 1): ?>
 												<?php echo Form::submit("submit", "Cancel", array('class' => 'btn btn-plan-action btn-plan-submit btn-plan-cancel')); ?>
 											<?php elseif ( $user->stripe_id() OR $plan->id() === 1): ?>
@@ -154,6 +163,7 @@
 										<?php echo Form::open("pay/planStripeProcess"); ?>
 											<input type="hidden" name="plan_id" value="<?php echo $plan->id() ?>">
 											<input type="hidden" name="payment_token" value="<?php echo $payment_token ?>">
+											<input type="hidden" name="coupon_code" value="" class='form-input-coupon-code'>
 											<?php if ( $plan->id() === 1 ): ?>
 												<?php echo Form::submit("submit", "Select", array('class' => 'btn btn-plan-action')); ?>
 											<?php elseif ( $user->stripe_id() ): ?>
@@ -186,15 +196,16 @@
 					<!-- new plans -->
 					<?php if (isset($limit)): ?>
 						<?php if ($app AND $new_app): ?>
-							<?php echo HTML::anchor("home/plans?app_id=".$app->id().'&new_app='.$new_app.'&limit=null', "view higher volume plans", array('id' => 'see-more-plans', 'class' => 'pull-left')) ?>
+							<?php echo HTML::anchor("home/plans?app_id=".$app->id().'&new_app='.$new_app.'&limit=null', "View Higher Volume Plans", array('id' => 'see-more-plans', 'class' => 'pull-left')) ?>
 						<?php else: ?>
-							<?php echo HTML::anchor('home/plans?limit=null', "view higher volume plans", array('id' => 'see-more-plans', 'class' => 'pull-left')) ?>
+							<?php echo HTML::anchor('home/plans?limit=null', "View Higher Volume Plans", array('id' => 'see-more-plans', 'class' => 'pull-left')) ?>
 						<?php endif ?>
 					<?php endif ?>
 					
 					<!-- coupon model opene -->
-					<a href="#coupon-modal" data-toggle='modal' class='pull-right'>Add A Coupon</a>
-					
+					<span class='coupon-modal-opener pull-right'>
+						<a href="#coupon-modal" data-toggle='modal'>Add A Coupon</a>
+					</span>
 				</div>
 				
 		</div><!-- .span9 -->

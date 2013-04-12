@@ -5,7 +5,7 @@
 	<div class="alert alert-block alert-danger" id='alert-payment'>
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<p>
-			<strong>Alert!</strong> There was an issue with your payment plan. Your data transfers will be placed on hold until this is resolved. To resolve this issue, please <a href="/home/plans">click here.</a>
+			<strong>Alert!</strong> There was an issue with your last payment invoice. Your data transfers will be placed on hold until this issue resolved. To change or update your payment method, please <a href="/pay/changeStripeCc">click here.</a>
 		</p>
 	</div>
 

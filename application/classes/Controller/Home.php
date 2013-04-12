@@ -137,15 +137,16 @@ class Controller_Home extends Controller_Abstract {
 	
 	public function action_plans()
 	{
-		$app_id   = (int)  get('app_id', 0);
-		$new_app  = (bool) get('new_app', FALSE);
-		$limit    = get('limit', 4);
-		$payments = (bool) get('payments', FALSE);
-		$message = (string ) get('message', '');
-		$message_type = (string ) get('message_type', 'success');
+		$app_id         = (int)  get('app_id', 0);
+		$new_app        = (bool) get('new_app', FALSE);
+		$limit          = get('limit', 4);
+		$payments       = (bool) get('payments', FALSE);
+		$message        = (string ) get('message', '');
+		$message_type   = (string ) get('message_type', 'success');
+		$invoices       = FALSE;
 		
 		// does this app belong to this user?
-		if ( $app_id AND ! $this->user->has_app_id($app_id)) 
+		if ( $app_id AND ! $this->user->has_app_id($app_id) )
 		{
 			throw new Exception('You cannot change the settings for this app at this time', 1);
 		}
@@ -157,7 +158,7 @@ class Controller_Home extends Controller_Abstract {
 		}
 		
 		// set app_id to false if needed
-		if ( ! $app_id) 
+		if ( ! $app_id ) 
 		{
 			$app_id = FALSE;
 		}
@@ -166,13 +167,13 @@ class Controller_Home extends Controller_Abstract {
 		$plan_name = $this->user->plan()->name();
 		
 		// null limit
-		if ($limit === 'null' OR ( $plan_name === 'Platinum' OR $plan_name === 'Platinum Plus' ) )
+		if ( $limit === 'null' OR ( $plan_name === 'Platinum' OR $plan_name === 'Platinum Plus' ) )
 		{
 			$limit = NULL;
 		}
 		
 		// create app object
-		if ($app_id) 
+		if ( $app_id )
 		{
 			$dao_app = Factory_Dao::create('kohana', 'app', $app_id);
 			$app = Factory_Model::create($dao_app);
@@ -212,6 +213,37 @@ class Controller_Home extends Controller_Abstract {
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
 		$view->sidebar->page = 'plan';
+		$view->footer        = new View('footer');
+		$this->template->set('content', $view);
+	}
+	
+	public function action_payments()
+	{
+		$offset = (int) get('offset', 0);
+		$limit =  (int) get('limit', 10);
+		$invoices = array();
+		
+		// get stripe
+		if ( $this->user->stripe_id() )
+		{
+			// query stripe to get invoices for this user
+			Factory_Payment::create('stripe');
+			$results = Stripe_Invoice::all(array(
+				'customer' => $this->user->stripe_id(),
+				'offset'   => $offset,
+				'count'    => $limit,
+				'expand'   => array('data.charge'),
+			));
+			$invoices = $results->data;
+		}
+		
+		$view = new View('main/home/payments');
+		$view->invoices      = $invoices;
+		$view->user          = $this->user();
+		$view->header        = new View('main/home/header');
+		$view->header->user  = $this->user();
+		$view->sidebar       = new View('main/home/sidebar');
+		$view->sidebar->page = 'payments';
 		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 	}

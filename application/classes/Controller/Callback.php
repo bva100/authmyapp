@@ -7,6 +7,16 @@
  */
 class Controller_Callback extends Controller {
 	
+	public function action_stripeevent()
+	{
+		$body = @file_get_contents('php://input');
+		$data = json_decode($body);
+		
+		// only subscribe to invoice.payment_failed and customer.subscription.deleted
+		
+		
+	}
+	
 	public function action_wepayipn()
 	{
 		$type      = (string) get('type', '');

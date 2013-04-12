@@ -45,12 +45,38 @@ $("#add-coupon").click(function(event) {
 	if ( ! coupon_code || coupon_code.length < 1 ) {
 		return false;
 	}
+	
+	// show spinner button
+	$(this).hide();
+	$("#add-coupon-loading").show().css('margin-top', '-5px');
+	
 	// check if coupon is valid stripe coupon
 	$.post('/pay/validateStripeCoupon', {coupon_code: coupon_code}, function(data, textStatus, xhr) {
-		alert(data);
+		if (textStatus !== 'success') {
+			alert('Something unexpected happened and we cannot complete your request at this time. Please try again soon.');
+		};
+		if (data === 'valid') {
+			// add to all coupon_code inputs
+			$(".form-input-coupon-code").val(coupon_code);
+			$("#coupon-modal").find('.modal-body-primary').fadeOut('fast', function(){
+				$("#coupon-modal-success-message").text('successfully addded coupon ' + coupon_code);
+				$("#coupon-modal").find('.modal-body-success').fadeIn('fast', function(){
+					setTimeout(function(){$("#coupon-modal").modal('hide');}, 1200);
+					// change modal opener text
+					$(".coupon-modal-opener").html('Coupon ' + coupon_code + ' will be applied at checkout');
+				});
+			});
+		}else{
+			// hide loader
+			$("#add-coupon-loading").hide();
+			$("#add-coupon").show();
+			// show error
+			$("#coupon-error").text(data).css('color', 'red');
+			$("#input-coupon-code").focus().css('border', '1px solid red');
+			return false;
+		}
+		
 	});
-	
-	
 });
 
 // confirm plan cancellation
