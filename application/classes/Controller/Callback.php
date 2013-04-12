@@ -37,8 +37,12 @@ class Controller_Callback extends Controller {
 				{
 					// create Model_User object and set plan to free
 					$user = Factory_Model::create($dao_user);
-					$user->set_plan_id(1);
-					$user->set_plan_state(Model_User::PLAN_STATE_PAYMENT_HOLD);
+					// if users plan is not currently set to free, place on hold and set to free
+					if ($user->plan_id() !== 1) 
+					{
+						$user->set_plan_id(1);
+						$user->set_plan_state(Model_User::PLAN_STATE_PAYMENT_HOLD);
+					}
 				}
 				// send email to user informing them that AuthMyApp cannot charge the current card on file and that they will not get new data transfers
 				
@@ -53,7 +57,11 @@ class Controller_Callback extends Controller {
 				{
 					// create Model_User object and set plan to free
 					$user = Factory_Model::create($dao_user);
-					$user->set_plan_state(Model_User::PLAN_STATE_OVERDUE);
+					// if users plan is not free, set plan state to overdue
+					if ($user->plan_id() !== 1) 
+					{
+						$user->set_plan_state( Model_User::PLAN_STATE_OVERDUE );
+					}
 				}
 				// send email to user prompting them to update payment method to avoid a data transfer hold
 				
