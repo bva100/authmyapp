@@ -16,28 +16,46 @@ class Controller_Callback extends Controller {
 		// when on prod, only accept livemode
 		if ( (Kohana::$environment === 'prod') AND ! $data->livemode)
 		{
-			// die silently
+			// end silently
 			die();
 		}
 		
 		// use id and send request for stripe event
 		$event = Stripe_Event::retrieve($data->id);
+		if ( ! $event ) 
+		{
+			die();
+		}
 		
 		// only subscribe to invoice.payment_failed and customer.subscription.deleted
 		switch ($event->type) {
 			case 'customer.subscription.deleted':
 				$stripe_id = $event->data->object->customer;
-				Kohana::$log->add(Log::ERROR, "STRIPE ID IS $stripe_id");
 				// use kohana's orm to find this user via stripe_id
 				$dao_user = Factory_Dao::create('kohana', 'user')->where('stripe_id', '=', $stripe_id)->find();
 				if ( $dao_user->loaded() ) 
 				{
+					// create Model_User object and set plan to free
 					$user = Factory_Model::create($dao_user);
-					// update plan state
-					$user->set_plan_state( Model_User::PLAN_STATE_PAYMENT_HOLD );
+					$user->set_plan(1);
+					$user->set_plan_state(Model_User::PLAN_STATE_PAYMENT_HOLD);
 				}
+				// send email to using, informing them that AuthMyApp cannot charge the current card on file and that they will not get new data transfers
+				
 				break;
 			case 'invoice.payment_failed':
+				// set user plan state to PLAN_STATE_OVERDUE
+				$stripe_id = $event->data->object->customer;
+				Kohana::$log->add(Log::ERROR, "invoice failed, stripe id is $stripe_id");
+				// use kohana's orm to find this user via stripe_id
+				$dao_user = Factory_Dao::create('kohana', 'user')->where('stripe_id', '=', $stripe_id)->find();
+				if ( $dao_user->loaded() ) 
+				{
+					// create Model_User object and set plan to free
+					$user = Factory_Model::create($dao_user);
+					$user->set_plan_state(Model_User::PLAN_STATE_OVERDUE);
+				}
+				// send email to user, prompting them to update payment method to avoid a data transfer hold
 				
 				break;
 			default:

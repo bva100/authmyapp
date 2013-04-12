@@ -75,8 +75,9 @@ class Controller_Pay extends Controller_Home {
 			// set stripe_id in db and set plan
 			$this->user->set_stripe_id($customer->id);
 			$this->user->set_plan_id($plan_id);
+			$this->user->set_plan_state( Model_User::PLAN_STATE_ACTIVE );
 			
-			// redirect
+			// redirect to new app flow
 			if ( $app_id AND $new_app )
 			{
 				// create Model_App object
@@ -91,6 +92,7 @@ class Controller_Pay extends Controller_Home {
 			}
 			else
 			{
+				// redirect back to plan
 				$dao_plan = Factory_Dao::create('kohana', 'plan', $plan_id);
 				$plan = Factory_Model::create($dao);
 				$message = urlencode('Thank you. Your plan is now '.$plan->name().'.');
@@ -108,12 +110,14 @@ class Controller_Pay extends Controller_Home {
 					$cu = Stripe_Customer::retrieve ($this->user->stripe_id() );
 					$cu->cancelSubscription();
 					$this->user->set_plan_id(1);
+					$this->user->set_plan_state( Model_User::PLAN_STATE_ACTIVE );
 					$message = urlencode('Your plan has been successfully canceled.');
 					$this->redirect('home/plans?message='.$message.'&message_type=success', 302);
 				}
 				else
 				{
 					$this->user->set_plan_id(1);
+					$this->user->set_plan_state( Model_User::PLAN_STATE_ACTIVE );
 					// redirect to free plan prompt
 					if ($app_id AND $new_app )
 					{
@@ -140,7 +144,7 @@ class Controller_Pay extends Controller_Home {
 			{
 				$c->updateSubscription( array("plan" => (string) $plan_id ) );
 			}
-			// update db
+			// update db, do not update plan state
 			$this->user->set_plan_id($plan_id);
 			// redirect
 			$dao_plan = Factory_Dao::create('kohana', 'plan', $plan_id);

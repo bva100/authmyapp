@@ -31,7 +31,11 @@ class Model_Orm_User extends Model_Auth_User {
 				'foreign_key' => 'user_id',
 				'far_key'     => 'organization_id',
 				'model'       => 'Orm_Organization',
-			)
+			),
+			'notifications' => array(
+				'foreign_key' => 'user_id',
+				'model' => 'Orm_Notification',
+			),
 		);
 	
 	/**

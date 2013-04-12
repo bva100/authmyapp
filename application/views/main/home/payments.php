@@ -53,6 +53,10 @@
 					</tbody>
 				</table>
 				
+				<p class='pull-right'>
+					Have an issue? Please <?php echo HTML::mailto("support@authmyapp.com", "contact us. ", array('target' => '_blank')) ?>
+				</p>
+				
 			<?php endif ?>
 			
 		</div>

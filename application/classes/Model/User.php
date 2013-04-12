@@ -16,7 +16,8 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	 * plan states
 	 */
 	const PLAN_STATE_ACTIVE       = 1;
-	const PLAN_STATE_PAYMENT_HOLD = 2;
+	const PLAN_STATE_PAYMENT_HOLD = 2; // inactive at this time/failed to pay invoice
+	const PLAN_STATE_OVERDUE      = 3; // plan is active but a recent invoice could not be billed due to, for example, an expires credit card
 	
 	/**
 	 * Create a new user with email
@@ -45,7 +46,6 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 				$dao->email = $email;
 			}
 		}
-		
 		$dao->create_timestamp = time();
 		$dao->create();
 		$user = Factory_Model::create($dao);
@@ -526,7 +526,6 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 			trigger_error('set_plan_id expects argument 1 to be type int', E_USER_WARNING);
 		}
 		$this->dao->plan_id = $plan_id;
-		$this->dao->plan_state = self::PLAN_STATE_ACTIVE;
 		if ( ! $lazy)
 		{
 			$this->db_update();

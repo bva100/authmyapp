@@ -507,13 +507,14 @@ class Controller_Test extends Controller {
 		echo Debug::vars($raw); die;
 	}
 	
-	public function action_stripeEvent()
+	public function action_notification()
 	{
-		$event_id = (string ) get('event_id', 'evt_1dGrfJvN5xLgQj');
+		$user_id = (int) get('user_id', 1);
+		$dao_user = Factory_Dao::create('kohana', 'user', $user_id);
+		$user = Factory_Model::create($dao_user);
 		
-		Factory_Payment::create('stripe');
-		$event = Stripe_Event::retrieve($event_id);
-		echo Debug::vars($event->data->object->customer); die;
+		$dao = Factory_Dao::create('kohana', 'notification');
+		$notification = Model_Notification::create_with_user_and_type($dao, $user, Model_Notification::TYPE_PAYMENT);
 	}
 	
 }
