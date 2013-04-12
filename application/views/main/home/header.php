@@ -41,9 +41,9 @@
 						</a>
 					</li>
 					<li>
-						<a href="/home/plans">
-							<img src="/assets/img/cog.png" width="22" height="22" class='header-pulldown-img'>
-							Account
+						<a href="/home/analytics">
+							<img src="/assets/img/graph_pie.png" width="22" height="22" class='header-pulldown-img'>
+							Analytics
 						</a>
 					</li>
 					<li>

@@ -212,7 +212,7 @@ class Controller_Home extends Controller_Abstract {
 		$view->header        = new View('main/home/header');
 		$view->header->user  = $this->user();
 		$view->sidebar       = new View('main/home/sidebar');
-		$view->sidebar->page = 'plan';
+		$view->sidebar->page = 'plans';
 		$view->footer        = new View('footer');
 		$this->template->set('content', $view);
 	}
