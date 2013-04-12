@@ -15,19 +15,26 @@ class Controller_Callback extends Controller {
 		
 		// use id and send request for stripe event
 		$event = Stripe_Event::retrieve($data->id);
-		echo $event->type;
-		
 		
 		// only subscribe to invoice.payment_failed and customer.subscription.deleted
-		// switch ($data->type) {
-		// 	case 'value':
-		// 		# code...
-		// 		break;
-		// 	
-		// 	default:
-		// 		# code...
-		// 		break;
-		// }
+		switch ($event->type) {
+			case 'customer.subscription.deleted':
+				$stripe_id = $event->object->customer;
+				// use kohana's orm to find this user via stripe_id
+				$dao_user = ORM::factory('user')->where('stripe_id', '=', $stripe_id)->find();
+				if ($dao_user->loaded() ) 
+				{
+					$user = Factory_Model::create($dao_user);
+					// update plan state
+					$user->set_plan_state( Model_User::PLAN_STATE_PAYMENT_HOLD );
+				}
+				break;
+			case 'invoice.payment_failed':
+				
+				break;
+			default:
+				break;
+		}
 		
 	}
 	
