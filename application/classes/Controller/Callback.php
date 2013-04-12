@@ -13,14 +13,20 @@ class Controller_Callback extends Controller {
 		$data = json_decode($body);
 		Factory_Payment::create('stripe');
 		
+		// when on prod, only accept livemode
+		if (Kohana::$environment === 'prod' AND ! $data->livemode)
+		{
+			// die silently
+			die();
+		}
+		
 		// use id and send request for stripe event
 		$event = Stripe_Event::retrieve($data->id);
 		
 		// only subscribe to invoice.payment_failed and customer.subscription.deleted
 		switch ($event->type) {
 			case 'customer.subscription.deleted':
-				$stripe_id = $event->object->customer;
-				Kohana::$log->add(Log::ERROR, "STRIPE ID IS $stripe_id");
+				$stripe_id = $event->data->object->customer;
 				// use kohana's orm to find this user via stripe_id
 				$dao_user = ORM::factory('user')->where('stripe_id', '=', $stripe_id)->find();
 				if ($dao_user->loaded() ) 

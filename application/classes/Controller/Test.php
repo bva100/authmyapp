@@ -513,7 +513,7 @@ class Controller_Test extends Controller {
 		
 		Factory_Payment::create('stripe');
 		$event = Stripe_Event::retrieve($event_id);
-		echo Debug::vars($event->type); die;
+		echo Debug::vars($event->data->object->customer); die;
 	}
 	
 }
