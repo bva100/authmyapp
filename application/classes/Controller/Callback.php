@@ -11,7 +11,7 @@ class Controller_Callback extends Controller {
 	{
 		$body = @file_get_contents('php://input');
 		$data = json_decode($body);
-		Factory_Payment::create('stripe')
+		Factory_Payment::create('stripe');
 		
 		// use id and send request for stripe event
 		echo Debug::vars($data); die;
