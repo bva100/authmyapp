@@ -28,7 +28,7 @@ class Controller_Callback extends Controller {
 		// }
 		
 		// only subscribe to invoice.payment_failed and customer.subscription.deleted
-		switch ($event->type) {
+		switch ($data->type) {
 			case 'customer.subscription.deleted':
 				$stripe_id = $event->data->object->customer;
 				// use kohana's orm to find this user via stripe_id
