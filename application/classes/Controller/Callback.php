@@ -14,7 +14,8 @@ class Controller_Callback extends Controller {
 		Factory_Payment::create('stripe');
 		
 		// use id and send request for stripe event
-		$event = Stripe_Event::retrieve($data->id);
+		Kohana::$log->add(Log::ERROR, $data->id);
+		// $event = Stripe_Event::retrieve($data->id);
 		// Kohana::$log->add(Log::ERROR, $event->id);
 		
 		// only subscribe to invoice.payment_failed and customer.subscription.deleted
