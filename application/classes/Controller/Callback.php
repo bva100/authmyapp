@@ -40,7 +40,7 @@ class Controller_Callback extends Controller {
 					$user->set_plan(1);
 					$user->set_plan_state(Model_User::PLAN_STATE_PAYMENT_HOLD);
 				}
-				// send email to using, informing them that AuthMyApp cannot charge the current card on file and that they will not get new data transfers
+				// send email to user informing them that AuthMyApp cannot charge the current card on file and that they will not get new data transfers
 				
 				break;
 			case 'invoice.payment_failed':
@@ -55,7 +55,8 @@ class Controller_Callback extends Controller {
 					$user = Factory_Model::create($dao_user);
 					$user->set_plan_state(Model_User::PLAN_STATE_OVERDUE);
 				}
-				// send email to user, prompting them to update payment method to avoid a data transfer hold
+				// send email to user prompting them to update payment method to avoid a data transfer hold
+				
 				
 				break;
 			default:

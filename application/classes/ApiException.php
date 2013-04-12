@@ -15,7 +15,7 @@ class ApiException {
 	 * @param array $options 
 	 * @author BRIAN ANDERSON
 	 */
-	public function __construct($code, $format, array $options = array()) {
+	public function __construct($code, $format = 'json', array $options = array()) {
 		$data = array();		
 		$data['error_code'] = $code;
 		$data['more_info'] = URL::base(TRUE).'api/docs/error/'.$code;
