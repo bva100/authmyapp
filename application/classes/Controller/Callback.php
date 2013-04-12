@@ -21,14 +21,14 @@ class Controller_Callback extends Controller {
 		}
 		
 		// use id and send request for stripe event
-		// $event = Stripe_Event::retrieve($data->id);
-		// if ( ! $event ) 
-		// {
-		// 	die();
-		// }
+		$event = Stripe_Event::retrieve($data->id);
+		if ( ! $event ) 
+		{
+			die();
+		}
 		
 		// only subscribe to invoice.payment_failed and customer.subscription.deleted
-		switch ($data->type) {
+		switch ($event->type) {
 			case 'customer.subscription.deleted':
 				$stripe_id = $event->data->object->customer;
 				// use kohana's orm to find this user via stripe_id
@@ -49,8 +49,7 @@ class Controller_Callback extends Controller {
 				break;
 			case 'invoice.payment_failed':
 				// set user plan state to PLAN_STATE_OVERDUE
-				$stripe_id = $data->data->object->customer;
-				Kohana::$log->add(Log::ERROR, "invoice failed, stripe id is $stripe_id");
+				$stripe_id = $event->data->object->customer;
 				// use kohana's orm to find this user via stripe_id
 				$dao_user = Factory_Dao::create('kohana', 'user')->where('stripe_id', '=', $stripe_id)->find();
 				if ( $dao_user->loaded() ) 
