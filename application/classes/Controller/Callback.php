@@ -25,7 +25,7 @@ class Controller_Callback extends Controller {
 		// if ( ! $event ) 
 		// {
 		// 	die();
-		}
+		// }
 		
 		// only subscribe to invoice.payment_failed and customer.subscription.deleted
 		switch ($event->type) {
