@@ -49,7 +49,7 @@ class Controller_Callback extends Controller {
 				break;
 			case 'invoice.payment_failed':
 				// set user plan state to PLAN_STATE_OVERDUE
-				$stripe_id = $event->data->object->customer;
+				$stripe_id = $data->data->object->customer;
 				Kohana::$log->add(Log::ERROR, "invoice failed, stripe id is $stripe_id");
 				// use kohana's orm to find this user via stripe_id
 				$dao_user = Factory_Dao::create('kohana', 'user')->where('stripe_id', '=', $stripe_id)->find();
