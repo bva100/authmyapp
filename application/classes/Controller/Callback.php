@@ -21,10 +21,10 @@ class Controller_Callback extends Controller {
 		}
 		
 		// use id and send request for stripe event
-		$event = Stripe_Event::retrieve($data->id);
-		if ( ! $event ) 
-		{
-			die();
+		// $event = Stripe_Event::retrieve($data->id);
+		// if ( ! $event ) 
+		// {
+		// 	die();
 		}
 		
 		// only subscribe to invoice.payment_failed and customer.subscription.deleted
