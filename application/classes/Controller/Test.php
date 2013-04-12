@@ -507,4 +507,13 @@ class Controller_Test extends Controller {
 		echo Debug::vars($raw); die;
 	}
 	
+	public function action_stripeEvent()
+	{
+		$event_id = (string ) get('event_id', 'evt_1dGrfJvN5xLgQj');
+		
+		Factory_Payment::create('stripe');
+		$event = Stripe_Event::retrieve($event_id);
+		echo Debug::vars($event->type); die;
+	}
+	
 }
