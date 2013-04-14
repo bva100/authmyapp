@@ -517,4 +517,38 @@ class Controller_Test extends Controller {
 		$notification = Model_Notification::create_with_user_and_type($dao, $user, Model_Notification::TYPE_PAYMENT);
 	}
 	
+	public function action_mail()
+	{
+		$user_id = (int) get('user_id', 1);
+		$dao = Factory_Dao::create('kohana', 'user', $user_id);
+		$user = Factory_Model::create($dao);
+		
+		$mandrill = Factory_Mailer::create('mandrill');
+		
+		$send_to = array(
+			array('email' => 'brianvanderson@gmail.com', 'Brian Anderson'),
+		);
+		
+		$view = new View('mailer/payment/overdue');
+		$view->user = $user;
+		
+		$message = array(
+			'html'         => (string)$view,
+			'text'         => 'There was a problem with your AuthMyApp payment. Update it here: '.URL::base(TRUE).'/pay/changeStripeCc',
+			'subject'      => 'Your AuthMyApp Payment is overdue',
+			'from_email'   => 'support@authmyapp.com',
+			'from_name'    => 'AuthMyApp Support',
+			'track_opens'  => TRUE,
+			'track_clicks' => TRUE,
+			'auto_text'    => TRUE,
+		);
+		
+		foreach( $send_to as $to )
+		{
+			$message['to'] = array( $to );
+			$result = $mandrill->messages->send( $message );
+			echo Debug::vars($result);
+		}
+	}
+	
 }
