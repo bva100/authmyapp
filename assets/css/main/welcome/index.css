@@ -151,7 +151,7 @@ body {
 .captcha {
 	width: 320px;
 	margin: 0px auto;
-	margin-bottom: 0px;
+	margin-bottom: -20px;
 }
 #form-input-example {
 	margin-bottom: 60px;
