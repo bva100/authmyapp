@@ -174,9 +174,11 @@
 							</div>
 						</div>
 					</div>
-					<script type="text/javascript"
-						src="http://www.google.com/recaptcha/api/challenge?k=6Lfq398SAAAAAIx02GqWT9Ub1Zbo2aQ8ItVmvNls">
-					</script>
+					<div class='captcha'>
+						<script type="text/javascript"
+							src="http://www.google.com/recaptcha/api/challenge?k=6Lfq398SAAAAAIx02GqWT9Ub1Zbo2aQ8ItVmvNls">
+						</script>
+					</div><!-- .captcha -->
 				</form>
 			</div><!-- .span6 -->
 			
