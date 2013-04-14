@@ -78,6 +78,25 @@ class Controller_Callback extends Controller {
 					if ($user->plan_id() !== 1) 
 					{
 						$user->set_plan_state( Model_User::PLAN_STATE_OVERDUE );
+						// send email to user informing them that AuthMyApp cannot charge the current card on file and that they will not get new data transfers
+						$mandrill = Factory_Mailer::create('mandrill');
+						// template
+						$view = new View('mailer/payment/overdue');
+						$view->user = $user;
+						// params
+						$message = array(
+							'html'         => (string)$view,
+							'text'         => 'There was a problem with your AuthMyApp payment. Please update it here: '.URL::base(TRUE).'/pay/changeStripeCc',
+							'subject'      => 'Your AuthMyApp Payment is overdue',
+							'from_email'   => 'support@authmyapp.com',
+							'from_name'    => 'AuthMyApp Support',
+							'track_opens'  => TRUE,
+							'track_clicks' => TRUE,
+							'auto_text'    => TRUE,
+							'to'           => array(array('email' => $user->email(), $user->first_name().' '.$user->last_name())),
+						);
+						// execute. Any errors are sent to log
+						$mandrill->messages->send( $message );
 					}
 				}
 				// send email to user prompting them to update payment method to avoid a data transfer hold

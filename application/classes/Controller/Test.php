@@ -529,7 +529,7 @@ class Controller_Test extends Controller {
 			array('email' => 'brianvanderson@gmail.com', 'Brian Anderson'),
 		);
 		
-		$view = new View('mailer/payment/hold');
+		$view = new View('mailer/payment/overdue');
 		$view->user = $user;
 		
 		$message = array(
@@ -543,10 +543,13 @@ class Controller_Test extends Controller {
 			'auto_text'    => TRUE,
 		);
 		
+		echo Debug::vars($message); die;
+		
 		foreach( $send_to as $to )
 		{
 			$message['to'] = array( $to );
 			$result = $mandrill->messages->send( $message );
+			echo Debug::vars($result);
 		}
 	}
 	
