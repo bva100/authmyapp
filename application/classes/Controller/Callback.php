@@ -35,17 +35,35 @@ class Controller_Callback extends Controller {
 				$dao_user = Factory_Dao::create('kohana', 'user')->where('stripe_id', '=', $stripe_id)->find();
 				if ( $dao_user->loaded() ) 
 				{
-					// create Model_User object and set plan to free
+					// create Model_User object and set plan to free and place on hold
 					$user = Factory_Model::create($dao_user);
-					// if users plan is not currently set to free, place on hold and set to free
 					if ($user->plan_id() !== 1) 
 					{
 						$user->set_plan_id(1);
 						$user->set_plan_state(Model_User::PLAN_STATE_PAYMENT_HOLD);
+						// send email to user informing them that AuthMyApp cannot charge the current card on file and that they will not get new data transfers
+						$mandrill = Factory_Mailer::create('mandrill');
+
+						// template
+						$view = new View('mailer/payment/hold');
+						$view->user = $user;
+
+						// params
+						$message = array(
+							'html'         => (string)$view,
+							'text'         => 'Your AuthMyApp Subscription has been canceled because we were unable to charge your card. You can re-subscribe at any time here: '.URL::base(TRUE).'/home/plans',
+							'subject'      => 'Your AuthMyApp Subscription Was Canceled',
+							'from_email'   => 'support@authmyapp.com',
+							'from_name'    => 'AuthMyApp Support',
+							'track_opens'  => TRUE,
+							'track_clicks' => TRUE,
+							'auto_text'    => TRUE,
+							'to'           => array('email' => $user->email(), $user->first_name().' '.$user->last_name()),
+						);
+						// execute. Any errors are sent to log
+						$mandrill->messages->send( $message );
 					}
 				}
-				// send email to user informing them that AuthMyApp cannot charge the current card on file and that they will not get new data transfers
-				
 				break;
 			case 'invoice.payment_failed':
 				// set user plan state to PLAN_STATE_OVERDUE
