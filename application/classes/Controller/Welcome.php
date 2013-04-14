@@ -11,8 +11,7 @@ class Controller_Welcome extends Controller_Abstract {
 	public function action_index()
 	{
 		$this->auto_login();
-		$security_code = MD5(uniqid(mt_rand(), TRUE));
-		Session::instance()->set('original_security_code', $security_code);
+		$security_code = $this->security_code();
 		
 		$view = new View('main/welcome/index');
 		$view->security_code = $security_code;
@@ -27,11 +26,35 @@ class Controller_Welcome extends Controller_Abstract {
 	
 	public function action_login()
 	{
-		$security_code = md5(uniqid(mt_rand(), TRUE));
-		Session::instance()->set('original_security_code', $security_code);
+		$this->auto_login();
 		
 		$view = new View('main/welcome/login');
-		$view->security_code = $security_code;
+		$view->security_code = $this->security_code();
+		$view->header = new View('main/welcome/header');
+		$view->footer = new View('footer');
+		$this->template->set('content', $view);
+		$this->add_css('main/welcome/index');
+	}
+	
+	public function action_signup()
+	{
+		$this->auto_login();
+		
+		$view = new View('main/welcome/signup');
+		$view->security_code = $this->security_code();
+		$view->header = new View('main/welcome/header');
+		$view->footer = new View('footer');
+		$this->template->set('content', $view);
+		$this->add_css('main/welcome/index');
+	}
+	
+	public function action_pricing()
+	{
+		$dao = Factory_Dao::create('kohana', 'plan');
+		$plans = Model_Plan::all($dao);
+		
+		$view = new View('main/welcome/pricing');
+		$view->plans = $plans;
 		$view->header = new View('main/welcome/header');
 		$view->footer = new View('footer');
 		$this->template->set('content', $view);
@@ -209,6 +232,19 @@ class Controller_Welcome extends Controller_Abstract {
 			$auth->force_login( $user->email() );
 			$this->redirect('home', 302);
 		}
+	}
+	
+	/**
+	 * Create an original security code, set to session and return code
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	protected function security_code()
+	{
+		$security_code = md5(uniqid(mt_rand(), TRUE));
+		Session::instance()->set('original_security_code', $security_code);
+		return $security_code;
 	}
 
 } // End Welcome

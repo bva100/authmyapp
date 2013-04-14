@@ -38,7 +38,7 @@
 					<div class='span5'>
 						<h2>Validate Signup Data</h2>
 						<p>
-							Avoid annoying email confirmations and get validated sign up data with one click. Outsource your data validation to Facebook to reduce spam and save money.
+							Avoid annoying captchas and email confirmations. Get validated sign up data by outsourcing your validation to Facebook. Save time and money by reducing spam.
 						</p>
 					</div><!-- .span4 -->
 				</div><!-- .row -->
@@ -53,7 +53,7 @@
 					<div class='span5'>
 						<h2>Increase Conversion</h2>
 						<p>
-							Increase your landing page conversion rate by removing the hassle of forms. Make it easy for your customers to click through, signup and purchase your product or service.
+							Increase your landing page conversion rates by removing the hassle of long forms. Make it easy for your customers to signup and purchase your product or service.
 					</div><!-- .span5 -->
 				</div><!-- .row -->
 			</div><!-- .span6 -->
@@ -69,9 +69,9 @@
 						<img src="/assets/img/clipboard.png" width="40" height="54" alt="Easy to manage" id='manage-icon'>
 					</div><!-- .span1 -->
 					<div class='span5'>
-						<h2>Easy To Manage</h2>
+						<h2>Flexible Pricing</h2>
 						<p>
-							A straight forward dashboard makes it easy to manage your account. Avoid confusion and frustration. Change your preferences in a breeze.
+							Straight forward pricing lets you choose the right plan for your needs. We offer a free plan and our premium plans start at just $10 a month. <a href='/welcome/pricing'>View plan pricing details.</a>
 						</p>
 					</div><!-- .span5 -->
 				</div><!-- .row -->
@@ -174,6 +174,9 @@
 							</div>
 						</div>
 					</div>
+					<script type="text/javascript"
+						src="http://www.google.com/recaptcha/api/challenge?k=6Lfq398SAAAAAIx02GqWT9Ub1Zbo2aQ8ItVmvNls">
+					</script>
 				</form>
 			</div><!-- .span6 -->
 			
@@ -226,7 +229,7 @@
 					Step Two.
 				</h3>
 				<h3 class='featurette-header-small'>
-					Redirect new sign ups to Auth-My-App
+					Redirect new sign ups to AuthMyApp
 				</h3>
 				<h3 class='featurette-header-small muted'>
  					Find the button that does this for you <?php echo HTML::anchor("tutorial/article?create-a-redirect-button", "here") ?>
@@ -283,7 +286,7 @@
 	<div class='container'>
 		<div class='row'>
 			<div class='span12'>
-				<h2>Auth-My-App Simplifies Facebook Connect</h2>
+				<h2>AuthMyApp Simplifies Facebook Connect</h2>
 				<?php echo HTML::anchor("connect_facebook?app_id=1&security_code=".$security_code.'&connect_version='.Controller_Api_Abstract::CONNECT_VERSION, "Get Started", array('class' => 'btn btn-large btn-blue btn-cta signup')) ?>
 			</div><!-- .span12 -->
 		</div><!-- .row -->

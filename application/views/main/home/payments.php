@@ -24,7 +24,7 @@
 					<h3 style='padding: 0px; margin: 0px'>Account Payment History</h3>
 				</div><!-- .well well-unit -->
 				
-				<table class='table table-striped table-bordered table-hover table-bordered'>
+				<table class='table table-striped table-bordered table-hover'>
 					<thead>
 						<tr>
 							<th>Date</th>

@@ -5,9 +5,9 @@
 	<div class='row'>
 		<div class='span12'>
 			<h2>
-				Create your Auth-My-App account
+				Create your AuthMyApp account
 			</h2>
-			<?php echo HTML::anchor('connect_facebook?app_id=1&security_code='.$security_code.'&connect_version='.Controller_Api_Abstract::CONNECT_VERSION, "Signup using Facebook", array('class' => 'btn btn-facebook btn-large btn-cta')) ?>
+			<?php echo HTML::anchor('connect_facebook?app_id=1&security_code='.$security_code.'&connect_version='.Controller_Api_Abstract::CONNECT_VERSION, "Connect with Facebook", array('class' => 'btn btn-facebook btn-cta')) ?>
 		</div><!-- .span10 offset1 -->
 	</div><!-- .row -->
 </div><!-- .container -->
