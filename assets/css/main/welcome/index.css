@@ -149,8 +149,8 @@ body {
 	padding: 40px 20px;
 }
 .captcha {
-	text-align: center;
-/*	margin: 0px auto;*/
+	width: 200px;
+	margin: 0px auto;
 }
 #form-input-example {
 	margin-bottom: 60px;
