@@ -58,7 +58,7 @@ class Controller_Callback extends Controller {
 							'track_opens'  => TRUE,
 							'track_clicks' => TRUE,
 							'auto_text'    => TRUE,
-							'to'           => array('email' => $user->email(), $user->first_name().' '.$user->last_name()),
+							'to'           => array(array('email' => $user->email(), $user->first_name().' '.$user->last_name())),
 						);
 						// execute. Any errors are sent to log
 						$mandrill->messages->send( $message );
