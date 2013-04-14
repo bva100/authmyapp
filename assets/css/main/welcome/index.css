@@ -149,7 +149,8 @@ body {
 	padding: 40px 20px;
 }
 .captcha {
-	width: 200px;
+	border: 1px solid #999;
+	width: 160px;
 	margin: 0px auto;
 }
 #form-input-example {
