@@ -208,12 +208,14 @@ class Controller_Home extends Controller_Abstract {
 			$view->alert->message      = $message;
 			$view->alert->type         = $message_type;
 		}
-		$view->user          = $this->user();
-		$view->header        = new View('main/home/header');
-		$view->header->user  = $this->user();
-		$view->sidebar       = new View('main/home/sidebar');
-		$view->sidebar->page = 'plans';
-		$view->footer        = new View('footer');
+		$view->user                = $this->user();
+		$view->payment_alert       = new View('alert/payment');
+		$view->payment_alert->user = $this->user();
+		$view->header              = new View('main/home/header');
+		$view->header->user        = $this->user();
+		$view->sidebar             = new View('main/home/sidebar');
+		$view->sidebar->page       = 'plans';
+		$view->footer              = new View('footer');
 		$this->template->set('content', $view);
 	}
 	

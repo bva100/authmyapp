@@ -149,7 +149,15 @@ class Controller_Pay extends Controller_Home {
 			// redirect
 			$dao_plan = Factory_Dao::create('kohana', 'plan', $plan_id);
 			$plan = Factory_Model::create($dao_plan);
-			$message = urlencode('Your plan has been successfully changed to '.$plan->name());
+			// message, switch on state
+			if ($this->user->plan_state() !== Model_User::PLAN_STATE_ACTIVE ) 
+			{
+				$message = urlencode('Your plan has been successfully changed to '.$plan->name().' however, you\'ll still have to update your credit card to proceed.');
+			}
+			else
+			{
+				$message = urlencode('Your plan has been successfully changed to '.$plan->name());
+			}
 			$this->redirect('home/plans?message='.$message.'&message_type=success', 302);
 		}
 	}

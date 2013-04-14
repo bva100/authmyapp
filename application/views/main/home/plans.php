@@ -36,6 +36,8 @@
 				</div><!-- .row -->
 			<?php endif ?>
 			
+			<?php echo $payment_alert ?>
+			
 			<!-- intro message -->
 			<?php if ($app AND $new_app): ?>
 					<div class='well well-unit'>

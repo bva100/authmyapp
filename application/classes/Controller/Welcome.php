@@ -27,8 +27,15 @@ class Controller_Welcome extends Controller_Abstract {
 	
 	public function action_login()
 	{
-		$this->auto_login();
-		echo Debug::vars('login here'); die;
+		$security_code = md5(uniqid(mt_rand(), TRUE));
+		Session::instance()->set('original_security_code', $security_code);
+		
+		$view = new View('main/welcome/login');
+		$view->security_code = $security_code;
+		$view->header = new View('main/welcome/header');
+		$view->footer = new View('footer');
+		$this->template->set('content', $view);
+		$this->add_css('main/welcome/index');
 	}
 	
 	public function action_amaconnect()
