@@ -66,7 +66,7 @@
 			<div class='span6 core-bottom-row'>
 				<div class='row'>
 					<div class='span1'>
-						<img src="/assets/img/clipboard.png" width="40" height="54" alt="Easy to manage" id='manage-icon'>
+						<img src="/assets/img/tag.png" width="42" height="42" alt="" id='price-icon'>
 					</div><!-- .span1 -->
 					<div class='span5'>
 						<h2>Flexible Pricing</h2>
@@ -197,44 +197,34 @@
 			</div><!-- .span12 -->
 		</div><!-- .row -->
 		
-		<div class='row'>
-			<div class='span12' style='text-align: center'>
-				<h3 class='featurette-header featurette-header-bold'>
-					How It Works
-				</h3>
-			</div><!-- .span4 -->
-		</div><!-- .row -->
-		
-		<hr class='hr-how-it-works'/>
-		
 		<!-- how it works. step one. -->
 		<div class='row'>
-			<div class='span12'>
+			<div class='span9'>
 				<h3 class='featurette-header featurette-header-bold'>
-					Step One.
-				</h3>
-				<h3 class='featurette-header-small'>
-					Create your new account and register <?php echo HTML::anchor("#create", "here") ?>
+					Now That's A Good Idea...
 				</h3>
 				<h3 class='featurette-header-small muted'>
-					It will take less than three minutes
+					Simplicity, validated data, improved first user experience- sounds good!
 				</h3>
 			</div><!-- .span -->
+			<div class='span3'>
+				<img src="/assets/img/dude1_idea.png" width="450" height="617" alt="">
+			</div>
 		</div><!-- .row -->
 		
 		<hr class='hr-how-it-works'/>
 		
 		<!-- how it works. step two. -->
 		<div class='row'>
-			<div class='span12' style='text-align: right'>
+			<div class='span3'>
+				<img src="/assets/img/dude1_confused.png" width="450" height="606" alt="">
+			</div>
+			<div class='span9' style='text-align: right'>
 				<h3 class='featurette-header featurette-header-bold'>
-					Step Two.
-				</h3>
-				<h3 class='featurette-header-small'>
-					Redirect new sign ups to AuthMyApp
+					...But It's Way Too Confusing
 				</h3>
 				<h3 class='featurette-header-small muted'>
- 					Find the button that does this for you <?php echo HTML::anchor("tutorial/article?create-a-redirect-button", "here") ?>
+					Access tokens, permissions, dialog boxes- This stuff takes too much time to implement!
 				</h3>
 			</div><!-- .span -->
 		</div><!-- .row -->
@@ -243,17 +233,17 @@
 		
 		<!-- how it works. step three. -->
 		<div class='row'>
-			<div class='span12' id='how-it-works-final'>
+			<div class='span9' id='how-it-works-final'>
 				<h3 class='featurette-header featurette-header-bold'>
-					Step Three.
-				</h3>
-				<h3 class='featurette-header-small'>
-					Receive the sign up data and create a new user
+					AuthMyApp Makes It Easy
 				</h3>
 				<h3 class='featurette-header-small muted'>
-					We already wrote all the nerdy scripts for you <?php echo HTML::anchor("tutorial/article?create-a-new-user-with-php", "here") ?>
+ 					Let us handle the technical details so you can go back to growing your app or website.
 				</h3>
 			</div><!-- .span12 -->
+			<div class='span3'>
+				<img src="/assets/img/dude1_happy.png" width="450" height="456" alt="">
+			</div>
 		</div><!-- .row -->
 		
 		<!-- hr drop -->

@@ -60,9 +60,9 @@
 								</td>
 								<td>
 									<?php if ($plan->downloads()): ?>
-										None
+										We Do It
 									<?php else: ?>
-										Required
+										You Do It
 									<?php endif ?>
 								</td>
 							</tr>
