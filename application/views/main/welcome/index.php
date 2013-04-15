@@ -193,7 +193,7 @@
 		<!-- hr drop -->
 		<div class='row'>
 			<div class='span12'>
-				<img src="assets/img/hr-drop.png" width="1000" height="10" alt="Facebook Connect Simplified" class='hr-drop'>
+				<img src="assets/img/hr-drop.png" width="1000" height="10" alt="" class='hr-drop' style='margin-bottom: 12px'>
 			</div><!-- .span12 -->
 		</div><!-- .row -->
 		
@@ -208,7 +208,7 @@
 				</h3>
 			</div><!-- .span -->
 			<div class='span3'>
-				<img src="/assets/img/dude1_idea.png" width="450" height="617" alt="">
+				<img src="/assets/img/dude1_idea_compressed.png" width="450" height="450" alt="" class='dude-img'>
 			</div>
 		</div><!-- .row -->
 		
@@ -217,7 +217,7 @@
 		<!-- how it works. step two. -->
 		<div class='row'>
 			<div class='span3'>
-				<img src="/assets/img/dude1_confused.png" width="450" height="606" alt="">
+				<img src="/assets/img/dude1_confused_compressed.png" width="450" height="450" alt="" class='dude-img'>
 			</div>
 			<div class='span9' style='text-align: right'>
 				<h3 class='featurette-header featurette-header-bold'>
@@ -242,7 +242,7 @@
 				</h3>
 			</div><!-- .span12 -->
 			<div class='span3'>
-				<img src="/assets/img/dude1_happy.png" width="450" height="456" alt="">
+				<img src="/assets/img/dude1_happy_compressed.png" width="450" height="456" alt="" class='dude-img'>
 			</div>
 		</div><!-- .row -->
 		

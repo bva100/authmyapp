@@ -125,8 +125,12 @@ body {
 	padding-bottom: 50px;
 }
 .hr-how-it-works {
-	margin-top: 60px;
 	margin-bottom: 60px;
+}
+.dude-img {
+	margin-top: 10px;
+	position: relative;
+	bottom: 30px;
 }
 .featurette-header {
 	font-size: 40px;
@@ -136,11 +140,9 @@ body {
 }
 .featurette-header-small {
 	font-size: 32px;
-	margin: 0px;
 }
 .form-example-header {
 	text-align: center;
-	margin-bottom: 60px;
 }
 .form-example {
 	border-radius: 4px;
