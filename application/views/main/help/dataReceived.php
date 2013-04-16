@@ -117,9 +117,8 @@
 			</p>
 			
 			<!-- ending -->
-			<hr />
 			<p>
-				Experience any problems? Please checkout our <?php echo HTML::anchor("blog.authmyapp.com/faqs", "FAQ") ?> or <?php echo HTML::mailto("hello@authmyapp.com?subject=Please+help+me!", "shoot us a question.", array('target' => '_blank')) ?>
+				Experiencing any problems? Please checkout our <?php echo HTML::anchor("blog.authmyapp.com/faqs", "FAQ") ?> or <?php echo HTML::mailto("hello@authmyapp.com?subject=Please+help+me!", "shoot us a question.", array('target' => '_blank')) ?>
 			</p>
 		</div>
 		

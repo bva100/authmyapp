@@ -41,7 +41,6 @@ class Controller_Downloads extends Controller_Home {
 		$this->template->set('content', $view);
 		$this->add_js('main/downloads/index');
 		$this->add_css('main/downloads/index');
-		$this->add_css('back');
 	}
 	
 	public function action_connectButton()

@@ -49,4 +49,18 @@ class Controller_Help extends Controller_Welcome {
 		$this->set_temp_view();
 	}
 	
+	public function action_postAuthUrl()
+	{
+		$this->set_view_props('main/help/postAuthUrl');
+		$this->set_view_page('postAuthUrl');
+		$this->set_temp_view();
+	}
+	
+	public function action_uploading()
+	{
+		$this->set_view_props('main/help/uploading');
+		$this->set_view_page('uploading');
+		$this->set_temp_view();
+	}
+	
 }

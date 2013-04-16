@@ -65,14 +65,14 @@
 			
 			<hr />
 			<h3>
-				And You're All Done! <span class="muted">That's all it takes.</span>
+				And You're All Done! <span class="muted">What is the next step?</span>
 			</h3>
 			<p>
-				Learn more about what happens by checking out the <a href="/help/dataReceived">data received help.</a>
+				Learn more about what to do next by checking out the <a href="/help/dataReceived">data received help.</a>
 			</p>
 			<br />
 			<p>
-				Experience any problems? Please checkout our <?php echo HTML::anchor("blog.authmyapp.com/faqs", "FAQ") ?> or <?php echo HTML::mailto("hello@authmyapp.com?subject=Please+help+me!", "shoot us a question.", array('target' => '_blank')) ?>
+				Experiencing any problems? Please checkout our <?php echo HTML::anchor("blog.authmyapp.com/faqs", "FAQ") ?> or <?php echo HTML::mailto("hello@authmyapp.com?subject=Please+help+me!", "shoot us a question.", array('target' => '_blank')) ?>
 			</p>
 			
 		</div>

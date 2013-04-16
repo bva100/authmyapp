@@ -104,7 +104,7 @@
 											</p>
 											<p class='offset1 span2'>
 												<label for="size">Button Size</label>
-												<select id='size-input'>
+												<select class="selectpicker" id='size-input'>
 													<option value="extra-large">Extra Large</option> 
 													<option value="large" selected>Large</option>
 													<option value="medium">Medium</option>

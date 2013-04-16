@@ -18,7 +18,7 @@
 			Data Received
 		</a>
 	</li>
-	<li <?php if ($page === 'postAutUrl') {echo 'class="active"'; } ?>>
+	<li <?php if ($page === 'postAuthUrl') {echo 'class="active"'; } ?>>
 		<a href="/help/postauthurl">
 			Post Auth Url
 		</a>
