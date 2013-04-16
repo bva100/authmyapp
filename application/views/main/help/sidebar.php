@@ -13,6 +13,16 @@
 			Logins
 		</a>
 	</li>
+	<li <?php if ($page === 'dataReceived') {echo 'class="active"'; } ?>>
+		<a href="/help/datareceived">
+			Data Received
+		</a>
+	</li>
+	<li <?php if ($page === 'postAutUrl') {echo 'class="active"'; } ?>>
+		<a href="/help/postauthurl">
+			Post Auth Url
+		</a>
+	</li>
 	<li <?php if($page === 'uploading'){echo 'class="active"';} ?>>
 		<a href="/help/uploading">
 			Uploading

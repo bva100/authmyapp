@@ -36,7 +36,7 @@
 			</p>
 			
 			<!-- step 2 header -->
-			<h3 class='help-header'>
+			<h3 class='help-header' id='data-sender'>
 				Step 2: <span class='muted'>Get the Data Sender</span>
 			</h3>
 			<p class='help-body'>
@@ -50,7 +50,7 @@
 			</p>
 			
 			<!-- step 3 header -->
-			<h3 class='help-header'>
+			<h3 class='help-header' id='data-receiver'>
 				Step 3: <span class='muted'>Get the Data Receiver</span>
 			</h3>
 			<p class='help-body'>
@@ -65,8 +65,12 @@
 			
 			<hr />
 			<h3>
-				And You're All Done! <span class="muted">That's all it takes</span>
+				And You're All Done! <span class="muted">That's all it takes.</span>
 			</h3>
+			<p>
+				Learn more about what happens by checking out the <a href="/help/dataReceived">data received help.</a>
+			</p>
+			<br />
 			<p>
 				Experience any problems? Please checkout our <?php echo HTML::anchor("blog.authmyapp.com/faqs", "FAQ") ?> or <?php echo HTML::mailto("hello@authmyapp.com?subject=Please+help+me!", "shoot us a question.", array('target' => '_blank')) ?>
 			</p>
