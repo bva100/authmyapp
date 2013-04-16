@@ -5,7 +5,7 @@
 	<?php echo HTML::anchor("http://blog.authmyapp.com", "blog", array('target' => 'blank')) ?>
 	<?php echo HTML::anchor("http://blog.authmyapp.com/faqs", "faq", array('target' => 'blank')) ?>
 	<?php echo HTML::anchor("welcome/pricing", "pricing") ?>
-	<?php echo HTML::anchor("http://blog.authmyapp.com/category/tutorial/", "help", array('target' => 'blank')) ?>
+	<?php echo HTML::anchor("help", "help") ?>
 	<?php echo HTML::mailto('hello@authmyapp.com', 'contact us', array('target' => '_blank')) ?>
 	<a href="http://www.facebook.com/authmyapp">
 		<img src="/assets/img/facebook.png" width="25" height="25" alt="Facebook" class='footer-social-btn' id='facebook-social-btn'>

@@ -37,7 +37,7 @@
 					</div><!-- .span1 -->
 					<div class='span5'>
 						<h2>Validate Signup Data</h2>
-						<p>
+						<p class='main-feature-p'>
 							Avoid annoying captchas and email confirmations. Get validated sign up data by outsourcing your validation to Facebook. Save time and money by reducing spam.
 						</p>
 					</div><!-- .span4 -->
@@ -52,7 +52,7 @@
 					</div><!-- .span1 -->
 					<div class='span5'>
 						<h2>Increase Conversion</h2>
-						<p>
+						<p class='main-feature-p'>
 							Increase your landing page conversion rates by removing the hassle of long forms. Make it easy for your customers to signup and purchase your product or service.
 					</div><!-- .span5 -->
 				</div><!-- .row -->
@@ -70,7 +70,7 @@
 					</div><!-- .span1 -->
 					<div class='span5'>
 						<h2>Flexible Pricing</h2>
-						<p>
+						<p class='main-feature-p'>
 							Straight forward pricing lets you choose the right plan for your needs. We offer a free plan and our premium plans start at just $10 a month. <a href='/welcome/pricing'>View plan pricing details.</a>
 						</p>
 					</div><!-- .span5 -->
@@ -85,7 +85,7 @@
 					</div><!-- .span1 -->
 					<div class='span5'>
 						<h2>Super Fast Setup</h2>
-						<p>
+						<p class='main-feature-p'>
 							Get all of the power of Facebook connect with none of the headaches. Create an account in minutes and start accepting new signups today.
 						</p>
 					</div><!-- .span5 -->

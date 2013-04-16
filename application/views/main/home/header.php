@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 ?>
 
-<div id="header">
+<div id="header" class='logged-in-header'>
 	<div class='container'>
 		<div class='row'>
 			<div class='span12'>

@@ -64,6 +64,118 @@ abstract class Controller_Abstract extends Controller_Template {
 	protected $javascript_base_url;
 	
 	/**
+	 * View for rendered page
+	 *
+	 * @var View object
+	 */
+	protected $view;
+	
+	/**
+	 * set view
+	 *
+	 * @param View object $view
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	protected function set_view(View $view)
+	{
+		$this->view = $view;
+	}
+	
+	/**
+	 * Set view's header
+	 *
+	 * @param string $header_string dir to view
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	protected function set_view_header($header_string)
+	{
+		if ( ! is_string($header_string) )
+		{
+			trigger_error('view header expects argument 1, header_string, to be string', E_USER_WARNING);
+		}
+		
+		$this->view->header = new View($header_string);
+		if ( isset($this->user) ) 
+		{
+			$this->view->header->user = $this->user;
+		}
+	}
+	
+	/**
+	 * Set view's sidebar
+	 *
+	 * @param string $sidebar_string 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	protected function set_view_sidebar($sidebar_string, $page = '')
+	{
+		if ( ! is_string($sidebar_string)) 
+		{
+			trigger_error('set_view_sidebar expects argument 1, sidebar_string, to be string', E_USER_WARNING);
+		}
+		if ( isset($page) AND ! is_string($page)) 
+		{
+			trigger_error('set_view_footer expects argument 2, page, to be string', E_USER_WARNING);
+		}
+		$this->view->sidebar = new View($sidebar_string);
+		$this->set_view_page($page);
+	}
+	
+	/**
+	 * set view page
+	 *
+	 * @param string $page 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	protected function set_view_page($page)
+	{
+		if ( ! is_string($page) )
+		{
+			trigger_error('set_view_page expects argument 1, page, to be string', E_USER_WARNING);
+		}
+		$this->view->sidebar->page = $page;
+	}
+	
+	/**
+	 * set view footer
+	 *
+	 * @param string $footer_string 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	protected function set_view_footer($footer_string)
+	{
+		if ( ! is_string($footer_string)) 
+		{
+			trigger_error('set_view_footer expects argument 1, footer_string, to be string', E_USER_WARNING);
+		}
+		$this->view->footer = new View($footer_string);
+	}
+	
+	/**
+	 * set template's view
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_temp_view()
+	{
+		if ( isset($this->view) )
+		{
+			$this->template->content = $this->view;
+			if (isset($this->user) AND isset($this->view->header)) 
+			{
+				$this->add_css('main/home/header');
+				$this->add_js('main/home/header');
+			}
+		}
+	}
+	
+	/**
 	 * set auth_object
 	 *
 	 * @param object $auth_object
