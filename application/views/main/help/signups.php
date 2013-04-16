@@ -63,6 +63,7 @@
 				</ol>
 			</p>
 			
+			<hr />
 			<h3>
 				And You're All Done! <span class="muted">That's all it takes</span>
 			</h3>

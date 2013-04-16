@@ -35,4 +35,18 @@ class Controller_Help extends Controller_Welcome {
 		$this->set_temp_view();
 	}
 	
+	public function action_logins()
+	{
+		$this->set_view_props('main/help/logins');
+		$this->set_view_page('logins');
+		$this->set_temp_view();
+	}
+	
+	public function action_dataReceived()
+	{
+		$this->set_view_props('main/help/dataReceived');
+		$this->set_view_page('dataReceived');
+		$this->set_temp_view();
+	}
+	
 }
