@@ -49,6 +49,11 @@
 						<th>Access With</th>
 					</tr>
 					<tr>
+						<td>user's AuthMyApp id</td>
+						<td>integer</td>
+						<td>$_SESSION['amaUserId']</td>
+					</tr>
+					<tr>
 						<td>user's email</td>
 						<td>string</td>
 						<td>$_SESSION['email']</td>

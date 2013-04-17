@@ -22,7 +22,7 @@
 			
 			<!-- step 1 header -->
 			<h3 class='help-header'>
-				Step 1: <span class='muted'>Get the Login Button</span>
+				Get the Login Button
 			</h3>
 			<!-- step 1 body -->
 			<p class='help-body'>

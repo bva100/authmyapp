@@ -257,6 +257,7 @@ switch ($storage_method) {
 		break;
 	case '.Model_App::STORAGE_PHP_SESSION.':
 	default:
+		$sessionHelper->set("amaUserId", $response->id);
 		if (isset($response->email))
 		{
 			$sessionHelper->set("email", $response->email);
