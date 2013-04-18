@@ -19,7 +19,7 @@
 			<?php endif ?>
 			
 			<div class='well well-unit'>
-				<?php if ( count($user->organizations() !== 0) ): ?>
+				<?php if ( count($user->organizations()) !== 0 ): ?>
 					<legend>
 						My Organizations
 					</legend>
