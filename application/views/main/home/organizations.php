@@ -19,9 +19,11 @@
 			<?php endif ?>
 			
 			<div class='well well-unit'>
-				<legend>
-					My Organizations
-				</legend>
+				<?php if ( count($user->organizations() !== 0) ): ?>
+					<legend>
+						My Organizations
+					</legend>
+				<?php endif ?>
 				<p>
 					<?php foreach ($user->organizations() as $org): ?>
 						
