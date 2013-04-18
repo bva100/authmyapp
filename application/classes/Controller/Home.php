@@ -389,6 +389,13 @@ class Controller_Home extends Controller_Abstract {
 	
 	public function action_analyticSelector()
 	{
+		// redirect if user has not apps
+		if ( count($this->user->apps()) === 0 )
+		{
+			$message = urlencode('You must add at least one app or website before you can view your analytics');
+			$this->redirect('home?message='.$message.'&message_type=info', 302);
+		}
+		
 		$view                = new View('main/home/analyticSelector');
 		$view->user          = $this->user();
 		$view->header        = new View('main/home/header');
