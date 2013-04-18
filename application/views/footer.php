@@ -7,7 +7,7 @@
 	<?php echo HTML::anchor("welcome/pricing", "pricing") ?>
 	<?php echo HTML::anchor("help", "help") ?>
 	<?php echo HTML::mailto('hello@authmyapp.com', 'contact us', array('target' => '_blank')) ?>
-	<a href="http://www.facebook.com/authmyapp" target='_blank'>
+	<a href='https://www.facebook.com/pages/Auth-My-App/475324372522142' target='_blank'>
 		<img src="/assets/img/facebook.png" width="25" height="25" alt="Facebook" class='footer-social-btn' id='facebook-social-btn'>
 	</a>
 	<a href="http://www.twitter.com/authmyapp" target='_blank'>
