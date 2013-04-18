@@ -12,6 +12,13 @@ class Controller_Downloads extends Controller_Home {
 		$app_id  = (int)  get('app_id', 0);
 		$new_app = (bool) get('new_app', FALSE);
 		
+		// redirect if user has no apps
+		if ( ! $new_app AND count($this->user->apps()) === 0 )
+		{
+			$message = urlencode('You must add at least one app or website before you can access your downloads');
+			$this->redirect('home?message='.$message.'&message_type=info', 302);
+		}
+		
 		// if no app_id was passed, but user only has one app, redirect
 		if ( ! $app_id AND count($this->user->apps()) === 1) 
 		{
