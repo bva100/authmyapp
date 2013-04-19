@@ -36,11 +36,6 @@ class Controller_Welcome extends Controller_Abstract {
 		$this->add_css('main/welcome/index');
 	}
 	
-	public function action_test()
-	{
-		$this->user->blah();
-	}
-	
 	public function action_signup()
 	{
 		$this->auto_login();
