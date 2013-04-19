@@ -303,11 +303,11 @@ class Controller_Pay extends Controller_Home {
 		}
 		if ( $token !== Session::instance()->get('plan_confirm_token', FALSE) ) 
 		{
-			throw new Exception('We cannot complete your request at this time. Please contact customer support to ensure your payment goes through. '.HTML::mailto('hello@authmyapp.com?subject=payment-issue', 'Click here to email us.'), 1);
+			throw new Exception('We cannot complete your request at this time. Please contact customer support to ensure your payment goes through. '.HTML::mailto('support@authmyapp.com?subject=payment-issue', 'Click here to email us.'), 1);
 		}
 		if ( ! $plan_id ) 
 		{
-			throw new Exception('We cannot complete your request at this time. Please contact customer support to ensure your payment goes through. '.HTML::mailto('hello@authmyapp.com?subject=payment-issue', 'Click here to email us.'), 1);
+			throw new Exception('We cannot complete your request at this time. Please contact customer support to ensure your payment goes through. '.HTML::mailto('support@authmyapp.com?subject=payment-issue', 'Click here to email us.'), 1);
 		}
 		
 		// check preapproval_id status and response state

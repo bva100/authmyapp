@@ -13,7 +13,7 @@
 				</p>
 				<hr />
 				<p>
-					<?php echo HTML::mailto('hello@authmyapp.com', 'Contact Us Via Email', array('class' => 'btn btn-cta btn-blue', 'target' => 'blank')) ?>
+					<?php echo HTML::mailto('support@authmyapp.com', 'Contact Us Via Email', array('class' => 'btn btn-cta btn-blue', 'target' => 'blank')) ?>
 				</p>
 			</div><!-- .hero-unit -->
 		</div><!-- .span10 offset1 -->

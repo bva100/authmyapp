@@ -14,7 +14,7 @@
 						Flexible Pricing for Your Needs
 					</h2>
 					<p>
-						AuthMyApp has straight forward pricing with a variety of plans to choose from. Have a questions? Want some clarification? Shoot us an <?php echo HTML::mailto('hello@authmyapp.com', 'email.') ?>
+						AuthMyApp has straight forward pricing with a variety of plans to choose from. Have a questions? Want some clarification? Shoot us an <?php echo HTML::mailto('support@authmyapp.com', 'email.') ?>
 					</p>
 					<a href="/welcome/signup" class='btn btn-blue btn-large'>Get Started Today</a>
 				</div><!-- .hero-unit -->

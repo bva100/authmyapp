@@ -112,7 +112,7 @@
 								Shoot us an email with the above information. <em>We will do our best to build you your custom dialog box and Facebook appas soon as possible</em>.
 							</p>
 							<p>
-								<?php echo HTML::mailto('hello@authmyapp.com?subject=Facebook+App+Request&body=(please+write+your+message+below+this+top+line)+app_id+is+'.$app->id(), 'Email Us', array('class' => 'btn btn-blue btn-large', 'target' => '_blank')); ?>
+								<?php echo HTML::mailto('support@authmyapp.com?subject=Facebook+App+Request&body=(please+write+your+message+below+this+top+line)+app_id+is+'.$app->id(), 'Email Us', array('class' => 'btn btn-blue btn-large', 'target' => '_blank')); ?>
 							</p>
 						</div><!-- .well well-unit -->
 					</div><!-- .span9 -->
