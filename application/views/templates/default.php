@@ -20,7 +20,7 @@
 	<meta property="og:description" content="<?php echo $fb_description ?>" />
 	<meta property="og:image" content="<?php echo $fb_img ?>" />
 	<meta property="og:site_name" content="<?php echo $fb_site_name ?>" />
-	<meta property="fb:app_id" content="<?php ?>" />
+	<meta property="fb:app_id" content="<?php echo $fb_app_id  ?>" />
 	
 	<?php if (isset($stylesheets)): ?>
 		<?php foreach ($stylesheets as $stylesheet): ?>
