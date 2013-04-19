@@ -50,7 +50,7 @@ class Factory_Payment extends Factory_Abstract {
 				}
 				else
 				{
-					Stripe::setApiKey(self::STRIPE_DEV_SECRET);
+					Stripe::setApiKey(self::STRIPE_PROD_SECRET);
 				}
 				return TRUE;
 				break;
@@ -128,7 +128,7 @@ class Factory_Payment extends Factory_Abstract {
 				}
 				else
 				{
-					return self::STRIPE_DEV_KEY;
+					return self::STRIPE_PROD_KEY;
 				}
 				break;
 			default:
