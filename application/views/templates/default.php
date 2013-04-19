@@ -22,8 +22,6 @@
 	<meta property="og:site_name" content="<?php echo $fb_site_name ?>" />
 	<meta property="fb:app_id" content="<?php ?>" />
 	
-	<link href="<?php echo URL::base(TRUE).Kohana_Request::detect_uri() ?>" rel="canonical" />
-	
 	<?php if (isset($stylesheets)): ?>
 		<?php foreach ($stylesheets as $stylesheet): ?>
 			<?php echo HTML::style($stylesheet); ?>

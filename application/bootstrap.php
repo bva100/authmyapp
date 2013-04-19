@@ -104,6 +104,15 @@ Kohana::init(array(
 	'errors' => strpos($_SERVER['REQUEST_URI'], 'api/') ? FALSE: TRUE,
 ));
 
+// exceptions
+if (Kohana::$environment === 'prod')
+{
+	// ignore notices
+	error_reporting(E_ALL & ~E_NOTICE);
+	// load default error view
+	Kohana_Exception::$error_view = 'errors/500';
+}
+
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
