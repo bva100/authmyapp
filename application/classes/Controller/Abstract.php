@@ -474,8 +474,8 @@ abstract class Controller_Abstract extends Controller_Template {
 			$this->template->fb_title       = $this->template->meta_description;
 			$this->template->fb_type        = 'website';
 			$this->template->fb_url         = URL::base(TRUE);
-			$this->template->fb_admin       = '';
-			$this->template->fb_img         = ''; // use a non ssl service
+			$this->template->fb_admin       = '164712480350937';
+			$this->template->fb_img         = 'http://oi35.tinypic.com/2je4tbk.jpg'; // use non-ssl service
 			$this->template->fb_description = $this->template->meta_description;
 			
 			// styles
