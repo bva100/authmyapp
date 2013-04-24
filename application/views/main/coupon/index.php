@@ -7,9 +7,9 @@
 		<h3>Like AuthMyApp's Fanpage</h3>
 	</div>
 	<div class="modal-footer">
-		<p>
+		<div class='fb-like-container'>
 			<div class="fb-like" data-href="http://www.facebook.com/pages/Auth-My-App/475324372522142" data-send="false" data-width="225" data-show-faces="true" data-font="segoe ui"></div>
-		</p>
+		</div>
 		<div class='modal-facebook-done-header hide'>
 			<hr />
 			<a class='close btn btn-primary btn-block close-facebook-modal' id='facebook-done' disabled='false'>All Done</a>

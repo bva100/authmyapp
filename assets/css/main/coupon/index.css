@@ -6,7 +6,7 @@ body {
 }
 .intro-box h1 {
 	color: #ECF0F1;
-	font-size: 52px;
+	font-size: 55px;
 	line-height: 1;
 }
 .intro-box p {
@@ -21,6 +21,14 @@ body {
 }
 .modal, .modal-footer, .modal-footer p {
 	text-align: center;
+}
+.fb-like-container{
+	width: 60%;
+	border: 1px solid #999;
+}
+.fb-like {
+	display: inline-block;
+	margin: 0px auto;
 }
 .modal-footer {
 	background-color: #ECF0F1;
