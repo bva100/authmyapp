@@ -484,10 +484,10 @@ abstract class Controller_Abstract extends Controller_Template {
 			
 			// scripts
 			$this->template->scripts = array();
-			// if (Kohana::$environment === 'prod') 
-			// {
-			// 	$this->add_js('googleAnalytics');
-			// }
+			if (Kohana::$environment === 'prod') 
+			{
+				$this->add_js('googleAnalytics');
+			}
 			$this->add_js('jquery');
 			$this->add_js('bootstrap/bootstrap.min');
 		}
