@@ -101,6 +101,13 @@
 		</div>
 		
 	</div>
+	
+	<div class='row'>
+		<nav class='span4' id='nav-container'>
+			<a href="/" title='Social Connect Simplified' class='return-link'>&larr; Return to AuthMyApp</a>
+		</nav>
+	</div>
+	
 </div>
 
 <div id="fb-root"></div>

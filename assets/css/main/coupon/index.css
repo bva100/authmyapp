@@ -6,7 +6,7 @@ body {
 }
 .intro-box h1 {
 	color: #ECF0F1;
-	font-size: 55px;
+	font-size: 52px;
 	line-height: 1;
 }
 .intro-box p {
@@ -19,7 +19,7 @@ body {
 	padding-bottom: 10px;
 	margin: 0px;
 }
-.modal, .modal-footer {
+.modal, .modal-footer, .modal-footer p {
 	text-align: center;
 }
 .modal-footer {
@@ -47,4 +47,13 @@ body {
 .completed > .btn:focus {
 	border: none;
 	background-color: #7F8C8D
+}
+#nav-container {
+	margin-top: 80px;
+}
+#nav-container a {
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 18px;
+	color: #ECF0F1;
 }
