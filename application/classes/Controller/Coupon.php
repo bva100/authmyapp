@@ -46,7 +46,7 @@ class Controller_Coupon extends Controller_Welcome {
 		$this->set_view_props('main/coupon/index');
 		$this->view->user = $this->user;
 		$this->view->coupon_token = $coupon_token;
-		$this->view->tweet_params = $tweet_params = 'url='.URL::base(TRUE).'&text='.urlencode("@AuthMyApp makes it easy to setup Social Connect buttons for you app or website. Check 'em out at ").'&related=authMyApp&lang=en&dnt=true';
+		$this->view->tweet_params = $tweet_params = 'url='.URL::base(TRUE).'&text='.urlencode("@AuthMyApp makes it easy to setup Social Connect buttons for your app or website. Check 'em out at").'&related=authMyApp&lang=en&dnt=true';
 		$this->set_temp_view();
 		$this->add_js('main/coupon/index');
 	}
