@@ -14,6 +14,13 @@ class Controller_Connect_Linkedin extends Controller {
 		$internal_app_id = (int)     get('app_id', 0);
 		$dao_type        = (string)  get('dao_type', 'kohana');
 		
+		// set security code
+		if ( ! $security_code) 
+		{
+			throw new Exception('Access Denied. Security code not provided', 1);
+		}
+		Session::instance()->set('security_code', $security_code);
+		
 		// create app and set internal_app_id
 		Session::instance()->set('internal_app_id', $internal_app_id);
 		$app_dao = Factory_Dao::create($dao_type, 'app', $internal_app_id);
@@ -64,15 +71,22 @@ class Controller_Connect_Linkedin extends Controller {
 			else
 			{
 				// create new app_user
-				$app_user = Model_App_User::create_with_email_and_app_id( Factory_Dao::create('kohana', 'app_user'), $api->id(), $app->id() );
+				$app_user = Model_App_User::create_with_email_and_app_id( Factory_Dao::create('kohana', 'app_user'), $api->email(), $app->id() );
 			}
-			
 			// cache linkedin data using the linkedin_to_user adopter
 			$li_user_adopter = Factory_Adopter::create('linkedin_to_user', $api->profile(), $app_user);
-			$li_user_adopter->convert()->update();
-			echo Debug::vars($li_user_adopter); die;
-			
-			
+			$li_user_adopter->convert();
+			//set access token and IP
+			$app_user->set_linkedin_token($response->access_token, TRUE);
+			$app_user->set_linkedin_token_created( time(), TRUE);
+			$app_user->set_linkedin_token_expires( time() + $response->expires_in, TRUE);
+			$app_user->set_ip(Request::$client_ip, TRUE);
+			// activate and record login
+			$app_user->set_state(MODEL_APP_USER::STATE_ACTIVE);
+			$app_user->record_login( Factory_Dao::create('kohana', 'app_user_login') );
+			// create sender object and redirect
+			$sender = Factory_Sender::create('signup', 'linkedin', $app, $app_user);
+			$this->redirect($sender->redirect_url(), 302);
 		}
 	}
 	

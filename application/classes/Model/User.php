@@ -512,6 +512,27 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
+	 * set linkedin_id
+	 *
+	 * @param string $linkedin_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_linkedin_id($linkedin_id, $lazy = FALSE)
+	{
+		if ( ! is_string($linkedin_id) )
+		{
+			trigger_error('set_linkedin_id expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->linkedin_id = $linkedin_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
 	 * get linkedin_id
 	 *
 	 * @return string
@@ -867,7 +888,7 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 		{
 			trigger_error('set_country_code expects argument 1 to be type string and have a length of 2', E_USER_WARNING);
 		}
-		$this->dao->country_code = $country_code;
+		$this->dao->country_code = strtoupper($country_code);
 		if ( ! $lazy)
 		{
 			$this->db_update();

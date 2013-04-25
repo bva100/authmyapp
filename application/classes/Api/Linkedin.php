@@ -250,7 +250,7 @@ class Api_LinkedIn {
 		
 		if ( ! isset($fields)) 
 		{
-			$fields = '(id,first-name,last-name,email-address,picture-url,positions)';
+			$fields = '(id,first-name,last-name,email-address,picture-url,positions,location:(country:(code)))';
 		}
 		
 		$uri = self::API_ROOT.self::VERSION.'/people/'.$linkedin_id.':'.$fields.'?oauth2_access_token='.$this->access_token().'&format=json';

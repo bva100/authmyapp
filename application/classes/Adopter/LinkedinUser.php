@@ -58,23 +58,20 @@ class Adopter_LinkedinUser {
 		{
 			$this->user->set_linkedin_id($this->li_data->id, TRUE);
 		}
-		if (isset($this->li_data->pictureUrl)) 
+		if (isset($this->li_data->location->country->code)) 
 		{
-			// only add if user does not already have picture
-			if ( ! $this->user->picture()) 
-			{
-				$this->user->picture($this->li_data->pictureUrl(), TRUE);
-			}
+			$this->user->set_country_code($this->li_data->location->country->code);
+		}
+		if (isset($this->li_data->pictureUrl) AND ! $this->user->picture()) 
+		{
+			// only add if user does not already have picture. This gives preference to other picture sources.
+			$this->user->set_picture($this->li_data->pictureUrl, TRUE);
 		}
 		if (isset($this->li_data->positions) AND isset($this->li_data->positions->values['0'])) 
 		{
 			$this->user->set_employer_name( $this->li_data->positions->values['0']->company->name, TRUE );
 			$this->user->set_job_title( $this->li_data->positions->values['0']->title, TRUE );
 		}
-		// set token stuff here too :)
-		
-		//ip here too
-		
 		return($this);
 	}
 	

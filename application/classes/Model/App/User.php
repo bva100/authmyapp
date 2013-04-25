@@ -440,7 +440,7 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 		{
 			throw new Exception('Invalid country code. Country code must be 2 characters. Please try again.', 1);
 		}
-		$this->dao->country_code = $country_code;
+		$this->dao->country_code = strtoupper($country_code);
 		if ( ! $lazy)
 		{
 			$this->db_update();

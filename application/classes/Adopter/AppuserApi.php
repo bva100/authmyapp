@@ -64,6 +64,10 @@ class Adopter_AppuserApi {
 				$api_user->name->full = $this->user->first_name().' '.$this->user->last_name();
 			}
 		}
+		if ($this->user->picture()) 
+		{
+			$api_user->picture = $this->user->picture();
+		}
 		if ($this->user->birthday())
 		{
 			$api_user->birthday = $this->user->birthday();
@@ -115,9 +119,18 @@ class Adopter_AppuserApi {
 			{
 				$api_user->facebook->token_expires = $this->user->facebook_token_expires();
 			}
-			if ($this->user->picture()) 
+		}
+		if ($this->user->linkedin_id()) 
+		{
+			$api_user->linkedin = new stdClass;
+			$api_user->linkedin->id = $this->user->linkedin_id();
+			if ($this->user->linkedin_token()) 
 			{
-				$api_user->facebook->picture = $this->user->picture();
+				$api_user->linkedin->token = $this->user->linkedin_token();
+			}
+			if ($this->user->linkedin_token_expires()) 
+			{
+				$api_user->linkedin->token_expires = $this->user->linkedin_token_expires();
 			}
 		}
 		if ($this->user->state()) 
