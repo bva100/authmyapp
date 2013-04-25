@@ -179,7 +179,6 @@ Abstract class Controller_Api_Abstract extends Controller {
 		$encrypt = Encrypt::instance();
 		$access_token = $encrypt->decode($encrypted_access_token);
 		$str_array = explode('_', $access_token);
-		echo Debug::vars($str_array); die;
 		if ( ! $str_array OR empty($str_array)) 
 		{
 			throw new ApiException(401);
