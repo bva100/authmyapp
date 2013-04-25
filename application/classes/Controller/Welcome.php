@@ -226,6 +226,7 @@ class Controller_Welcome extends Controller_Abstract {
 			{
 				$user->set_facebook_token_expires($response->facebook->token_expires, TRUE);
 			}
+			echo Debug::vars($response->linkedin); die;
 			if (isset($response->linkedin->id)) 
 			{
 				$user->set_linkedin_id($response->linkedin->id, TRUE);
