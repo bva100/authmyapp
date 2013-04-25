@@ -34,8 +34,10 @@ class Controller_Api_Users extends Controller_Api_Abstract {
 			throw new ApiException(401);
 		}
 		$token_array = $this->convert_access_token($encrypted_access_token);
+		echo Debug::vars('token array', $token_array);
 		if ( ! $this->validate_access_token('kohana', $token_array) ) 
 		{
+			echo Debug::vars('here within validate'); die;
 			throw new ApiException(401);
 		}
 		
