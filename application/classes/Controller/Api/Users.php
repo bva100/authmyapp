@@ -23,7 +23,7 @@ class Controller_Api_Users extends Controller_Api_Abstract {
 	public function before()
 	{
 		parent::before();
-
+		
 		// validate access token
 		if ( isset($_REQUEST['access_token'])) 
 		{
@@ -34,10 +34,8 @@ class Controller_Api_Users extends Controller_Api_Abstract {
 			throw new ApiException(401);
 		}
 		$token_array = $this->convert_access_token($encrypted_access_token);
-		echo Debug::vars('token array', $token_array); die;
 		if ( ! $this->validate_access_token('kohana', $token_array) ) 
 		{
-			echo Debug::vars('failed result from validate_access_token'); die;
 			throw new ApiException(401);
 		}
 		
