@@ -251,7 +251,7 @@ class Controller_Connect_Facebook extends Controller {
 		}
 		$app_user_email = $app_user_fb_data['email'];
 		
-		// query db to determine if this app_user already exists or if a new user one needs to be created
+		// query db to determine if this app_user already exists or if a new user needs to be created
 		$dao_app_user = Factory_Dao::create('kohana', 'app_user')->where('email', '=', $app_user_email)->and_where('app_id', '=', $app_id)->find();
 		if ($dao_app_user->loaded()) 
 		{

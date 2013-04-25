@@ -512,6 +512,117 @@ class Model_User extends Model_Abstract implements Interface_Model_User {
 	}
 	
 	/**
+	 * get linkedin_id
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function linkedin_id()
+	{
+		return($this->dao->linkedin_id);
+	}
+	
+	/**
+	 * set linkedin_token
+	 *
+	 * @param string $linkedin_token
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_linkedin_token($linkedin_token, $lazy = FALSE)
+	{
+		if ( ! is_string($linkedin_token) )
+		{
+			trigger_error('set_linkedin_token expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->linkedin_token = $linkedin_token;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get linkedin_token
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function linkedin_token()
+	{
+		return($this->dao->linkedin_token);
+	}
+	
+	/**
+	 * set linkedin_token_created
+	 *
+	 * @param int $linkedin_token_created. Unix timestamp.
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_linkedin_token_created($linkedin_token_created, $lazy = FALSE)
+	{
+		if ( ! is_int($linkedin_token_created) )
+		{
+			trigger_error('set_linkedin_token_created expects argument 1 to be type int', E_USER_WARNING);
+		}
+		if ( $linkedin_token_created < time() ) 
+		{
+			throw new Exception('Invalid linkedin token created. Please try again', 1);
+		}
+		$this->dao->linkedin_token_created = $linkedin_token_created;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get linkedin_token_created
+	 *
+	 * @return int. Unix  timestamp.
+	 * @author BRIAN ANDERSON
+	 */
+	public function linkedin_token_created()
+	{
+		return( (int) $this->dao->linkedin_token_created);
+	}
+	
+	/**
+	 * set linkedin_token_expires
+	 *
+	 * @param int $linkedin_token_expires Unix Timestamp
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_linkedin_token_expires($linkedin_token_expires, $lazy = FALSE)
+	{
+		if ( ! is_int($linkedin_token_expires) )
+		{
+			trigger_error('set_linkedin_token_expires expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->linkedin_token_expires = $linkedin_token_expires;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get linkedin_token_expires
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function linkedin_token_expires()
+	{
+		return( (int) $this->dao->linkedin_token_expires);
+	}
+	
+	/**
 	 * set plan_id. Automatically sets plan state to active.
 	 *
 	 * @param int $plan_id

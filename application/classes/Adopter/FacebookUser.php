@@ -21,6 +21,13 @@ class Adopter_FacebookUser {
 	 */
 	private $user;
 	
+	/**
+	 * Constuctor
+	 *
+	 * @param array $fb_data 
+	 * @param Model_Abstract $user 
+	 * @author BRIAN ANDERSON
+	 */
 	public function __construct(array $fb_data, Model_Abstract $user)
 	{
 		$this->set_fb_data($fb_data);
@@ -117,7 +124,7 @@ class Adopter_FacebookUser {
 	}
 	
 	/**
-	 * Update User model, user this after convert method since convert method uses lazy loading
+	 * Update User model, use this after convert method since convert method uses lazy loading
 	 *
 	 * @return void
 	 * @author BRIAN ANDERSON

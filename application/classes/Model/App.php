@@ -841,6 +841,70 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
+	 * set linkedin_key
+	 *
+	 * @param string $linkedin_key
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_linkedin_key($linkedin_key, $lazy = FALSE)
+	{
+		if ( ! is_string($linkedin_key) )
+		{
+			trigger_error('set_linkedin_key expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->linkedin_key = $linkedin_key;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get linkedin_key
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function linkedin_key()
+	{
+		return($this->dao->linkedin_key);
+	}
+	
+	/**
+	 * set linkedin_secret
+	 *
+	 * @param string $linkedin_secret
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_linkedin_secret($linkedin_secret, $lazy = FALSE)
+	{
+		if ( ! is_string($linkedin_secret) )
+		{
+			trigger_error('set_linkedin_secret expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->linkedin_secret = $linkedin_secret;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get linkedin_secret
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function linkedin_secret()
+	{
+		return($this->dao->linkedin_secret);
+	}
+	
+	/**
 	 * Get users associated with this app
 	 *
 	 * @return array of Model_App_User

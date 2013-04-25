@@ -67,6 +67,11 @@ interface Interface_Model_App
 	public function facebook_secret();
 	public function facebook_config();
 	
+	public function set_linkedin_key($key, $lazy = FALSE);
+	public function linkedin_key();
+	public function set_linkedin_secret($secret, $lazy = FALSE);
+	public function linkedin_secret();
+	
 	public function app_users();
 	
 	public function count_logins($min_timestamp, $max_timestamp, array $options = array());

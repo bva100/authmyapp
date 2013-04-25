@@ -49,6 +49,15 @@ interface Interface_Model_App_User
 	public function set_facebook_token_expires($timestamp, $lazy = FALSE);
 	public function facebook_token_expires();
 	
+	public function set_linkedin_id($linkedin_id, $lazy = FALSE);
+	public function linkedin_id();
+	public function set_linkedin_token($linkedin_token, $lazy = FALSE);
+	public function linkedin_token();
+	public function set_linkedin_token_created($timestamp, $lazy = FALSE);
+	public function linkedin_token_created();
+	public function set_linkedin_token_expires($timestamp, $lazy = FALSE);
+	public function linkedin_token_expires();
+	
 	public function count_logins($min_timestamp, $max_timestamp, array $options = array());
 	public function record_login(Dao_Abstract $dao);
 	
