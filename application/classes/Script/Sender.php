@@ -176,11 +176,19 @@ if (isset($_GET["data_source"]))
 {
 	switch ($_GET["data_source"]) {
 		case "facebook":
+			$connect_type = "facebook";
+		case "linkedin":
+			$connect_type = "linkedin";
 		default:
-			header( "Location: '.URL::base(TRUE).'connect_facebook?app_id='.$this->app->id().'&security_code=$securityCode&connect_version='.Controller_Api_Abstract::CONNECT_VERSION.'" );
+			die("data source not recognized");
 			break;
 	}
-}';
+	header( "Location: '.URL::base(TRUE).'connect_$connect_type?app_id='.$this->app->id().'&security_code=$securityCode&connect_version='.Controller_Api_Abstract::CONNECT_VERSION.'" );
+	break;
+}else{
+	die("data_source parameter not passed");
+}
+';
 	}
 	
 	/**

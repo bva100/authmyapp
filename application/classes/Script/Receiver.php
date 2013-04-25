@@ -270,13 +270,13 @@ switch ($storage_method) {
 		{
 			$sessionHelper->set("lastName", $response->name->last);
 		}
+		if (isset($response->picture))
+		{
+			$sessionHelper->set("picture", $response->picture);
+		}
 		if (isset($response->birthday)) 
 		{
 			$sessionHelper->set("birthday", $response->birthday);
-		}
-		if (isset($response->facebook->picture))
-		{
-			$sessionHelper->set("pictureFacebook", $response->facebook->picture);
 		}
 		if (isset($response->gender)) 
 		{
@@ -313,6 +313,18 @@ switch ($storage_method) {
 		if (isset($response->facebook->token_expires))
 		{
 			$sessionHelper->set("facebookTokenExpires", $response->facebook->token_expires);
+		}
+		if (isset($response->linkedin->id)) 
+		{
+			$sessionHelper->set("linkedinId", $response->linkedin->id);
+		}
+		if (isset($response->linkedin->token)) 
+		{
+			$sessionHelper->set("linkedinToken", $response->linkedin->token);
+		}
+		if (isset($response->linkedin->token_expires)) 
+		{
+			$sessionHelper->set("linkedinTokenExpires", $response->linkedin->token_expires);
 		}
 		if (isset($data_source)) 
 		{
