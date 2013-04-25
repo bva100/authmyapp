@@ -28,7 +28,7 @@ class SessionHelper {
 	/**
 	 * Starts session. Use lazy loading to account for environments which use auto sessions
 	 *
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public function __construct()
 	{
@@ -42,7 +42,7 @@ class SessionHelper {
 	 * Convenience method. Call regenerate method and, in the future, might call a fingerprint method.
 	 *
 	 * @return void
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public function secure()
 	{
@@ -54,7 +54,7 @@ class SessionHelper {
 	 * Regenerate session id, if needed. This method helps fight fixation attacks.
 	 *
 	 * @return void
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public function regenerate()
 	{
@@ -71,7 +71,7 @@ class SessionHelper {
 	 * @param string $key 
 	 * @param mixed $value 
 	 * @return void
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public function set($key, $value)
 	{
@@ -83,7 +83,7 @@ class SessionHelper {
 	 *
 	 * @param array $array 
 	 * @return void
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public function massSet(array $array)
 	{
@@ -99,7 +99,7 @@ class SessionHelper {
 	 * @param string $key 
 	 * @param mixed $default 
 	 * @return mixed
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public function get($key, $default = NULL)
 	{
@@ -118,7 +118,7 @@ class SessionHelper {
 	 *
 	 * @param string $key 
 	 * @return bool
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public function delete($key)
 	{
@@ -137,7 +137,7 @@ class SessionHelper {
 /**
  * Request Helper for setting GET and POST vars
  *
- * @author BRIAN ANDERSON
+ * @author AuthMyApp
  */
 class ParamHelper {
 
@@ -147,7 +147,7 @@ class ParamHelper {
 	 * @param string $key 
 	 * @param string $default 
 	 * @return void
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public static function get($key, $default = NULL)
 	{
@@ -165,7 +165,7 @@ class ParamHelper {
 	 * @param string $key 
 	 * @param mixed $default 
 	 * @return mixed
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public static function post($key, $default = NULL)
 	{
@@ -183,7 +183,7 @@ class ParamHelper {
 	 * @param string $key 
 	 * @param mixed $default 
 	 * @return mixed
-	 * @author BRIAN ANDERSON
+	 * @author AuthMyApp
 	 */
 	public static function request($key, $default = NULL)
 	{
