@@ -132,6 +132,10 @@ class Controller_Welcome extends Controller_Abstract {
 			{
 				$user->set_last_name($response->name->last, TRUE);
 			}
+			if (isset($response->picture))
+			{
+				$user->set_picture($response->picture, TRUE);
+			}
 			if (isset($response->birthday))
 			{
 				$user->set_birthday($response->birthday, TRUE);
@@ -165,9 +169,18 @@ class Controller_Welcome extends Controller_Abstract {
 			{
 				$user->set_facebook_token_expires($response->facebook->token_expires, TRUE);
 			}
-			if (isset($response->picture))
+			if (isset($response->linkedin->id)) 
 			{
-				$user->set_picture($response->picture, TRUE);
+				$user->set_linkedin_id($response->linkedin->id, TRUE);
+			}
+			if (isset($response->linkedin->token)) 
+			{
+				$user->set_linkedin_token($response->linkedin->token, TRUE);
+				$user->set_linkedin_token_created(time(), TRUE);
+			}
+			if (isset($response->linkedin->token_expires)) 
+			{
+				$user->set_linkedin_token_expires($response->linkedin->token_expires, TRUE);
 			}
 			$user->db_update();
 			
@@ -226,7 +239,6 @@ class Controller_Welcome extends Controller_Abstract {
 			{
 				$user->set_facebook_token_expires($response->facebook->token_expires, TRUE);
 			}
-			echo Debug::vars($response->linkedin); die;
 			if (isset($response->linkedin->id)) 
 			{
 				$user->set_linkedin_id($response->linkedin->id, TRUE);
