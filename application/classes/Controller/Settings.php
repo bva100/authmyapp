@@ -102,6 +102,7 @@ class Controller_Settings extends Controller_Home {
 		}
 		$dao = Factory_Dao::create('kohana', 'app', $app_id);
 		$app = Factory_Model::create($dao);
+		$app->set_secret();
 		$app->set_access_token();
 		echo $app->access_token();
 	}
