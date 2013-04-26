@@ -16,6 +16,9 @@ class Factory_Script extends Factory_Abstract {
 			case 'login_facebook_button':
 				return new Script_Connect_Button_Facebook($user, $app, $data);
 				break;
+			case 'connect_linkedin_button':
+				return new Script_Connect_Button_Linkedin($user, $app, $data);
+				break;
 			case 'sender':
 				return new Script_Sender($user, $app, $data);
 			case 'receiver':

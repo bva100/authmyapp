@@ -201,7 +201,7 @@ class Controller_Downloads extends Controller_Home {
 		// redirect or print url on ajax
 		if ( ! $this->request->is_ajax())
 		{
-			if ($type === 'connect_facebook_button' OR $type === 'login_facebook_button')
+			if ($type === 'connect_facebook_button' OR $type === 'login_facebook_button' OR $type === 'connect_linkedin_button')
 			{
 				echo $script->text().' <hr> <a href="/downloads?app_id='.$app->id().'">Click Here to Return</a>';
 				die;
