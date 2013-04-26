@@ -905,6 +905,70 @@ class Model_App extends Model_Abstract implements Interface_Model_App {
 	}
 	
 	/**
+	 * set twitter_key
+	 *
+	 * @param string $twitter_key
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_twitter_key($twitter_key, $lazy = FALSE)
+	{
+		if ( ! is_string($twitter_key) )
+		{
+			trigger_error('set_twitter_key expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->twitter_key = $twitter_key;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get twitter_key
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function twitter_key()
+	{
+		return($this->dao->twitter_key);
+	}
+	
+	/**
+	 * set twitter_secret
+	 *
+	 * @param string $twitter_secret
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_twitter_secret($twitter_secret, $lazy = FALSE)
+	{
+		if ( ! is_string($twitter_secret) )
+		{
+			trigger_error('set_twitter_secret expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->twitter_secret = $twitter_secret;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get twitter_secret
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function twitter_secret()
+	{
+		return($this->dao->twitter_secret);
+	}
+	
+	/**
 	 * Get users associated with this app
 	 *
 	 * @return array of Model_App_User

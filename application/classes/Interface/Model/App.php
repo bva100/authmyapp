@@ -67,10 +67,15 @@ interface Interface_Model_App
 	public function facebook_secret();
 	public function facebook_config();
 	
-	public function set_linkedin_key($key, $lazy = FALSE);
+	public function set_linkedin_key($linkedin_key, $lazy = FALSE);
 	public function linkedin_key();
-	public function set_linkedin_secret($secret, $lazy = FALSE);
+	public function set_linkedin_secret($linkedin_secret, $lazy = FALSE);
 	public function linkedin_secret();
+	
+	public function set_twitter_key($twitter_key, $lazy = FALSE);
+	public function twitter_key();
+	public function set_twitter_secret($twitter_secret, $lazy = FALSE);
+	public function twitter_secret();
 	
 	public function app_users();
 	
