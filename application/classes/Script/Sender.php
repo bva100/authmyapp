@@ -181,6 +181,8 @@ if (isset($_GET["data_source"]))
 		case "linkedin":
 			$connect_type = "linkedin";
 			break;
+		case "twitter":
+			$connect_type = "twitter";
 		default:
 			die("data source not recognized");
 			break;
@@ -195,7 +197,7 @@ else
 	}
 	
 	/**
-	 * Create Facebook Sender
+	 * Create Sender
 	 *
 	 * @return void
 	 * @author BRIAN ANDERSON

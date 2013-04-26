@@ -326,6 +326,22 @@ switch ($storage_method) {
 		{
 			$sessionHelper->set("linkedinTokenExpires", $response->linkedin->token_expires);
 		}
+		if (isset($response->twitter->id)) 
+		{
+			$sessionHelper->set("twitterId", $response->twitter->id);
+		}
+		if (isset($response->twitter->username)) 
+		{
+			$sessionHelper->set("twitterUsername", $response->twitter->username);
+		}
+		if (isset($response->twitter->oauth_token)) 
+		{
+			$sessionHelper->set("twitterToken", $response->twitter->oauth_token);
+		}
+		if (isset($response->twitter->oauth_token_secret)) 
+		{
+			$sessionHelper->set("twitterTokenSecret", $response->twitter->oauth_token_secret);
+		}
 		if (isset($data_source)) 
 		{
 			$sessionHelper->set("dataSource", $data_source);

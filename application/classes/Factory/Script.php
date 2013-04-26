@@ -19,6 +19,8 @@ class Factory_Script extends Factory_Abstract {
 			case 'connect_linkedin_button':
 				return new Script_Connect_Button_Linkedin($user, $app, $data);
 				break;
+			case 'connect_twitter_button':
+				return new Script_Connect_Button_Twitter($user, $app, $data);
 			case 'sender':
 				return new Script_Sender($user, $app, $data);
 			case 'receiver':

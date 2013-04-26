@@ -1,11 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Linkedin_Connect for signup and login redirects. Sends users to ama sender
+ * Twitter_Connect for signup and login redirects. Sends users to ama sender
  *
  * @author BRIAN ANDERSON
  */
-class Script_Connect_Button_Linkedin extends Script_Abstract {
+class Script_Connect_Button_Twitter extends Script_Abstract {
 	
 	/**
 	 * data used to create this script
@@ -48,7 +48,7 @@ class Script_Connect_Button_Linkedin extends Script_Abstract {
 				break;
 			case 'large':
 				$size = 
-					'padding: 11px 25px;
+					'padding: 11px 31px;
 					font-size: 17.5px;
 					-webkit-border-radius: 6px;
 					-moz-border-radius: 6px;
@@ -79,10 +79,10 @@ class Script_Connect_Button_Linkedin extends Script_Abstract {
 		// create html and css
 		$this->file_data = '
 		
-		<a href="'.$this->app->sender_url().'?data_source=linkedin&button_version='.Controller_Api_Abstract::CONNECT_VERSION.'" class="btn-linkedin" target="_top">'.$this->data['text'].'</a>
+		<a href="'.$this->app->sender_url().'?data_source=twitter&button_version='.Controller_Api_Abstract::CONNECT_VERSION.'" class="btn-twitter" target="_top">'.$this->data['text'].'</a>
 		
 		<style type="text/css" media="screen">
-			.btn-linkedin {
+			.btn-twitter {
 				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 				text-decoration: none;
 				display: inline-block;
@@ -124,24 +124,24 @@ class Script_Connect_Button_Linkedin extends Script_Abstract {
 					$size
 				.'
 
-				background-color: hsl(201, 64%, 30%) !important;
-				background-repeat: repeat-x;
-				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2d97d1", endColorstr="#1b5b7d");
-				background-image: -khtml-gradient(linear, left top, left bottom, from(#2d97d1), to(#1b5b7d));
-				background-image: -moz-linear-gradient(top, #2d97d1, #1b5b7d);
-				background-image: -ms-linear-gradient(top, #2d97d1, #1b5b7d);
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2d97d1), color-stop(100%, #1b5b7d));
-				background-image: -webkit-linear-gradient(top, #2d97d1, #1b5b7d);
-				background-image: -o-linear-gradient(top, #2d97d1, #1b5b7d);
-				background-image: linear-gradient(#2d97d1, #1b5b7d);
-				border-color: #1b5b7d #1b5b7d hsl(201, 64%, 25%);
-				color: #fff !important;
-				text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
-				-webkit-font-smoothing: antialiased;
+			  background-color: hsl(205, 90%, 27%) !important;
+			  background-repeat: repeat-x;
+			  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0b89e3", endColorstr="#064f82");
+			  background-image: -khtml-gradient(linear, left top, left bottom, from(#0b89e3), to(#064f82));
+			  background-image: -moz-linear-gradient(top, #0b89e3, #064f82);
+			  background-image: -ms-linear-gradient(top, #0b89e3, #064f82);
+			  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #0b89e3), color-stop(100%, #064f82));
+			  background-image: -webkit-linear-gradient(top, #0b89e3, #064f82);
+			  background-image: -o-linear-gradient(top, #0b89e3, #064f82);
+			  background-image: linear-gradient(#0b89e3, #064f82);
+			  border-color: #064f82 #064f82 hsl(205, 90%, 22%);
+			  color: #fff !important;
+			  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
+			  -webkit-font-smoothing: antialiased;
 			}
 			
-			.btn-linkedin:hover,
-			.btn-linkedin:focus {
+			.btn-twitter:hover,
+			.btn-twitter:focus {
 				color: #333333;
 				text-decoration: none;
 				background-position: 0 -15px;

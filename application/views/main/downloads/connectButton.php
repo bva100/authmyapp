@@ -139,6 +139,26 @@
 								</div>
 							<?php endif ?>
 							
+							<!-- connect twitter -->
+							<?php if ($type === 'connect_twitter' OR $type === 'login_twitter'): ?>
+								<div class='download-setup-form well' id='connect-button-setup'>
+									<?php echo Form::open("downloads/process"); ?>
+										<input type="hidden" name="type" value="connect_twitter_button" id='type-input'>
+										<input type="hidden" name="app_id" value="<?php echo $app->id() ?>" class='app-id'>
+												<label for="text">Button Text</label>
+												<input type="text" name="text" value="<?php if ($type === 'connect_twitter') {echo 'Connect with Twitter';}else{echo 'Login with Twitter';} ?>" id='text-input'>
+												<label for="size">Button Size</label>
+												<select id='size-input' data-width='314px'>
+													<option value="extra-large">Extra Large</option> 
+													<option value="large" selected>Large</option>
+													<option value="medium">Medium</option>
+													<option value="small">Small</option>
+												</select>
+											<?php echo Form::submit("submit", "Preview Connect Button", array('class' => 'btn btn-blue submitter')); ?>
+									<?php echo Form::close(); ?>
+								</div>
+							<?php endif ?>
+							
 						</div><!-- .span9 -->
 					</div><!-- .row -->
 					
