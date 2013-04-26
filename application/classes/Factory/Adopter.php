@@ -31,8 +31,14 @@ class Factory_Adopter extends Factory_Abstract {
 				break;
 			case 'linkedin_to_user':
 			case 'linkedin_user':
-			case 'facebookuser';
+			case 'linkedinUser';
 				return new Adopter_LinkedinUser($from, $to);
+				break;
+			case 'twitter_to_user':
+			case 'twitter_user':
+			case 'twitterUser':
+				return new Adopter_TwitterUser($from, $to);
+				break;
 			case 'appuserApi':
 			case 'app_user_api':
 			case 'appuser_to_api':

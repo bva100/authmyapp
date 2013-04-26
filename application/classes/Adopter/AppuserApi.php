@@ -133,6 +133,23 @@ class Adopter_AppuserApi {
 				$api_user->linkedin->token_expires = $this->user->linkedin_token_expires();
 			}
 		}
+		if ($this->user->twitter_id()) 
+		{
+			$api_user->twitter = new stdClass;
+			$api_user->twitter->id = $this->user->twitter_id();
+			if ($this->user->twitter_username()) 
+			{
+				$api_user->twitter->username = $this->user->twitter_username();
+			}
+			if ($this->user->twitter_oauth_token()) 
+			{
+				$api_user->twitter->oauth_token = $this->user->twitter_oauth_token();
+			}
+			if ($this->user->twitter_oauth_token_secret()) 
+			{
+				$api_user->twitter->oauth_token_secret = $this->user->twitter_oauth_token_secret();
+			}
+		}
 		if ($this->user->state()) 
 		{
 			$api_user->state = $this->user->state();

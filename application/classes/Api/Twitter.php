@@ -36,6 +36,20 @@ class Api_Twitter {
 	private $access_token;
 	
 	/**
+	 * Profile data
+	 *
+	 * @var stdClass object
+	 */
+	private $profile;
+	
+	/**
+	 * Any valid name parser object
+	 *
+	 * @var string
+	 */
+	private $name_parser;
+	
+	/**
 	 * Constructor injects a valid sk
 	 *
 	 * @param object $sdk 
@@ -71,6 +85,33 @@ class Api_Twitter {
 	public function sdk()
 	{
 		return($this->sdk);
+	}
+	
+	/**
+	 * set name_parser
+	 *
+	 * @param object $name_parser. Any valid name parse made with Factory_Nameparser
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_name_parser($name_parser)
+	{
+		if ( ! is_object($name_parser) )
+		{
+			trigger_error('set_name_parser expects argument 1 to be type object', E_USER_WARNING);
+		}
+		$this->name_parser = $name_parser;
+	}
+	
+	/**
+	 * get name_parser
+	 *
+	 * @return object
+	 * @author BRIAN ANDERSON
+	 */
+	public function name_parser()
+	{
+		return($this->name_parser);
 	}
 	
 	/**
@@ -146,6 +187,110 @@ class Api_Twitter {
 	public function access_token()
 	{
 		return($this->access_token);
+	}
+	
+	/**
+	 * Set's profile data
+	 *
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_profile()
+	{
+		$this->profile = $this->sdk()->get('account/verify_credentials');
+	}
+	
+	/**
+	 * get profile
+	 *
+	 * @return stdClass
+	 * @author BRIAN ANDERSON
+	 */
+	public function profile()
+	{
+		return($this->profile);
+	}
+	
+	/**
+	 * Get twitter id. Must set profile first.
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function id()
+	{
+		return( (int) $this->profile->id);
+	}
+	
+	/**
+	 * Get screen_name as username
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function username()
+	{
+		return $this->profile->screen_name;
+	}
+	
+	/**
+	 * get first_name. Must set profile first. Must also set name parser.
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function first_name()
+	{
+		if ( $this->name_parser->getName() !== $this->profile->name ) 
+		{
+			$this->name_parser->setName($this->profile->name);
+		}
+		return($this->name_parser->getFirst());
+	}
+	
+	/**
+	 * get last_name. Must set profile first. Must also set name parser.
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function last_name()
+	{
+		if ( $this->name_parser->getName() !== $this->profile->name ) 
+		{
+			$this->name_parser->setName($this->profile->name);
+		}
+		return($this->name_parser->getLast());
+	}
+	
+	/**
+	 * get picture url. Must call set_profile method prior to running.
+	 *
+	 * @param bool $ssl 
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function picture($ssl = TRUE)
+	{
+		if ($ssl) 
+		{
+			return $this->profile->profile_image_url_https;
+		}
+		else
+		{
+			return $this->profile->profile_image_url;
+		}
+	}
+	
+	/**
+	 * Get timezone
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function timezone()
+	{
+		return ($this->profile->utc_offset/60)/60;
 	}
 	
 }

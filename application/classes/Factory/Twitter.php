@@ -24,16 +24,16 @@ class Factory_Twitter extends Factory_Abstract {
 		{
 			$oauth_token = NULL;
 		}
-		if ( ! isset($oauth_verifier))
+		if ( ! isset($oauth_token_secret))
 		{
-			$oauth_verifier = NULL;
+			$oauth_token_secret = NULL;
 		}
 		
 		switch ($sdk) {
 			case 'abraham-twitteroauth':
 			case 'abraham':
 				require_once APPPATH.'classes/Vendor/Abraham-twitteroauth.php';
-				$sdk = new TwitterOAuth($app->twitter_key(), $app->twitter_secret(), $oauth_token, $oauth_verifier);
+				$sdk = new TwitterOAuth($app->twitter_key(), $app->twitter_secret(), $oauth_token, $oauth_token_secret);
 				return new Api_Twitter($sdk);
 				break;
 			default:

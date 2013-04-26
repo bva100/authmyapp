@@ -12,6 +12,9 @@ interface Interface_Model_App_User
 	
 	public static function exists(Dao_Abstract $dao, $email, $app_id);
 	
+	public function set_app_id($app_id, $lazy = FALSE);
+	public function app_id();
+	
 	public function set_first_name($first_name, $lazy = FALSE);
 	public function first_name();
 	public function set_last_name($first_name, $lazy = FALSE);
@@ -57,6 +60,15 @@ interface Interface_Model_App_User
 	public function linkedin_token_created();
 	public function set_linkedin_token_expires($timestamp, $lazy = FALSE);
 	public function linkedin_token_expires();
+	
+	public function set_twitter_id($twitter_id, $lazy = FALSE);
+	public function twitter_id();
+	public function set_twitter_username($twitter_username, $lazy = FALSE);
+	public function twitter_username();
+	public function set_twitter_oauth_token($twitter_oauth_token, $lazy = FALSE);
+	public function twitter_oauth_token();
+	public function set_twitter_oauth_token_secret($twitter_oauth_token_secret, $lazy = FALSE);
+	public function twitter_oauth_token_secret();
 	
 	public function count_logins($min_timestamp, $max_timestamp, array $options = array());
 	public function record_login(Dao_Abstract $dao);

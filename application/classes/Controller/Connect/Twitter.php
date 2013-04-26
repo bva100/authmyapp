@@ -49,34 +49,76 @@ class Controller_Connect_Twitter extends Controller {
 		// create api object to get token creds
 		$api = Factory_Twitter::create($app, 'abraham', array(
 			'oauth_token' => $oauth_token,
-			'oauth_verifier' => $oauth_verifier,
+			'oauth_token_secret' => $oauth_verifier,
 		));
 		$api->set_access_token($oauth_verifier);
 		$access_token_array = $api->access_token();
+		// // create new api object using obtainer access_token array to query for full data
+		$api = Factory_Twitter::create($app, 'abraham', array(
+			'oauth_token' => $access_token_array['oauth_token'],
+			'oauth_token_secret' => $access_token_array['oauth_token_secret'],
+		));
+		$api->set_profile();
+		$api->set_name_parser( Factory_Nameparser::create() );
 		
 		// query db to determine if this app_user already exists or if a new user needs to be created
-		$dao_app_user = Factory_Dao::create('kohana', 'app_user')->where('twitter_id', '=', $access_token_array['user_id'])->and_where('app_id', '=', $app->id())->find();
+		$dao_app_user = Factory_Dao::create('kohana', 'app_user')->where('twitter_id', '=', (int)$access_token_array['user_id'])->and_where('app_id', '=', $app->id())->find();
 		if ($dao_app_user->loaded())
 		{
 			$app_user = Factory_Model::create($dao_app_user);                                                                                    
 		}
 		else
 		{
-			// // create new api object to query for full data
-			$api = Factory_Twitter::create($app, 'abraham', array(
-				'oauth_token' => $access_token_array['oauth_token'],
-				'oauth_verifier' => $access_token_array['oauth_token_secret'],
-			));
-			
-			// $connection = new TwitterOAuth($app->twitter_key(), $app->twitter_secret(), $access_token_array['oauth_token'], $access_token_array['oauth_token_secret']);
-			
-			$account = $api->sdk()->get('account/verify_credentials');
-			echo Debug::vars($account); die;
-			
 			// create new app_user
-			//$app_user = Model_App_User::create_with_email_and_app_id( Factory_Dao::create('kohana', 'app_user'), $api->email(), $app->id() );
+			$app_user = Model_App_User::create( Factory_Dao::create('kohana', 'app_user') );
+			$app_user->set_app_id($app->id());
 		}
+		// cache twitter data using the twitter_to_user adopter
+		$li_user_adopter = Factory_Adopter::create('twitter_to_user', $api, $app_user);
+		$li_user_adopter->convert();
+		//set access token and IP
+		$app_user->set_twitter_oauth_token($access_token_array['oauth_token'], TRUE);
+		$app_user->set_twitter_oauth_token_secret($access_token_array['oauth_token_secret'], TRUE);
+		$app_user->set_ip(Request::$client_ip, TRUE);
+		// activate and record login
+		$app_user->set_state(MODEL_APP_USER::STATE_ACTIVE);
+		$app_user->record_login( Factory_Dao::create('kohana', 'app_user_login') );
+		// create sender object and redirect
+		$sender = Factory_Sender::create('signup', 'twitter', $app, $app_user);
+		$this->redirect($sender->redirect_url(), 302);
+	}
+	
+	public function action_test()
+	{
+		$data_source   = (string ) get('data_source', 'twitter');
+		$user_id       = (int) get('user_id', 21);
 		
+		// create uri
+		$dao = Factory_Dao::create('kohana', 'app', 1);
+		$app = Factory_Model::create($dao);
+		$uri = URL::base(TRUE).'api/users.json?user_id='.$user_id.'&access_token='.urlencode($app->access_token()).'&v=.8';
+		
+		//cURL
+		$headers = array('Content-Type: application/json');
+		if ($app->access_token())
+		{
+			$headers[] = 'Authorization: Bearer '.$app->access_token();
+		}
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_USERAGENT, 'AuthMyApp PHP SDK api_version=.8');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+		curl_setopt($ch, CURLOPT_URL, $uri);
+		// response
+		$response = curl_exec($ch);
+		// status
+		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		// close
+		curl_close($ch);
+		$response = json_decode($response);
+		
+		echo Debug::vars($response); die;
 	}
 	
 }

@@ -102,6 +102,38 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	}
 	
 	/**
+	 * set app_id
+	 *
+	 * @param int $app_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_app_id($app_id, $lazy = FALSE)
+	{
+		if ( ! is_int($app_id) )
+		{
+			trigger_error('set_app_id expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->app_id = $app_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get app_id
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function app_id()
+	{
+		return($this->dao->app_id);
+	}
+	
+	/**
 	 * set email
 	 *
 	 * @param string $email
@@ -795,6 +827,135 @@ class Model_App_User extends Model_Abstract implements Interface_Model_App_User 
 	{
 		return( (int) $this->dao->linkedin_token_expires);
 	}
+	
+	/**
+	 * set twitter_id
+	 *
+	 * @param int $twitter_id
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_twitter_id($twitter_id, $lazy = FALSE)
+	{
+		if ( ! is_int($twitter_id) )
+		{
+			trigger_error('set_twitter_id expects argument 1 to be type int', E_USER_WARNING);
+		}
+		$this->dao->twitter_id = $twitter_id;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get twitter_id
+	 *
+	 * @return int
+	 * @author BRIAN ANDERSON
+	 */
+	public function twitter_id()
+	{
+		return( (int) $this->dao->twitter_id);
+	}
+	
+	/**
+	 * set twitter_username
+	 *
+	 * @param string $twitter_username
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_twitter_username($twitter_username, $lazy = FALSE)
+	{
+		if ( ! is_string($twitter_username) )
+		{
+			trigger_error('set_twitter_username expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->twitter_username = $twitter_username;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get twitter_username
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function twitter_username()
+	{
+		return($this->dao->twitter_username);
+	}
+	
+	/**
+	 * set twitter_oauth_token
+	 *
+	 * @param string $twitter_oauth_token
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_twitter_oauth_token($twitter_oauth_token, $lazy = FALSE)
+	{
+		if ( ! is_string($twitter_oauth_token) )
+		{
+			trigger_error('set_twitter_oauth_token expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->twitter_oauth_token = $twitter_oauth_token;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get twitter_oauth_token
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function twitter_oauth_token()
+	{
+		return($this->dao->twitter_oauth_token);
+	}
+	
+	/**
+	 * set twitter_oauth_token_secret
+	 *
+	 * @param string $twitter_oauth_token_secret
+	 * @param bool $lazy
+	 * @return void
+	 * @author BRIAN ANDERSON
+	 */
+	public function set_twitter_oauth_token_secret($twitter_oauth_token_secret, $lazy = FALSE)
+	{
+		if ( ! is_string($twitter_oauth_token_secret) )
+		{
+			trigger_error('set_twitter_oauth_token_secret expects argument 1 to be type string', E_USER_WARNING);
+		}
+		$this->dao->twitter_oauth_token_secret = $twitter_oauth_token_secret;
+		if ( ! $lazy)
+		{
+			$this->db_update();
+		}
+	}
+	
+	/**
+	 * get twitter_oauth_token_secret
+	 *
+	 * @return string
+	 * @author BRIAN ANDERSON
+	 */
+	public function twitter_oauth_token_secret()
+	{
+		return($this->dao->twitter_oauth_token_secret);
+	}
+	
 	
 	/**
 	 * Count the amount of logins given a range of unix timestamps. Pass min_timestamp and max_timestamp as null or leave empty.
