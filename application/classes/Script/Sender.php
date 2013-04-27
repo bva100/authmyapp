@@ -183,6 +183,7 @@ if (isset($_GET["data_source"]))
 			break;
 		case "twitter":
 			$connect_type = "twitter";
+			break;
 		default:
 			die("data source not recognized");
 			break;
