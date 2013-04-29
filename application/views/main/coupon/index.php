@@ -68,7 +68,7 @@
 		<div class="span4" id='twitter-container'>
 			<section class="tile">
 				<h3 class="tile-title">Step 1: Twitter</h3>
-				<p>show us some love with a tweet and be sure to follow @AuthMyApp too</p>
+				<p>show us some love with a tweet and be sure to follow @AuthMyApp</p>
 				<p class='tweet'><i class="icon-twitter icon-4x"></i></p>
 				<a href="https://twitter.com/share?<?php echo $tweet_params ?>" target='_blank' class='btn btn-warning btn-large btn-block tweet'>Tweet</a>
 			</section>
@@ -88,7 +88,7 @@
 		<div class="span4" id='coupon-container'>
 			<section class="tile">
 				<h3 class="tile-title">Step 3: Coupon</h3>
-				<p>your sweet 25% off your first month coupon code will appear here</p>
+				<p>your sweet 30% off your first month coupon code will appear here</p>
 				<p class='tweet'><i class="icon-check icon-4x"></i></p>
 				<p class='coupon-container hide'>
 					<span class="coupon-token hide"><?php echo $coupon_token ?></span>
