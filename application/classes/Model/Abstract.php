@@ -24,10 +24,10 @@ abstract class Model_Abstract {
 	/**
 	 * Constructor inject's a dao
 	 *
-	 * @param Dao_Abstract $dao 
+	 * @param Dao_Abstract | Dao_Mongo $dao 
 	 * @author BRIAN ANDERSON
 	 */
-	public function __construct(Dao_Abstract $dao)
+	public function __construct($dao)
 	{
 		$this->set_dao( $dao );
 	}
@@ -39,8 +39,12 @@ abstract class Model_Abstract {
 	 * @return void
 	 * @author BRIAN ANDERSON
 	 */
-	public function set_dao(Dao_Abstract $dao)
+	public function set_dao($dao)
 	{
+		if ( ! is_object($dao)) 
+		{
+			trigger_error(__METHOD__.'expects argument 1, dao, to be a DAO object created with the DAO factory', E_USER_WARNING);
+		}
 		$this->dao = $dao;
 	}
 	

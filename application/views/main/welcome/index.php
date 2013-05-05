@@ -208,7 +208,7 @@
 				</h3>
 			</div><!-- .span -->
 			<div class='span3'>
-				<img src="/assets/img/dude1_idea_compressed.png" width="450" height="450" alt="" class='dude-img'>
+				<img src="/assets/img/dude1-wr.png" width="160" height="450" alt="Dude1 Wr" class='dude-img pull-right'>
 			</div>
 		</div><!-- .row -->
 		
@@ -217,7 +217,7 @@
 		<!-- how it works. step two. -->
 		<div class='row'>
 			<div class='span3'>
-				<img src="/assets/img/dude1_confused_compressed.png" width="450" height="450" alt="" class='dude-img'>
+				<img src="/assets/img/dude2-wr.png" width="170" height="450" alt="Dude2 Wr" class='dude-img pull-left'>
 			</div>
 			<div class='span9' style='text-align: right'>
 				<h3 class='featurette-header featurette-header-bold'>
@@ -242,7 +242,7 @@
 				</h3>
 			</div><!-- .span12 -->
 			<div class='span3'>
-				<img src="/assets/img/dude1_happy_compressed.png" width="450" height="456" alt="" class='dude-img'>
+				<img src="/assets/img/dude3-wr.png" width="450" height="450" alt="Dude3 Wr" class='dude-img pull-right'>
 			</div>
 		</div><!-- .row -->
 		
