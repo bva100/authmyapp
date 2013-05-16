@@ -57,7 +57,7 @@
 								<div class='span6'>
 									<h3>
 										<span class='required'>
-											<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=connect_facebook" class='btn-downloader link-black'>Get Connect Button</a>
+											<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=connect_facebook" class='btn-downloader link-black'>Get Facebook Button</a>
 										</span>
 									</h3>
 									<p>
@@ -102,7 +102,167 @@
 								</div><!-- .span2 -->
 							</div><!-- .row -->
 							
+							<hr>
+							
+							<!-- signup button -->
+							<div class='row'>
+								<div class='span6'>
+									<h3>
+										<span class='required'>
+											<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=connect_facebook" class='btn-downloader link-black'>Get LinkedIn Button</a>
+										</span>
+									</h3>
+									<p>
+										Let new users signup with a "Connect using LinkedIn" button
+									</p>
+									<a href="#see-tutorial-connect-button" data-open='#tutorial-connect-facebook' class='tutorial-open-close'>
+										View Instructions
+									</a>
+									<div class='tutorial hide' id='tutorial-connect-facebook' state='closed'>
+										<h5>
+											Implementing your "Connect using Facebook" button
+										</h5>
+										<ol>
+											<li>
+												Click on the blue download button to the right
+											</li>
+											<li>
+												Edit the size and text of your login button
+											</li>
+											<li>
+												Click preview. A preview of the button as well as a grey box of html code appears
+											</li>
+											<li>
+												Add this html (iframe) to your webpage by copying and pasting
+											</li>
+										</ol>
+										<p>
+											<a href="#close" class='btn tutorial-closer'>Close</a>
+										</p>
+									</div>
+								</div><!-- .span6 -->
+								<div class='span2 btn-downloader-container'>
+									<?php if ($user->plan()->downloads()): ?>
+										<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=connect_facebook" class="btn btn-info btn-downloader" data-open="#connect-facebook-setup">
+											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
+										</a>
+									<?php else: ?>
+										<button class="btn btn-downloader disabled" id='download-button-btn'>
+											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
+										</button>
+									<?php endif ?>
+								</div><!-- .span2 -->
+							</div><!-- .row -->
+							
 							<hr />
+							
+							<!-- signup button -->
+							<div class='row'>
+								<div class='span6'>
+									<h3>
+										<span class='required'>
+											<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=connect_facebook" class='btn-downloader link-black'>Get Twitter Button</a>
+										</span>
+									</h3>
+									<p>
+										Let new users signup with a "Connect using Twitter" button
+									</p>
+									<a href="#see-tutorial-connect-button" data-open='#tutorial-connect-facebook' class='tutorial-open-close'>
+										View Instructions
+									</a>
+									<div class='tutorial hide' id='tutorial-connect-facebook' state='closed'>
+										<h5>
+											Implementing your "Connect using Twitter" button
+										</h5>
+										<ol>
+											<li>
+												Click on the blue download button to the right
+											</li>
+											<li>
+												Edit the size and text of your login button
+											</li>
+											<li>
+												Click preview. A preview of the button as well as a grey box of html code appears
+											</li>
+											<li>
+												Add this html (iframe) to your webpage by copying and pasting
+											</li>
+										</ol>
+										<p>
+											<a href="#close" class='btn tutorial-closer'>Close</a>
+										</p>
+									</div>
+								</div><!-- .span6 -->
+								<div class='span2 btn-downloader-container'>
+									<?php if ($user->plan()->downloads()): ?>
+										<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&new_app=<?php echo $new_app ?>&type=connect_facebook" class="btn btn-info btn-downloader" data-open="#connect-facebook-setup">
+											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
+										</a>
+									<?php else: ?>
+										<button class="btn btn-downloader disabled" id='download-button-btn'>
+											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
+										</button>
+									<?php endif ?>
+								</div><!-- .span2 -->
+							</div><!-- .row -->
+							
+							<hr>
+							
+							<!-- login button -->
+							<div class='row'>
+								<div class='span6'>
+									<h3>
+										<span>
+											<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&type=login_facebook" class='btn-downloader link-black'>Get Login Button</a>
+										</span>
+									</h3>
+									<p>
+										Let returning users login with a "Login using Facebook" button
+									</p>
+									<div class='tutorial-container'>
+										<a href="#see-tutorial-connect-button" data-open="#tutorial-login-facebook" class='tutorial-open-close'>
+											View Instructions
+										</a>
+										<div class='tutorial hide' id='tutorial-login-facebook' state='closed'>
+											<div classs='tutorial-body' id='tutorial-login-body'>
+												<h5>
+													Implementing your "Login with Facebook" button
+												</h5>
+												<ol>
+													<li>
+														Click on the blue download button to the right
+													</li>
+													<li>
+														Edit the size and text of your login button
+													</li>
+													<li>
+														Click preview. A preview of the button as well as a grey box of html code appears
+													</li>
+													<li>
+														Add this html (iframe) to your webpage by copying and pasting
+													</li>
+												</ol>
+												<p>
+													<a href="#close" class='btn tutorial-closer'>Close</a>
+												</p>
+											</div>
+										</div>
+									</div><!-- .tutorial-container -->
+								</div><!-- .span6 -->
+								<div class='span2 btn-downloader-container'>
+									<?php if ($user->plan()->downloads()): ?>
+										<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&type=login_facebook" class="btn btn-info btn-downloader" id='download-button-btn'>
+											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
+										</a>
+									<?php else: ?>
+										<button class="btn btn-downloader disabled" id='download-button-btn'>
+											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
+										</button>
+									<?php endif ?>
+								</div><!-- .span2 -->
+							</div><!-- .row -->
+							
+							<hr>
 							
 							<!-- sender -->
 							<div class='row'>
@@ -216,62 +376,6 @@
 										</button>
 									<?php endif ?>
 								</div><!-- .span4 -->
-							</div><!-- .row -->
-
-							<hr />
-
-							<!-- login button -->
-							<div class='row'>
-								<div class='span6'>
-									<h3>
-										<span>
-											<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&type=login_facebook" class='btn-downloader link-black'>Get Login Button</a>
-										</span>
-									</h3>
-									<p>
-										Let returning users login with a "Login using Facebook" button
-									</p>
-									<div class='tutorial-container'>
-										<a href="#see-tutorial-connect-button" data-open="#tutorial-login-facebook" class='tutorial-open-close'>
-											View Instructions
-										</a>
-										<div class='tutorial hide' id='tutorial-login-facebook' state='closed'>
-											<div classs='tutorial-body' id='tutorial-login-body'>
-												<h5>
-													Implementing your "Login with Facebook" button
-												</h5>
-												<ol>
-													<li>
-														Click on the blue download button to the right
-													</li>
-													<li>
-														Edit the size and text of your login button
-													</li>
-													<li>
-														Click preview. A preview of the button as well as a grey box of html code appears
-													</li>
-													<li>
-														Add this html (iframe) to your webpage by copying and pasting
-													</li>
-												</ol>
-												<p>
-													<a href="#close" class='btn tutorial-closer'>Close</a>
-												</p>
-											</div>
-										</div>
-									</div><!-- .tutorial-container -->
-								</div><!-- .span6 -->
-								<div class='span2 btn-downloader-container'>
-									<?php if ($user->plan()->downloads()): ?>
-										<a href="/downloads/connectButton?app_id=<?php echo $app->id() ?>&type=login_facebook" class="btn btn-info btn-downloader" id='download-button-btn'>
-											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
-										</a>
-									<?php else: ?>
-										<button class="btn btn-downloader disabled" id='download-button-btn'>
-											<img src="/assets/img/download_file.png" width="45" height="45" alt="Download" class='download-file'>
-										</button>
-									<?php endif ?>
-								</div><!-- .span2 -->
 							</div><!-- .row -->
 							
 						</div><!-- .app-body -->
